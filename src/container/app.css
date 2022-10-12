@@ -1,0 +1,6 @@
+:root {
+  --accent-1: rgb(26, 167, 125);
+  --low-prio: rgb(0, 211, 0);
+  --mid-prio: rgb(255, 255, 40);
+  --high-prio: rgb(255, 50, 50);
+}

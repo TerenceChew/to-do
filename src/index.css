@@ -5,3 +5,18 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* Utilities */
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
