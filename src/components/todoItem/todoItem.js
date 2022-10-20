@@ -1,8 +1,7 @@
 import "./todoItem.css";
 import pencilIcon from "./pencil-outline.svg";
 import deleteIcon from "./delete.svg";
-
-export {todoItemFactory, createTodoItemUI};
+import { createTodoDetailsUI } from "../todoDetails/todoDetails";
 
 const todoItemFactory = (checked, title, notes, dueDate, priority) => {
   // Getting
@@ -43,7 +42,7 @@ const todoItemFactory = (checked, title, notes, dueDate, priority) => {
   }
 };
 
-const createTodoItemUI = ({ getChecked, getTitle, getDueDate, getPriority, editChecked }) => {
+const createTodoItemUI = (todoItem, container) => {
   const todoItemContainer = document.createElement("div");
   const leftContainer = document.createElement("div");
   const rightContainer = document.createElement("div");
@@ -54,31 +53,34 @@ const createTodoItemUI = ({ getChecked, getTitle, getDueDate, getPriority, editC
   const editIcon = document.createElement("img");
   const trashIcon = document.createElement("img");
 
-  todoItemContainer.classList.add("todo-item-container", `var(--${getPriority()}-prio)`, "flex");
-  leftContainer.classList.add("todo-left-container", "flex", "center");
-  rightContainer.classList.add("todo-right-container", "flex", "center");
+  todoItemContainer.classList.add("item-container", `var(--${todoItem.getPriority()}-prio)`, "flex");
+  leftContainer.classList.add("item-left-container", "flex", "center");
+  rightContainer.classList.add("item-right-container", "flex", "center");
 
-  checkbox.classList.add("todo-checkbox", "flex", "center");
+  checkbox.classList.add("item-checkbox", "flex", "center");
   checkbox.addEventListener("click", () => {
-    checkbox.classList.toggle('checked');
-    editChecked();
-    checkbox.innerText = getChecked() ? '✓' : '';
+    checkbox.classList.toggle("checked");
+    todoItem.editChecked();
+    checkbox.innerText = todoItem.getChecked() ? "✓" : "";
   });
 
 
-  title.classList.add("todo-title");
-  title.innerText = getTitle();
+  title.classList.add("item-title");
+  title.innerText = todoItem.getTitle();
 
-  detailsBtn.classList.add("todo-details-btn");
-  detailsBtn.innerText = 'DETAILS';
+  detailsBtn.classList.add("item-details-btn");
+  detailsBtn.innerText = "DETAILS";
+  detailsBtn.addEventListener("click", () => {
+    container.append(createTodoDetailsUI(todoItem));
+  });
 
-  dueDate.classList.add("todo-due-date");
-  dueDate.innerText = getDueDate(); 
+  dueDate.classList.add("item-due-date");
+  dueDate.innerText = todoItem.getDueDate(); 
 
-  editIcon.classList.add("todo-edit-icon");
+  editIcon.classList.add("item-edit-icon");
   editIcon.src = pencilIcon;
 
-  trashIcon.classList.add("todo-remove-icon");
+  trashIcon.classList.add("item-remove-icon");
   trashIcon.src = deleteIcon;
 
   leftContainer.append(checkbox, title);
@@ -87,3 +89,5 @@ const createTodoItemUI = ({ getChecked, getTitle, getDueDate, getPriority, editC
 
   return todoItemContainer;
 }
+
+export { todoItemFactory, createTodoItemUI };

@@ -1,26 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Alatsi&family=Berkshire+Swash&family=JetBrains+Mono:wght@200&family=Lato:wght@100;300&family=Lobster&family=Montserrat:wght@200;300&family=PT+Mono&display=swap');
-
-.todo-item-container {
+.item-container {
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(240, 240, 240);
+  background-color: var(--accent-2);
   padding: 10px;
   margin: 5px;
   transition: .25s;
   font-family: 'Lato', sans-serif;
 }
 
-.todo-item-container:hover {
-  box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.25);
+.item-container:hover {
+  box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.25);
   transform: translate(2px, 1px);
 }
 
-.todo-left-container,
-.todo-right-container {
+.item-left-container,
+.item-right-container {
   gap: 15px;
 }
 
-.todo-checkbox {
+.item-checkbox {
   width: 18px;
   height: 18px;
   border: 2px solid var(--accent-1);
@@ -31,15 +29,15 @@
 }
 
 .checked {
-  background-color: var(--accent-1);
+  background-color: var(--accent-1accent-1);
   color: white;
 }
 
-.todo-title {
+.item-title {
   font-size: 1.1rem;
 }
 
-.todo-details-btn {
+.item-details-btn {
   border: 1px solid var(--accent-1);
   border-radius: 2px;
   color: var(--accent-1);
@@ -48,32 +46,32 @@
   transition: .25s;
 }
 
-.todo-details-btn:hover {
+.item-details-btn:hover {
   background-color: var(--accent-1);
   color: white;
   font-weight: bold;
 }
 
-.todo-due-date {
+.item-due-date {
   font-size: .95rem;
 }
 
-.todo-edit-icon,
-.todo-remove-icon  {
+.item-edit-icon,
+.item-remove-icon  {
   width: 20px;
   height: auto;
   transition: .35s;
 }
 
-.todo-edit-icon:hover,
-.todo-remove-icon:hover {
+.item-edit-icon:hover,
+.item-remove-icon:hover {
   transform: translateY(-2px);
 }
 
-.todo-checkbox,
-.todo-details-btn,
-.todo-edit-icon,
-.todo-remove-icon {
+.item-checkbox,
+.item-details-btn,
+.item-edit-icon,
+.item-remove-icon {
   cursor: pointer;
 }
 
