@@ -4,4 +4,15 @@ const setAttributes = (el, attrs) => {
   }
 }
 
-export { setAttributes };
+const getRandomNumInclusive = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const generateRandomID = (title) => {
+  return `${title}-${getRandomNumInclusive(1, 1000000)}`;
+}
+
+export { setAttributes, getRandomNumInclusive, generateRandomID };

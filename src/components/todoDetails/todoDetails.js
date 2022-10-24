@@ -1,7 +1,7 @@
 import "./todoDetails.css";
 
 const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) => {
-  const todoDetailsContainer = document.createElement("div");
+  const container = document.createElement("div");
   const topContainer = document.createElement("div");
   const bottomContainer = document.createElement("div");
   const priority = document.createElement("div");
@@ -10,7 +10,7 @@ const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) =>
   const notes = document.createElement("p");
   const closeBtn = document.createElement("button");
 
-  todoDetailsContainer.classList.add("details-container");
+  container.classList.add("details-container");
 
   topContainer.classList.add("details-top-container", "flex");
 
@@ -31,14 +31,14 @@ const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) =>
   closeBtn.classList.add("details-close-btn");
   closeBtn.innerText = "CLOSE";
   closeBtn.addEventListener("click", () => {
-    todoDetailsContainer.remove();
+    container.remove();
   })
 
   topContainer.append(priority, dueDate);
   bottomContainer.append(title, notes, closeBtn);
-  todoDetailsContainer.append(topContainer, bottomContainer);
+  container.append(topContainer, bottomContainer);
 
-  return todoDetailsContainer;
+  return container;
 }
 
 export { createTodoDetailsUI };

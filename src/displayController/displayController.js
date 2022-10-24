@@ -1,9 +1,5 @@
-const blurElem = (elem) => {
-  elem.style.filter = "blur(4px)";
+const addFilterToElem = (elem, value) => {
+  elem.style.filter = value;
 }
 
-const getAppContainer = () => {
-  return document.querySelector(".app-container");
-}
-
-export { blurElem, getAppContainer };
+export { addFilterToElem };

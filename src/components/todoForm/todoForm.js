@@ -1,14 +1,13 @@
 import "./todoForm.css";
 import { setAttributes } from "../../utilityFunctions/utilityFunctions";
-import { getAppContainer, blurElem } from "../../displayController/displayController";
 
 const createFormUI = () => {
-  const formContainer = document.createElement("div");
+  const container = document.createElement("div");
   const topContainer = document.createElement("div");
   const todoBtn = document.createElement("button");
   const projectBtn = document.createElement("button");
 
-  formContainer.classList.add("form-container");
+  container.classList.add("form-container");
 
   topContainer.classList.add("form-top-container", "flex", "center");
 
@@ -17,8 +16,8 @@ const createFormUI = () => {
   todoBtn.addEventListener("pointerdown", () => {
     todoBtn.style.borderBottom = "6px solid black";
     projectBtn.style.borderBottom = "6px solid white";
-    formContainer.lastElementChild.remove();
-    formContainer.append(createTodoFieldsUI());
+    container.lastElementChild.remove();
+    container.append(createTodoFieldsUI());
   })
 
   projectBtn.classList.add("form-project-btn");
@@ -26,14 +25,14 @@ const createFormUI = () => {
   projectBtn.addEventListener("pointerdown", () => {
     projectBtn.style.borderBottom = "6px solid black";
     todoBtn.style.borderBottom = "6px solid white";
-    formContainer.lastElementChild.remove();
-    formContainer.append(createProjectFieldsUI());
+    container.lastElementChild.remove();
+    container.append(createProjectFieldsUI());
   })
 
-  formContainer.append(topContainer, createTodoFieldsUI());
+  container.append(topContainer, createTodoFieldsUI());
   topContainer.append(todoBtn, projectBtn);
 
-  return formContainer;
+  return container;
 }
 
 const createTodoFieldsUI = () => {

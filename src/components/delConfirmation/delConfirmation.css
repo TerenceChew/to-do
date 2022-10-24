@@ -1,0 +1,66 @@
+.del-confirmation-container {
+  width: 255px;
+  height: 140px;
+  gap: 35px;
+  background-color: white;
+  padding: 10px 15px;
+  font-family: 'Lato', sans-serif;
+  border-radius: 8px;
+  box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+.del-confirmation-msg {
+  font-size: 1.25rem;
+}
+
+.del-confirmation-btns-container {
+  gap: 15px;
+}
+
+.del-confirmation-no-btn,
+.del-confirmation-yes-btn {
+  width: 100px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .85rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: .5s;
+  background-color: white;
+  cursor: pointer;
+}
+
+.del-confirmation-no-btn:hover,
+.del-confirmation-yes-btn:hover {
+  color: white;
+  transform: translateY(-5px);
+  font-weight: bold;
+}
+
+.del-confirmation-no-btn {
+  border: 1px solid var(--accent-3);
+  color: var(--accent-3);
+}
+
+.del-confirmation-yes-btn {
+  border: 1px solid var(--accent-1);
+  color: var(--accent-1);
+}
+
+.del-confirmation-no-btn:hover {
+  background-color: var(--accent-3);
+}
+
+.del-confirmation-yes-btn:hover {
+  background-color: var(--accent-1);
+}
+
+
+

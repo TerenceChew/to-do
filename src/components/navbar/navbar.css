@@ -1,0 +1,104 @@
+.navbar-container {
+  width: 100%;
+  height: 65px;
+  grid-area: 3 / 1 / -1 / -1;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  background-color: var(--accent-4);
+  font-family: 'Press Start 2P', cursive;
+}
+
+.navbar-btn {
+  height: 40px;
+  width: 40px;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  color: white;
+  transition: .65s;
+  cursor: pointer;
+}
+
+.navbar-btn:hover {
+  transform: scale(1.15);
+  color: var(--accent-3);
+}
+
+.navbar-plus-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 4px;
+  color: var(--accent-1)
+}
+
+.navbar-plus-btn:hover {
+  color: var(--accent-1);
+}
+
+@media (min-width: 400px) {
+  .navbar-container {
+    padding: 0 30px;
+  }
+}
+
+@media (min-width: 500px) {
+  .navbar-container {
+    padding: 0 60px;
+  }
+}
+
+@media (min-width: 600px) {
+  .navbar-container {
+    padding: 0 80px;
+  }
+}
+
+@media (min-width: 650px) {
+  .navbar-container {
+    height: 100%;
+    grid-area: 2 / 1 / 3 / 2;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 20px 0;
+    background-color: var(--accent-5);
+    box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .navbar-btn {
+    width: 100%;
+    height: 60px;
+    justify-content: start;
+    align-items: center;
+    padding-left: 25px;
+    font-size: 1.1rem;
+    color: var(--accent-4);
+    font-family: 'Montserrat', sans-serif;
+    border-right: 6px solid transparent;
+  }
+
+  .navbar-btn:hover {
+    transform: none;
+    color: var(--accent-4);
+    background-color: var(--accent-6);
+    border-right: 6px solid var(--accent-1);
+  }
+
+  .navbar-plus-btn {
+    width: 80px;
+    justify-content: center;
+    margin-top: auto;
+    padding-left: 0px;
+    font-size: 2.65rem;
+    color: var(--accent-1);
+  }
+
+  .navbar-plus-btn:hover {
+    transform: scale(1.35);
+    color: var(--accent-1);
+    background-color: transparent;
+    border-right: 6px solid transparent;
+  }
+}
+

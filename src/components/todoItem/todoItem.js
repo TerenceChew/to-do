@@ -1,5 +1,5 @@
 import "./todoItem.css";
-import pencilIcon from "./pencil-outline.svg";
+import penIcon from "./pencil-outline.svg";
 import deleteIcon from "./delete.svg";
 import { createTodoDetailsUI } from "../todoDetails/todoDetails";
 
@@ -39,21 +39,20 @@ const todoItemFactory = (checked, title, notes, dueDate, priority) => {
     editNotes,
     editDueDate,
     editPriority
-  }
+  };
 };
 
-const createTodoItemUI = (todoItem, container) => {
-  const todoItemContainer = document.createElement("div");
+const createTodoItemUI = (todoItem, elem) => {
+  const container = document.createElement("div");
   const leftContainer = document.createElement("div");
   const rightContainer = document.createElement("div");
   const checkbox = document.createElement("div");
   const title = document.createElement("p");
   const detailsBtn = document.createElement("button");
-  const dueDate = document.createElement("p");
   const editIcon = document.createElement("img");
   const trashIcon = document.createElement("img");
 
-  todoItemContainer.classList.add("item-container", `var(--${todoItem.getPriority()}-prio)`, "flex");
+  container.classList.add("item-container", `var(--${todoItem.getPriority()}-prio)`, "flex");
   leftContainer.classList.add("item-left-container", "flex", "center");
   rightContainer.classList.add("item-right-container", "flex", "center");
 
@@ -71,23 +70,20 @@ const createTodoItemUI = (todoItem, container) => {
   detailsBtn.classList.add("item-details-btn");
   detailsBtn.innerText = "DETAILS";
   detailsBtn.addEventListener("click", () => {
-    container.append(createTodoDetailsUI(todoItem));
+    elem.append(createTodoDetailsUI(todoItem));
   });
 
-  dueDate.classList.add("item-due-date");
-  dueDate.innerText = todoItem.getDueDate(); 
-
   editIcon.classList.add("item-edit-icon");
-  editIcon.src = pencilIcon;
+  editIcon.src = penIcon;
 
-  trashIcon.classList.add("item-remove-icon");
+  trashIcon.classList.add("item-trash-icon");
   trashIcon.src = deleteIcon;
 
   leftContainer.append(checkbox, title);
-  rightContainer.append(detailsBtn, dueDate, editIcon, trashIcon);
-  todoItemContainer.append(leftContainer, rightContainer);
+  rightContainer.append(detailsBtn, editIcon, trashIcon);
+  container.append(leftContainer, rightContainer);
 
-  return todoItemContainer;
+  return container;
 }
 
 export { todoItemFactory, createTodoItemUI };
