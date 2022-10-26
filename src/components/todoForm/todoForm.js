@@ -1,41 +1,75 @@
 import "./todoForm.css";
 import { setAttributes } from "../../utilityFunctions/utilityFunctions";
+import * as domController from "../../domController/domController";
 
-const createFormUI = () => {
+import { todoItemFactory, createTodoItemUI } from "../todoItem/todoItem";
+// let testTodo = todoItemFactory(false, 'No Title', 'No Notes', '2022-11-12', 'low');
+
+import { projectFactory, createProjectUI } from "../project/project";
+let testProject = projectFactory("Test Project", []);
+
+
+const createFormUI = (mode, todoItem, project) => {
+  const box = document.createElement("div");
   const container = document.createElement("div");
   const topContainer = document.createElement("div");
   const todoBtn = document.createElement("button");
   const projectBtn = document.createElement("button");
+
+  box.classList.add("box", "flex", "center");
 
   container.classList.add("form-container");
 
   topContainer.classList.add("form-top-container", "flex", "center");
 
   todoBtn.classList.add("form-todo-btn");
-  todoBtn.innerText = "Todo";
-  todoBtn.addEventListener("pointerdown", () => {
-    todoBtn.style.borderBottom = "6px solid black";
-    projectBtn.style.borderBottom = "6px solid white";
-    container.lastElementChild.remove();
-    container.append(createTodoFieldsUI());
-  })
+  todoBtn.innerText = mode === "edit-todo" ? "Edit Todo" : "New Todo";
 
   projectBtn.classList.add("form-project-btn");
-  projectBtn.innerText = "Project";
-  projectBtn.addEventListener("pointerdown", () => {
-    projectBtn.style.borderBottom = "6px solid black";
-    todoBtn.style.borderBottom = "6px solid white";
-    container.lastElementChild.remove();
-    container.append(createProjectFieldsUI());
-  })
+  projectBtn.innerText = mode === "edit-project" ? "Edit Project" : "New Project";
 
-  container.append(topContainer, createTodoFieldsUI());
-  topContainer.append(todoBtn, projectBtn);
+  if (mode === "edit-todo") {
+    todoBtn.classList.add("border-btm-w", "no-pointer-events");
 
-  return container;
+    topContainer.append(todoBtn);
+    container.append(topContainer, createTodoFieldsUI(box, todoItem));
+    box.append(container);
+  } else if (mode === "edit-project") {
+    projectBtn.classList.add("border-btm-w", "no-pointer-events");
+
+    topContainer.append(projectBtn);
+    container.append(topContainer, createProjectFieldsUI(box, project));
+    box.append(container);
+  } else {
+    todoBtn.classList.add("border-btm-b");
+
+    topContainer.append(todoBtn, projectBtn);
+    container.append(topContainer, createTodoFieldsUI(box, null));
+    box.append(container);
+
+    todoBtn.addEventListener("pointerdown", () => {
+      todoBtn.classList.add("border-btm-b");
+      projectBtn.classList.remove("border-btm-b");
+
+      container.lastElementChild.remove();
+      container.append(createTodoFieldsUI(box, null));
+      box.append(container);
+    })
+
+    projectBtn.addEventListener("pointerdown", () => {
+      todoBtn.classList.remove("border-btm-b");
+      projectBtn.classList.add("border-btm-b");
+
+      container.lastElementChild.remove();
+      container.append(createProjectFieldsUI(box, null));
+      box.append(container);
+    })
+  }
+
+  return box;
 }
 
-const createTodoFieldsUI = () => {
+const createTodoFieldsUI = (box, todoItem) => {
   const fieldsContainer = document.createElement("div");
   const middleContainer = document.createElement("div");
   const titleInput = document.createElement("textarea");
@@ -52,9 +86,6 @@ const createTodoFieldsUI = () => {
   const midPriorityLabel = document.createElement("label");
   const highPriorityInput = document.createElement("input");
   const highPriorityLabel = document.createElement("label");
-  const bottomContainer = document.createElement("div");
-  const cancelBtn = document.createElement("button");
-  const addBtn = document.createElement("button");
 
   fieldsContainer.classList.add("form-fields-container", "flex-column");
 
@@ -63,10 +94,12 @@ const createTodoFieldsUI = () => {
 
   titleInput.classList.add("form-title-input");
   titleInput.placeholder = "Enter Title";
+  titleInput.innerText = todoItem ? todoItem.getTitle() : "";
   titleInput.setAttribute("maxlength", "50");
 
   notesInput.classList.add("form-notes-input");
   notesInput.placeholder = "Enter Notes";
+  notesInput.innerText = todoItem ? todoItem.getNotes() : "";
   notesInput.setAttribute("maxlength", "300");
 
   dueDateContainer.classList.add("form-due-date-container", "flex-column", "center");
@@ -76,6 +109,7 @@ const createTodoFieldsUI = () => {
 
   dueDateInput.classList.add("form-due-date-input");
   dueDateInput.type = "date";
+  dueDateInput.value = todoItem ? todoItem.getDueDate() : "22-11-11";
 
   priorityContainer.classList.add("form-priority-container", "flex-column", "center");
 
@@ -89,7 +123,8 @@ const createTodoFieldsUI = () => {
     id: "l-prio",
     value: "low",
     name: "priority",
-    required: true
+    required: true,
+    checked: todoItem && todoItem.getPriority() === "low" ? true : false
   });
   lowPriorityInput.classList.add("form-priority-radio", "hidden");
 
@@ -102,7 +137,8 @@ const createTodoFieldsUI = () => {
     id: "m-prio",
     value: "medium",
     name: "priority",
-    required: true
+    required: true,
+    checked: todoItem && todoItem.getPriority() === "medium" ? true : false
   });
   midPriorityInput.classList.add("form-priority-radio", "hidden");
 
@@ -115,7 +151,8 @@ const createTodoFieldsUI = () => {
     id: "h-prio",
     value: "high",
     name: "priority",
-    required: true
+    required: true,
+    checked: todoItem && todoItem.getPriority() === "high" ? true : false
   })
   highPriorityInput.classList.add("form-priority-radio", "hidden");
 
@@ -123,32 +160,19 @@ const createTodoFieldsUI = () => {
   highPriorityLabel.innerText = "High";
   highPriorityLabel.classList.add("form-priority-label", "h-prio-label");
 
-  // Bottom
-  bottomContainer.classList.add("form-bottom-container", "flex", "center");
-  
-  cancelBtn.classList.add("form-cancel-btn");
-  cancelBtn.innerText = "CANCEL";
-
-  addBtn.classList.add("form-add-btn");
-  addBtn.innerText = "ADD";
-
-  fieldsContainer.append(middleContainer, bottomContainer);
+  fieldsContainer.append(middleContainer, createBottomContainerUI(box));
   middleContainer.append(titleInput, notesInput, dueDateContainer, priorityContainer);
   dueDateContainer.append(dueDateLabel, dueDateInput);
   priorityContainer.append(priorityTitle, priorityOptionsContainer);
   priorityOptionsContainer.append(lowPriorityInput, lowPriorityLabel, midPriorityInput, midPriorityLabel, highPriorityInput, highPriorityLabel);
-  bottomContainer.append(cancelBtn, addBtn);
 
   return fieldsContainer;
 }
 
-const createProjectFieldsUI = () => {
+const createProjectFieldsUI = (box, project) => {
   const fieldsContainer = document.createElement("div");
   const middleContainer = document.createElement("div");
   const titleInput = document.createElement("textarea");
-  const bottomContainer = document.createElement("div");
-  const cancelBtn = document.createElement("button");
-  const addBtn = document.createElement("button");
 
   fieldsContainer.classList.add("form-fields-container", "flex-column");
 
@@ -157,22 +181,35 @@ const createProjectFieldsUI = () => {
 
   titleInput.classList.add("form-title-input");
   titleInput.placeholder = "Enter Title";
+  titleInput.innerText = project ? project.getTitle() : "";
   titleInput.setAttribute("maxlength", "50");
 
-  // Bottom
-  bottomContainer.classList.add("form-bottom-container", "flex", "center");
-  
-  cancelBtn.classList.add("form-cancel-btn");
-  cancelBtn.innerText = "CANCEL";
-
-  addBtn.classList.add("form-add-btn");
-  addBtn.innerText = "ADD";
-
-  fieldsContainer.append(middleContainer, bottomContainer);
+  fieldsContainer.append(middleContainer, createBottomContainerUI(box));
   middleContainer.append(titleInput);
-  bottomContainer.append(cancelBtn, addBtn);
 
   return fieldsContainer;
+}
+
+const createBottomContainerUI = (box) => {
+  const bottomContainer = document.createElement("div");
+  const cancelBtn = document.createElement("button");
+  const okBtn = document.createElement("button");
+
+  bottomContainer.classList.add("form-bottom-container", "flex", "center");
+
+  cancelBtn.classList.add("form-cancel-btn");
+  cancelBtn.innerText = "CANCEL";
+  cancelBtn.addEventListener("pointerdown", () => {
+    box.remove();
+    domController.getAppContainer().classList.remove("disabled");
+  })
+
+  okBtn.classList.add("form-ok-btn");
+  okBtn.innerText = "OK";
+
+  bottomContainer.append(cancelBtn, okBtn);
+
+  return bottomContainer;
 }
 
 export { createFormUI };

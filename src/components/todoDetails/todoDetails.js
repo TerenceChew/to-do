@@ -1,4 +1,5 @@
 import "./todoDetails.css";
+import * as domController from "../../domController/domController";
 
 const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) => {
   const container = document.createElement("div");
@@ -30,8 +31,9 @@ const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) =>
 
   closeBtn.classList.add("details-close-btn");
   closeBtn.innerText = "CLOSE";
-  closeBtn.addEventListener("click", () => {
+  closeBtn.addEventListener("pointerdown", () => {
     container.remove();
+    domController.getAppContainer().classList.remove("disabled");
   })
 
   topContainer.append(priority, dueDate);

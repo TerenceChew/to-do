@@ -1,6 +1,6 @@
 const setAttributes = (el, attrs) => {
   for (let key in attrs) {
-    el.setAttribute(key, attrs[key]);
+    el[key] = attrs[key];
   }
 }
 
@@ -15,4 +15,10 @@ const generateRandomID = (title) => {
   return `${title}-${getRandomNumInclusive(1, 1000000)}`;
 }
 
-export { setAttributes, getRandomNumInclusive, generateRandomID };
+const addEventListenerToElems = (elemsArr, event, fn) => {
+  elemsArr.forEach(e => {
+    e.addEventListener(event, fn);
+  })
+}
+
+export { setAttributes, getRandomNumInclusive, generateRandomID, addEventListenerToElems };

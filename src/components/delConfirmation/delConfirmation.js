@@ -1,6 +1,7 @@
 import "./delConfirmation.css";
+import * as domController from "../../domController/domController";
 
-const createDelConfirmationUI = () => {
+const createDelConfirmationUI = (obj, objUI) => {
   const container = document.createElement("div");
   const confirmationMsg = document.createElement("p");
   const btnsContainer = document.createElement("div");
@@ -16,9 +17,21 @@ const createDelConfirmationUI = () => {
 
   noBtn.classList.add("del-confirmation-no-btn");
   noBtn.innerText = "NO";
+  noBtn.addEventListener("pointerdown", () => {
+    removeContainer();
+  })
 
   yesBtn.classList.add("del-confirmation-yes-btn");
   yesBtn.innerText = "YES";
+  yesBtn.addEventListener("pointerdown", () => {
+    objUI.remove();
+    removeContainer();
+  })
+
+  function removeContainer() {
+    container.remove();
+    domController.getAppContainer().classList.remove("disabled");
+  }
 
   container.append(confirmationMsg, btnsContainer);
   btnsContainer.append(noBtn, yesBtn);

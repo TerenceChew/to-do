@@ -10,18 +10,31 @@ const createNavbarUI = () => {
 
   container.classList.add("navbar-container", "flex");
 
-  todosBtn.classList.add("navbar-btn", "navbar-todos-btn", "flex");
+  todosBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-todos-btn", "flex");
+  todosBtn.addEventListener("pointerdown", handleBtnUI);
 
-  projectsBtn.classList.add("navbar-btn", "navbar-projects-btn", "flex");
+  projectsBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-projects-btn", "flex");
+  projectsBtn.addEventListener("pointerdown", handleBtnUI);
 
-  dayBtn.classList.add("navbar-btn", "navbar-day-btn", "flex");
+  dayBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-day-btn", "flex");
+  dayBtn.addEventListener("pointerdown", handleBtnUI);
 
-  weekBtn.classList.add("navbar-btn", "navbar-week-btn", "flex");
+  weekBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-week-btn", "flex");
+  weekBtn.addEventListener("pointerdown", handleBtnUI);
 
-  plusBtn.classList.add("navbar-btn", "navbar-plus-btn", "flex");
+  plusBtn.classList.add("navbar-btn", "navbar-btn-grp-2", "navbar-plus-btn", "flex");
+  plusBtn.title = "Add New";
   plusBtn.innerText = "+";
 
-  const updateBtnsText = () => {
+  function handleBtnUI(e) {
+    document.querySelectorAll(".navbar-btn-grp-1").forEach(btn => {
+      btn.classList.remove("navbar-btn-selected");
+    });
+
+    e.target.classList.add("navbar-btn-selected");
+  }
+
+  function updateBtnsText() {
     if (window.innerWidth < 650) {
       todosBtn.innerText = "T";
       projectsBtn.innerText = "P";

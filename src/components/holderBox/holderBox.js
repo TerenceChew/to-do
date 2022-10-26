@@ -1,19 +1,17 @@
 import "./holderBox.css";
-import { createTodoItemUI, todoItemFactory } from "../todoItem/todoItem";
-import { createProjectUI } from "../project/project";
+import { todoItemFactory, createTodoItemUI } from "../todoItem/todoItem";
+import { projectFactory, createProjectUI } from "../project/project";
 
-let todoItemSample = todoItemFactory(false, 'No Title', 'No Notes', '11-11-22', 'High');
-
-let testArr = new Array(20).fill('');
+let arr = new Array(2).fill('');
 
 const createHolderBoxUI = () => {
   const container = document.createElement("div");
 
   container.classList.add("holder-box-container", "flex-column",);
 
-  container.append(...testArr.map(e => createTodoItemUI(todoItemSample)));
+  container.append(...arr.map(e => createTodoItemUI(todoItemFactory(false, 'No Title', 'No Notes', '2022-11-25', 'low'))));
 
-  // container.append(...testArr.map(e => createProjectUI({getTitle() { return "Test Title"}})))
+  // container.append(...arr.map(e => createProjectUI({getTitle() { return "Test Title"}})));
 
   return container;
 }

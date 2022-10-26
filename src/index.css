@@ -24,3 +24,8 @@
 .hidden {
   display: none;
 }
+
+.disabled {
+  filter: blur(1px) grayscale(50%) brightness(50%);
+  pointer-events: none;
+}

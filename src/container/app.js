@@ -11,6 +11,16 @@ import { createContentBoxUI } from "../components/contentBox/contentBox";
 
 let todoItemSample = todoItemFactory(false, 'No Title', 'No Notes', '11-11-22', 'High');
 
+let testObj = {
+  name: "JJ",
+  getName() {
+    return this.name;
+  },
+  editName(nName) {
+    this.name = nName;
+  }
+}
+
 export default function app() {
   const todoItemsArray = [];
 
@@ -21,7 +31,7 @@ export default function app() {
 
   // container.append(createTodoDetailsUI(todoItemSample));
 
-  // container.append(createFormUI());
+  // container.append(createFormUI("add", null, null));
 
   // container.append(createProjectUI({getTitle() {return "sampleTitle"}}));
 
@@ -29,7 +39,7 @@ export default function app() {
 
   // displayController.addFilterToElem(container, "blur(4px) brightness(.3)");
 
-  container.append(createContentBoxUI())
+  container.append(createContentBoxUI());
 
   return container;
 }
