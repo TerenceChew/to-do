@@ -41,12 +41,13 @@
 
 .details-title {
   text-align: center;
-  word-break: break-all;
+  overflow-wrap: anywhere;
+  font-size: 1.1rem;
 }
 
 .details-notes {
-  text-align: center;
-  word-break: break-all;
+  text-align: left;
+  overflow-wrap: anywhere;
 }
 
 .details-close-btn {

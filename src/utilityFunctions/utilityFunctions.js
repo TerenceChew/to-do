@@ -21,4 +21,13 @@ const addEventListenerToElems = (elemsArr, event, fn) => {
   })
 }
 
-export { setAttributes, getRandomNumInclusive, generateRandomID, addEventListenerToElems };
+const getTodayInYYYYMMDD = () => {
+  const date = new Date();
+  const year = String(date.getFullYear());
+  const month = String(date.getMonth() + 1);
+  const day = String(date.getDate());
+  
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+}
+
+export { setAttributes, getRandomNumInclusive, generateRandomID, addEventListenerToElems, getTodayInYYYYMMDD };

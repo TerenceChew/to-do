@@ -9,25 +9,52 @@ import * as domController from "../domController/domController";
 import { createNavbarUI } from "../components/navbar/navbar";
 import { createContentBoxUI } from "../components/contentBox/contentBox";
 
-let todoItemSample = todoItemFactory(false, 'No Title', 'No Notes', '11-11-22', 'High');
+const appFactory = () => {
+  let todosArr = [];
+  let projectsArr = [];
+  let dayArr = [];
+  let weekArr = [];
 
-let testObj = {
-  name: "JJ",
-  getName() {
-    return this.name;
-  },
-  editName(nName) {
-    this.name = nName;
+  const getTodosArr = () => todosArr;
+  const getProjectsArr = () => projectsArr;
+  const getDayArr = () => dayArr;
+  const getWeekArr = () => weekArr;
+
+  const pushToTodosArr = (obj) => {
+    todosArr.push(obj);
+  }
+
+  const removeFromTodosArr = (id) => {
+    todosArr = todosArr.filter(e => e.id !== id);
+  }
+
+  const pushToProjectsArr = (obj) => {
+    projectsArr.push(obj);
+  }
+
+  const removeFromProjectsArr = (id) => {
+    projectsArr = projectsArr.filter(e => e.id !== id);
+  }
+
+  return {
+    getTodosArr,
+    getProjectsArr,
+    getDayArr,
+    getWeekArr,
+    pushToTodosArr,
+    removeFromTodosArr,
+    pushToProjectsArr,
+    removeFromProjectsArr
   }
 }
 
-export default function app() {
-  const todoItemsArray = [];
-
+const createAppUI = () => {
   const container = document.createElement('div');
+  const app = appFactory();
+
   container.classList.add("app-container", "flex-column", "center")
 
-  // container.append(...[createTodoItemUI(todoItemSample, container), createTodoItemUI(todoItemSample, container)]);
+  // let todoItemSample = todoItemFactory(false, "Test", "Notes", "2022-11-12", "low")
 
   // container.append(createTodoDetailsUI(todoItemSample));
 
@@ -39,7 +66,21 @@ export default function app() {
 
   // displayController.addFilterToElem(container, "blur(4px) brightness(.3)");
 
-  container.append(createContentBoxUI());
+  
+  // container.append(createTodoItemUI(todoItemSample, app));
+
+  const logBtn = document.createElement("button");
+  logBtn.innerText = "LOG INFO";
+  logBtn.addEventListener("pointerup", () => {
+    console.log({
+      todosArr: app.getTodosArr(),
+      projectsArr: app.getProjectsArr()
+    })
+  })
+  
+  container.append(createContentBoxUI(app), logBtn);
 
   return container;
 }
+
+export { createAppUI };

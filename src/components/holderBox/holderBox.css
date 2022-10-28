@@ -16,6 +16,6 @@
 @media (min-width: 650px) {
   .holder-box-container {
     grid-area: 2 / 2 / -1 / -1;
-    padding: 15px 20px;
+    padding: 15px;
   }
 }

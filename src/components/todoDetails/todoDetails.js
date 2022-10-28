@@ -18,7 +18,7 @@ const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) =>
   bottomContainer.classList.add("details-bottom-container");
 
   priority.classList.add("details-priority", "flex", "center");
-  priority.innerText = getPriority();
+  priority.innerText = getPriority()[0].toUpperCase() + getPriority().slice(1);
 
   dueDate.classList.add("details-due-date", "flex", "center");
   dueDate.innerText = `Due: ${getDueDate()}`;
@@ -27,11 +27,11 @@ const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) =>
   title.innerText = getTitle();
 
   notes.classList.add("details-notes");
-  notes.innerText = getNotes();
+  notes.innerText = getNotes() || "No Notes";
 
   closeBtn.classList.add("details-close-btn");
   closeBtn.innerText = "CLOSE";
-  closeBtn.addEventListener("pointerdown", () => {
+  closeBtn.addEventListener("pointerup", () => {
     container.remove();
     domController.getAppContainer().classList.remove("disabled");
   })

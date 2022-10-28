@@ -96,7 +96,7 @@
 }
 
 .form-priority-options-container {
-  gap: 25px;
+  gap: 5px;
 }
 
 .form-priority-label {
@@ -121,6 +121,7 @@
 .h-prio-label {
   border: 1px solid var(--high-prio);
   background-color: var(--high-prio);
+  margin-right: 18px;
 }
 
 .form-priority-radio:checked + .form-priority-label {

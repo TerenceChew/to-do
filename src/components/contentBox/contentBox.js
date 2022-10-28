@@ -2,7 +2,7 @@ import "./contentBox.css";
 import { createNavbarUI } from "../navbar/navbar";
 import { createHolderBoxUI } from "../holderBox/holderBox";
 
-const createContentBoxUI = () => {
+const createContentBoxUI = (app) => {
   const container = document.createElement("div");
   const titleIcon = document.createElement("span");
   const title = document.createElement("h1");
@@ -16,7 +16,7 @@ const createContentBoxUI = () => {
 
   title.append(titleIcon, "To-Do");
 
-  container.append(title, createNavbarUI(), createHolderBoxUI());
+  container.append(title, createNavbarUI(app), createHolderBoxUI("todos", app.getTodosArr()));
 
   return container;
 }

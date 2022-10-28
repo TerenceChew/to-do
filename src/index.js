@@ -1,6 +1,6 @@
-import app from './container/app';
+import { createAppUI } from './container/app';
 import './index.css';
 
 const root = document.querySelector('#root');
 
-root.append(app());
+root.append(createAppUI());

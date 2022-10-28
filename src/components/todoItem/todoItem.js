@@ -6,14 +6,20 @@ import { createTodoDetailsUI } from "../todoDetails/todoDetails";
 import { createFormUI } from "../todoForm/todoForm";
 import { createDelConfirmationUI } from "../delConfirmation/delConfirmation";
 import * as domController from "../../domController/domController";
+import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
+import format from "date-fns/format";
 
 const todoItemFactory = (checked, title, notes, dueDate, priority) => {
+  // Create ID
+  const id = utilityFunctions.generateRandomID(title);
+
   // Getting
   const getChecked = () => checked;
   const getTitle = () => title;
   const getNotes = () => notes;
   const getDueDate = () => dueDate;
   const getPriority = () => priority;
+  const getId = () => id;
 
   // Editing
   const editChecked = () => {
@@ -33,11 +39,13 @@ const todoItemFactory = (checked, title, notes, dueDate, priority) => {
   };
 
   return {
+    id,
     getChecked,
     getTitle,
     getNotes,
     getDueDate,
     getPriority,
+    getId,
     editChecked,
     editTitle,
     editNotes,
@@ -46,26 +54,36 @@ const todoItemFactory = (checked, title, notes, dueDate, priority) => {
   };
 };
 
-const createTodoItemUI = (todoItem) => {
+const createTodoItemUI = (todoItem, app) => {
   const container = document.createElement("div");
   const leftContainer = document.createElement("div");
   const rightContainer = document.createElement("div");
   const checkbox = document.createElement("div");
   const title = document.createElement("p");
-  const detailsBtn = document.createElement("button");
+  // const detailsBtn = document.createElement("button");
+  const sup =  document.createElement("sup");
+  const dueDate = document.createElement("p");
   const editIcon = document.createElement("img");
   const moveIcon = document.createElement("img");
   const trashIcon = document.createElement("img");
 
+  const processedDueDate = formatDueDate(todoItem.getDueDate());
+
   container.classList.add("item-container", "flex");
   container.style.borderLeft = `4px solid var(--${todoItem.getPriority()}-prio)`;
+  container.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
+    domController.appendToRoot(createTodoDetailsUI(todoItem));
+    domController.getAppContainer().classList.add("disabled");
+  });
 
   leftContainer.classList.add("item-left-container", "flex", "center");
 
   rightContainer.classList.add("item-right-container", "flex", "center");
 
   checkbox.classList.add("item-checkbox", "flex", "center");
-  checkbox.addEventListener("pointerdown", () => {
+  checkbox.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
     checkbox.classList.toggle("checked");
     todoItem.editChecked();
     checkbox.innerText = todoItem.getChecked() ? "✓" : "";
@@ -74,18 +92,22 @@ const createTodoItemUI = (todoItem) => {
   title.classList.add("item-title");
   title.innerText = todoItem.getTitle();
 
-  detailsBtn.classList.add("item-details-btn");
-  detailsBtn.innerText = "DETAILS";
-  detailsBtn.addEventListener("pointerdown", () => {
-    domController.appendToRoot(createTodoDetailsUI(todoItem));
-    domController.getAppContainer().classList.add("disabled");
-  });
+  // detailsBtn.classList.add("item-details-btn");
+  // detailsBtn.innerText = "DETAILS";
+
+  sup.innerText = processedDueDate.slice(-6, -4);
+
+  dueDate.classList.add("item-due-date");
+  dueDate.append(processedDueDate.slice(0, -6), sup, processedDueDate.slice(-4));
+
+  // dueDate.innerText = utilityFunctions.formatDueDate(todoItem.getDueDate());
 
   editIcon.classList.add("item-edit-icon");
   editIcon.title = "Edit Todo";
   editIcon.src = penIcon;
-  editIcon.addEventListener("pointerdown", () => {
-    domController.appendToRoot(createFormUI("edit-todo", todoItem, null));
+  editIcon.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
+    domController.appendToRoot(createFormUI(null, null, "edit-todo", todoItem, null));
     domController.getAppContainer().classList.add("disabled");
   })
 
@@ -96,17 +118,24 @@ const createTodoItemUI = (todoItem) => {
   trashIcon.classList.add("item-trash-icon");
   trashIcon.title = "Delete Todo";
   trashIcon.src = deleteIcon;
-  trashIcon.addEventListener("pointerdown", () => {
-    domController.appendToRoot(createDelConfirmationUI(todoItem, container));
+  trashIcon.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
+    domController.appendToRoot(createDelConfirmationUI(app, "todo", todoItem, container));
     domController.getAppContainer().classList.add("disabled");
   })
 
   leftContainer.append(checkbox, title);
-  rightContainer.append(detailsBtn, editIcon, moveIcon, trashIcon);
+  rightContainer.append(dueDate, editIcon, moveIcon, trashIcon);
   container.append(leftContainer, rightContainer);
 
   return container;
 }
 
-export { todoItemFactory, createTodoItemUI };
+const formatDueDate = (dueDate) => {
+  const [ y, m, d ] = dueDate.split("-");
+  const processedM = Number(m) - 1;
 
+  return format(new Date(y, processedM, d), 'do MMM');
+}
+
+export { todoItemFactory, createTodoItemUI };
