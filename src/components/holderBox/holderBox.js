@@ -2,6 +2,7 @@ import "./holderBox.css";
 import { todoItemFactory, createTodoItemUI } from "../todoItem/todoItem";
 import { projectFactory, createProjectUI } from "../project/project";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
+import * as domController from "../../domController/domController";
 import compareAsc from "date-fns/compareAsc";
 import isThisWeek from "date-fns/isThisWeek";
 
@@ -9,6 +10,10 @@ const createHolderBoxUI = (app, type, arr) => {
   const container = document.createElement("div");
 
   container.classList.add("holder-box-container", "flex-column");
+
+  if (domController.getContentBox()) {
+    domController.getContentBox().lastElementChild.remove();
+  } 
 
   if (type === "todos") {
     const sortedArr = sortObjsByDateAsc(arr);

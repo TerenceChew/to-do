@@ -20,20 +20,28 @@ const appFactory = () => {
   const getDayArr = () => dayArr;
   const getWeekArr = () => weekArr;
 
-  const pushToTodosArr = (obj) => {
-    todosArr.push(obj);
+  const pushToTodosArr = (todoItem) => {
+    todosArr.push(todoItem);
   }
 
   const removeFromTodosArr = (id) => {
     todosArr = todosArr.filter(e => e.id !== id);
   }
 
-  const pushToProjectsArr = (obj) => {
-    projectsArr.push(obj);
+  const updateTodosArr = (todoItem) => {
+    todosArr = todosArr.map(e => e.getId() === todoItem.getId() ? todoItem : e);
+  }
+
+  const pushToProjectsArr = (project) => {
+    projectsArr.push(project);
   }
 
   const removeFromProjectsArr = (id) => {
     projectsArr = projectsArr.filter(e => e.id !== id);
+  }
+
+  const updateProjectsArr = (project) => {
+    projectsArr = projectsArr.map(e => e.getId() === project.getId() ? project : e);
   }
 
   return {
@@ -43,8 +51,10 @@ const appFactory = () => {
     getWeekArr,
     pushToTodosArr,
     removeFromTodosArr,
+    updateTodosArr,
     pushToProjectsArr,
-    removeFromProjectsArr
+    removeFromProjectsArr,
+    updateProjectsArr
   }
 }
 

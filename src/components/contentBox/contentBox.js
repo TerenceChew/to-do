@@ -16,7 +16,7 @@ const createContentBoxUI = (app) => {
 
   title.append(titleIcon, "To-Do");
 
-  container.append(title, createNavbarUI(app), createHolderBoxUI("todos", app.getTodosArr()));
+  container.append(title, createNavbarUI(app), createHolderBoxUI(app, "todos", app.getTodosArr()));
 
   return container;
 }

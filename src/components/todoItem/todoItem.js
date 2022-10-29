@@ -70,6 +70,7 @@ const createTodoItemUI = (todoItem, app) => {
   const processedDueDate = formatDueDate(todoItem.getDueDate());
 
   container.classList.add("item-container", "flex");
+  container.dataset.id = todoItem.getId();
   container.style.borderLeft = `4px solid var(--${todoItem.getPriority()}-prio)`;
   container.addEventListener("pointerup", (e) => {
     e.stopPropagation();
@@ -107,13 +108,20 @@ const createTodoItemUI = (todoItem, app) => {
   editIcon.src = penIcon;
   editIcon.addEventListener("pointerup", (e) => {
     e.stopPropagation();
-    domController.appendToRoot(createFormUI(null, null, "edit-todo", todoItem, null));
+    
+    const navbarMode = document.querySelector(`.navbar-container[data-mode]`).dataset.mode;
+
+    domController.appendToRoot(createFormUI(app, navbarMode, "edit-todo", todoItem, null));
     domController.getAppContainer().classList.add("disabled");
   })
 
   moveIcon.classList.add("item-move-icon");
   moveIcon.title = "Move to Project";
   moveIcon.src = arrowIcon;
+  moveIcon.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
+    
+  })
 
   trashIcon.classList.add("item-trash-icon");
   trashIcon.title = "Delete Todo";

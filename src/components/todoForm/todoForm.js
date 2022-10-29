@@ -3,6 +3,7 @@ import { setAttributes } from "../../utilityFunctions/utilityFunctions";
 import * as domController from "../../domController/domController";
 import { todoItemFactory, createTodoItemUI } from "../todoItem/todoItem";
 import { projectFactory, createProjectUI } from "../project/project";
+import { createHolderBoxUI } from "../holderBox/holderBox";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 import isThisWeek from "date-fns/isThisWeek";
 
@@ -90,10 +91,12 @@ const createTodoFieldsUI = (app, navbarMode, mode, box, todoItem) => {
   middleContainer.classList.add("form-middle-container", "flex-column");
   middleContainer.id = "form";
   middleContainer.addEventListener("submit", (e) => {
+    e.preventDefault();
+
     if (mode === "add") {
-      addTodo(e, app, navbarMode);
+      addTodo(app, navbarMode);
     } else if (mode === "edit-todo") {
-      // editTodo();
+      editTodo(app, navbarMode, todoItem);
     }
 
     domController.getAppContainer().classList.remove("disabled");
@@ -190,10 +193,12 @@ const createProjectFieldsUI = (app, navbarMode, mode, box, project) => {
   middleContainer.classList.add("form-middle-container", "flex-column");
   middleContainer.id = "form";
   middleContainer.addEventListener("submit", (e) => {
+    e.preventDefault();
+
     if (mode === "add") {
-      addProject(e, app, navbarMode);
+      addProject(app, navbarMode);
     } else if (mode === "edit-project") {
-      // editProject();
+      editProject(app, navbarMode, project);
     }
 
     domController.getAppContainer().classList.remove("disabled");
@@ -242,12 +247,12 @@ const getInputValues = () => {
   const priorityInput = document.querySelector("input[name='priority']:checked");
 
 
-  console.log({
-    titleVal: titleInput.value,
-    notesVal: notesInput ? notesInput.value : null,
-    dueDateVal: dueDateInput ? dueDateInput.value : null,
-    priorityVal: priorityInput ? priorityInput.value : null
-  })
+  // console.log({
+  //   titleVal: titleInput.value,
+  //   notesVal: notesInput ? notesInput.value : null,
+  //   dueDateVal: dueDateInput ? dueDateInput.value : null,
+  //   priorityVal: priorityInput ? priorityInput.value : null
+  // })
   
 
   return {
@@ -258,60 +263,88 @@ const getInputValues = () => {
   };
 }
 
-const addTodo = (e, app, navbarMode) => {
-  e.preventDefault();
-
+const addTodo = (app, navbarMode) => {
   const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
   const todoItem = todoItemFactory(false, titleVal, notesVal, dueDateVal, priorityVal);
-  const todoItemUI = createTodoItemUI(todoItem, app);
 
-  // Due date check
+  const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
+
+  app.pushToTodosArr(todoItem);
+
+  const todosArr = app.getTodosArr();
+
+  renderTodos(app, navbarMode, todosArr, isDueToday, isDueThisWeek);
+}
+
+const editTodo = (app, navbarMode, todoItem) => {
+  const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
+
+  todoItem.editTitle(titleVal);
+  todoItem.editNotes(notesVal);
+  todoItem.editDueDate(dueDateVal);
+  todoItem.editPriority(priorityVal);
+
+  app.updateTodosArr(todoItem);
+
+  const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
+
+  // Get latest todosArr & rerender todos
+  const todosArr = app.getTodosArr();
+  
+  renderTodos(app, navbarMode, todosArr, isDueToday, isDueThisWeek);
+}
+
+const addProject = (app, navbarMode) => {
+  const { titleVal } = getInputValues();
+  const project = projectFactory(titleVal, []);
+
+  app.pushToProjectsArr(project);
+
+  const projectsArr = app.getProjectsArr();
+
+  renderProjects(app, navbarMode, projectsArr);
+}
+
+const editProject = (app, navbarMode, project) => {
+  const { titleVal } = getInputValues();
+
+  project.editTitle(titleVal);
+
+  // Update project in app arr
+  app.updateProjectsArr(project);
+
+  // Get latest projectsArr & rerender projects
+  const projectsArr = app.getProjectsArr();
+
+  renderProjects(app, navbarMode, projectsArr);
+}
+
+const checkDueDate = (todoItem) => {
   const today = utilityFunctions.getTodayInYYYYMMDD();
   const processedDueDate = `${todoItem.getDueDate()}T00:00:00`;
   const isDueToday = todoItem.getDueDate() === today;
   const isDueThisWeek = isThisWeek(new Date(processedDueDate), { weekStartsOn: 1 });
 
-  app.pushToTodosArr(todoItem);
+  return {
+    isDueToday,
+    isDueThisWeek
+  };
+}
 
+const renderTodos = (app, navbarMode, todosArr, isDueToday, isDueThisWeek) => {
   if (navbarMode === "todos") {
-    domController.appendToHolderBox(todoItemUI); 
+    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr));
   } else if (navbarMode === "day" && isDueToday) {
-    domController.appendToHolderBox(todoItemUI); 
+    domController.getContentBox().append(createHolderBoxUI(app, "day", todosArr));
   } else if (navbarMode === "week" && isDueThisWeek) {
-    domController.appendToHolderBox(todoItemUI);
-  }
+    domController.getContentBox().append(createHolderBoxUI(app, "week", todosArr));
+  } 
 }
 
-const editTodo = (e, app) => {
-  e.preventDefault();
-
-  // Get input values
-  const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
-  // Edit todoItem in app arr
-  // Update todoItemUI
-}
-
-const addProject = (e, app, navbarMode) => {
-  e.preventDefault();
-
-  const { titleVal } = getInputValues();
-  const project = projectFactory(titleVal, []);
-  const projectUI = createProjectUI(project, app);
-
-  app.pushToProjectsArr(project);
-
+const renderProjects = (app, navbarMode, projectsArr) => {
   if (navbarMode === "projects") {
-    domController.appendToHolderBox(projectUI); 
+    domController.getContentBox().append(createHolderBoxUI(app, navbarMode, projectsArr));
   }
-}
-
-const editProject = (e, app) => {
-  e.preventDefault();
-
-  // Get input values
-  const { titleVal } = getInputValues();
-  // Edit project in app arr
-  // Update projectUI
 }
  
 export { createFormUI };

@@ -26,7 +26,7 @@
   border: 1px solid var(--accent-1);
   border-radius: 2px;
   color: var(--accent-1);
-  padding: 4px 5px 3px 5px;
+  padding: 4px 5px 2px 5px;
   font-size: .65rem;
   transition: .25s;
 }

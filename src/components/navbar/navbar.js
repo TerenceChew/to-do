@@ -13,6 +13,7 @@ const createNavbarUI = (app) => {
   const plusBtn = document.createElement("div");
 
   container.classList.add("navbar-container", "flex");
+  container.dataset.mode = navbarMode;
 
   todosBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-todos-btn", "flex", "navbar-btn-selected");
 
@@ -21,7 +22,6 @@ const createNavbarUI = (app) => {
     updateNavbarMode("todos");
 
 
-    domController.getContentBox().lastElementChild.remove();
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
     domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr));
@@ -33,7 +33,6 @@ const createNavbarUI = (app) => {
     updateNavbarMode("projects");
 
     
-    domController.getContentBox().lastElementChild.remove();
     const projectsArr = app.getProjectsArr();
     console.log("projectsArr:", projectsArr);
     domController.getContentBox().append(createHolderBoxUI(app, "projects", projectsArr));
@@ -45,7 +44,6 @@ const createNavbarUI = (app) => {
     updateNavbarMode("day");
     
 
-    domController.getContentBox().lastElementChild.remove();
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
     domController.getContentBox().append(createHolderBoxUI(app, "day", todosArr));
@@ -56,7 +54,6 @@ const createNavbarUI = (app) => {
     handleBtnUI(e);
     updateNavbarMode("week");
 
-    domController.getContentBox().lastElementChild.remove();
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
     domController.getContentBox().append(createHolderBoxUI(app, navbarMode, todosArr));
@@ -72,6 +69,7 @@ const createNavbarUI = (app) => {
 
   function updateNavbarMode(mode) {
     navbarMode = mode;
+    container.dataset.mode = navbarMode;
   }
 
   function handleBtnUI(e) {

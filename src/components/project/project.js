@@ -6,22 +6,31 @@ import { createDelConfirmationUI } from "../delConfirmation/delConfirmation";
 import * as domController from "../../domController/domController";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 
-const projectFactory = (title, todoItemsArr) => {
+const projectFactory = (title) => {
   // Create ID
   const id = utilityFunctions.generateRandomID(title);
+  
+  const todosArr = [];
 
   // Getting
   const getTitle = () => title;
-  const getTodoItemsArr = () => todoItemsArr;
+  const getTodoItemsArr = () => todosArr;
   const getId = () => id;
 
   // Editing
   const editTitle = (newTitle) => {
     title = newTitle;
   }
-  const editTodoItemsArr = (newTodoItemsArr) => {
-    todoItemsArr = newTodoItemsArr;
+
+  const pushToTodosArr = (todoItem) => {
+    todosArr.push(todoItem);
   }
+
+  const removeFromTodosArr = (id) => {
+    todosArr = todosArr.filter(e => e.id !== id);
+  }
+
+
 
   return {
     id,
@@ -29,7 +38,8 @@ const projectFactory = (title, todoItemsArr) => {
     getTodoItemsArr,
     getId,
     editTitle,
-    editTodoItemsArr
+    pushToTodosArr,
+    removeFromTodosArr
   };
 }
 
@@ -50,8 +60,12 @@ const createProjectUI = (project, app) => {
 
   editIcon.classList.add("project-edit-icon");
   editIcon.src = penIcon;
-  editIcon.addEventListener("pointerup", () => {
-    domController.appendToRoot(createFormUI("edit-project", null, project));
+  editIcon.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
+
+    const navbarMode = document.querySelector(`.navbar-container[data-mode]`).dataset.mode;
+
+    domController.appendToRoot(createFormUI(app, navbarMode, "edit-project", null, project));
     domController.getAppContainer().classList.add("disabled");
   })
 
