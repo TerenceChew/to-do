@@ -12,13 +12,9 @@ import { createContentBoxUI } from "../components/contentBox/contentBox";
 const appFactory = () => {
   let todosArr = [];
   let projectsArr = [];
-  let dayArr = [];
-  let weekArr = [];
 
   const getTodosArr = () => todosArr;
   const getProjectsArr = () => projectsArr;
-  const getDayArr = () => dayArr;
-  const getWeekArr = () => weekArr;
 
   const pushToTodosArr = (todoItem) => {
     todosArr.push(todoItem);
@@ -47,8 +43,6 @@ const appFactory = () => {
   return {
     getTodosArr,
     getProjectsArr,
-    getDayArr,
-    getWeekArr,
     pushToTodosArr,
     removeFromTodosArr,
     updateTodosArr,

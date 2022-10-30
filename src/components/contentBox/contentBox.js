@@ -22,5 +22,3 @@ const createContentBoxUI = (app) => {
 }
 
 export { createContentBoxUI };
-
-// Add move to project functionality

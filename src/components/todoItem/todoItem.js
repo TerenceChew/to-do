@@ -10,7 +10,6 @@ import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 import format from "date-fns/format";
 
 const todoItemFactory = (checked, title, notes, dueDate, priority) => {
-  // Create ID
   const id = utilityFunctions.generateRandomID(title);
 
   // Getting
@@ -60,7 +59,6 @@ const createTodoItemUI = (todoItem, app) => {
   const rightContainer = document.createElement("div");
   const checkbox = document.createElement("div");
   const title = document.createElement("p");
-  // const detailsBtn = document.createElement("button");
   const sup =  document.createElement("sup");
   const dueDate = document.createElement("p");
   const editIcon = document.createElement("img");
@@ -86,6 +84,7 @@ const createTodoItemUI = (todoItem, app) => {
   checkbox.addEventListener("pointerup", (e) => {
     e.stopPropagation();
     checkbox.classList.toggle("checked");
+    container.classList.toggle("no-pointer-events");
     todoItem.editChecked();
     checkbox.innerText = todoItem.getChecked() ? "✓" : "";
   });
@@ -93,15 +92,10 @@ const createTodoItemUI = (todoItem, app) => {
   title.classList.add("item-title");
   title.innerText = todoItem.getTitle();
 
-  // detailsBtn.classList.add("item-details-btn");
-  // detailsBtn.innerText = "DETAILS";
-
   sup.innerText = processedDueDate.slice(-6, -4);
 
   dueDate.classList.add("item-due-date");
   dueDate.append(processedDueDate.slice(0, -6), sup, processedDueDate.slice(-4));
-
-  // dueDate.innerText = utilityFunctions.formatDueDate(todoItem.getDueDate());
 
   editIcon.classList.add("item-edit-icon");
   editIcon.title = "Edit Todo";
@@ -139,6 +133,7 @@ const createTodoItemUI = (todoItem, app) => {
   return container;
 }
 
+// Format "2022-12-30" to "30th Dec"
 const formatDueDate = (dueDate) => {
   const [ y, m, d ] = dueDate.split("-");
   const processedM = Number(m) - 1;

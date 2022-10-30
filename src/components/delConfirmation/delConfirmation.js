@@ -40,8 +40,8 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
     domController.getAppContainer().classList.remove("disabled");
   }
 
-  container.append(confirmationMsg, btnsContainer);
   btnsContainer.append(noBtn, yesBtn);
+  container.append(confirmationMsg, btnsContainer);
 
   return container;
 }

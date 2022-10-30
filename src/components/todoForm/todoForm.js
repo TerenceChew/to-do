@@ -38,6 +38,12 @@ const createFormUI = (app, navbarMode, mode, todoItem, project) => {
     topContainer.append(projectBtn);
     container.append(topContainer, createProjectFieldsUI(app, navbarMode, mode, box, project));
     box.append(container);
+  } else if (mode === "add-to-project") {
+    todoBtn.classList.add("border-btm-w", "no-pointer-events");
+
+    topContainer.append(todoBtn);
+    container.append(topContainer, createTodoFieldsUI(app, navbarMode, mode, box, null, project));
+    box.append(container);
   } else {
     todoBtn.classList.add("border-btm-b");
 
@@ -67,7 +73,7 @@ const createFormUI = (app, navbarMode, mode, todoItem, project) => {
   return box;
 }
 
-const createTodoFieldsUI = (app, navbarMode, mode, box, todoItem) => {
+const createTodoFieldsUI = (app, navbarMode, mode, box, todoItem, project = null) => {
   const fieldsContainer = document.createElement("div");
   const middleContainer = document.createElement("form");
   const titleInput = document.createElement("textarea");
@@ -97,6 +103,8 @@ const createTodoFieldsUI = (app, navbarMode, mode, box, todoItem) => {
       addTodo(app, navbarMode);
     } else if (mode === "edit-todo") {
       editTodo(app, navbarMode, todoItem);
+    } else if (mode === "add-to-project") {
+      addToProject(app, project);
     }
 
     domController.getAppContainer().classList.remove("disabled");
@@ -264,8 +272,7 @@ const getInputValues = () => {
 }
 
 const addTodo = (app, navbarMode) => {
-  const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
-  const todoItem = todoItemFactory(false, titleVal, notesVal, dueDateVal, priorityVal);
+  const todoItem = createTodoItem();
 
   const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
 
@@ -346,5 +353,26 @@ const renderProjects = (app, navbarMode, projectsArr) => {
     domController.getContentBox().append(createHolderBoxUI(app, navbarMode, projectsArr));
   }
 }
- 
+
+const addToProject = (app, project) => {
+  const todoItem = createTodoItem();
+
+  // Update project obj
+  project.pushToTodosArr(todoItem);
+
+  // Update app obj
+  app.pushToTodosArr(todoItem);
+  app.updateProjectsArr(project);
+
+  // console.log("addToProject");
+  // console.log(project.getTodosArr());
+  // console.log(app.getTodosArr());
+  // console.log(app.getProjectsArr());
+}
+
+const createTodoItem = () => {
+  const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
+  return todoItemFactory(false, titleVal, notesVal, dueDateVal, priorityVal);
+}
+
 export { createFormUI };

@@ -18,44 +18,57 @@
 }
 
 .project-title {
+  width: 175px;
   margin-right: auto;
   font-size: 1rem;
+  overflow-wrap: anywhere;
 }
 
-.project-view-btn {
-  border: 1px solid var(--accent-1);
-  border-radius: 2px;
-  color: var(--accent-1);
-  padding: 4px 5px 2px 5px;
-  font-size: .65rem;
-  transition: .25s;
+.project-add-icon {
+  margin-left: 2px;
 }
 
-.project-view-btn:hover {
-  background-color: var(--accent-1);
-  color: white;
-  font-weight: bold;
-}
-
-.project-edit-icon {
-  margin-left: 4px;
-}
-
+.project-add-icon,
 .project-edit-icon,
 .project-trash-icon {
   width: var(--icon-width-1);
   height: var(--icon-height-1);
 }
 
+.project-add-icon:hover,
 .project-edit-icon:hover,
 .project-trash-icon:hover {
   transform: translateY(-3px);
 }
 
-
-.project-view-btn,
+.project-container,
+.project-add-icon,
 .project-edit-icon,
 .project-trash-icon {
   cursor: pointer;
+}
+
+@media (min-width: 400px) {
+  .project-title {
+    width: 215px;
+  }
+}
+
+@media (min-width: 500px) {
+  .project-title {
+    width: 265px;
+  }
+}
+
+@media (min-width: 750px) {
+  .project-title {
+    width: 325px;
+  }
+}
+
+@media (min-width: 850px) {
+  .project-title {
+    width: 370px;
+  }
 }
 

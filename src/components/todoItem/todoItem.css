@@ -40,8 +40,8 @@
 }
 
 .item-checkbox {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   border: 2px solid var(--accent-1);
   border-radius: 5px;
   background-color: white;
@@ -54,26 +54,21 @@
   color: white;
 }
 
+.no-pointer-events {
+  pointer-events: none;
+  cursor: auto;
+}
+
+.item-container.no-pointer-events .item-checkbox {
+  pointer-events: all;
+  cursor: pointer;
+}
+
 .item-title {
   width: 110px;
   font-size: 1rem;
-  word-break: break-all;
+  overflow-wrap: anywhere;
 }
-
-/* .item-details-btn {
-  border: 1px solid var(--accent-1);
-  border-radius: 2px;
-  color: var(--accent-1);
-  padding: 4px 5px 3px 5px;
-  font-size: .65rem;
-  transition: .25s;
-}
-
-.item-details-btn:hover {
-  background-color: var(--accent-1);
-  color: white;
-  font-weight: bold;
-} */
 
 .item-due-date {
   font-size: .9rem;
@@ -99,7 +94,6 @@
 
 .item-container,
 .item-checkbox,
-/* .item-details-btn, */
 .item-edit-icon,
 .item-move-icon,
 .item-trash-icon {

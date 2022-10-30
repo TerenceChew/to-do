@@ -1,20 +1,20 @@
 import "./project.css";
+import plusIcon from "./plus.svg";
 import penIcon from "./pencil-outline.svg";
 import deleteIcon from "./delete.svg";
 import { createFormUI } from "../todoForm/todoForm";
 import { createDelConfirmationUI } from "../delConfirmation/delConfirmation";
+import { createHolderBoxUI } from "../holderBox/holderBox";
 import * as domController from "../../domController/domController";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 
 const projectFactory = (title) => {
-  // Create ID
   const id = utilityFunctions.generateRandomID(title);
-  
   const todosArr = [];
 
   // Getting
   const getTitle = () => title;
-  const getTodoItemsArr = () => todosArr;
+  const getTodosArr = () => todosArr;
   const getId = () => id;
 
   // Editing
@@ -35,7 +35,7 @@ const projectFactory = (title) => {
   return {
     id,
     getTitle,
-    getTodoItemsArr,
+    getTodosArr,
     getId,
     editTitle,
     pushToTodosArr,
@@ -46,17 +46,32 @@ const projectFactory = (title) => {
 const createProjectUI = (project, app) => {
   const container = document.createElement("div");
   const title = document.createElement("p");
-  const viewBtn = document.createElement("button");
+  const addIcon = document.createElement("img");
   const editIcon = document.createElement("img");
   const trashIcon = document.createElement("img");
 
   container.classList.add("project-container", "flex", "center");
+  container.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
+
+    const todosArr = project.getTodosArr();
+    console.log("todosArr:", todosArr);
+    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr));
+  })
 
   title.classList.add("project-title");
   title.innerText = project.getTitle();
 
-  viewBtn.classList.add("project-view-btn");
-  viewBtn.innerText = "VIEW";
+  addIcon.classList.add("project-add-icon");
+  addIcon.src = plusIcon;
+  addIcon.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
+
+    const navbarMode = document.querySelector(`.navbar-container[data-mode]`).dataset.mode;
+
+    domController.appendToRoot(createFormUI(app, null, "add-to-project", null, project));
+    domController.getAppContainer().classList.add("disabled");
+  })
 
   editIcon.classList.add("project-edit-icon");
   editIcon.src = penIcon;
@@ -71,12 +86,14 @@ const createProjectUI = (project, app) => {
 
   trashIcon.classList.add("project-trash-icon");
   trashIcon.src = deleteIcon;
-  trashIcon.addEventListener("pointerup", () => {
+  trashIcon.addEventListener("pointerup", (e) => {
+    e.stopPropagation();
+
     domController.appendToRoot(createDelConfirmationUI(app, "project", project, container));
     domController.getAppContainer().classList.add("disabled");
   })
 
-  container.append(title, viewBtn, editIcon, trashIcon);
+  container.append(title, addIcon, editIcon, trashIcon);
 
   return container;
 }
