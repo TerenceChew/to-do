@@ -51,6 +51,7 @@ const createProjectUI = (project, app) => {
   const trashIcon = document.createElement("img");
 
   container.classList.add("project-container", "flex", "center");
+  container.dataset.id = project.getId();
   container.addEventListener("pointerup", (e) => {
     e.stopPropagation();
 

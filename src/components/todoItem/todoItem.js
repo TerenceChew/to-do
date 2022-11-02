@@ -5,6 +5,7 @@ import deleteIcon from "./delete.svg";
 import { createTodoDetailsUI } from "../todoDetails/todoDetails";
 import { createFormUI } from "../todoForm/todoForm";
 import { createDelConfirmationUI } from "../delConfirmation/delConfirmation";
+import { createProjectSelectorUI } from "../projectSelector/projectSelector";
 import * as domController from "../../domController/domController";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 import format from "date-fns/format";
@@ -115,6 +116,8 @@ const createTodoItemUI = (todoItem, app) => {
   moveIcon.addEventListener("pointerup", (e) => {
     e.stopPropagation();
     
+    domController.appendToRoot(createProjectSelectorUI(app, todoItem));
+    domController.getAppContainer().classList.add("disabled");
   })
 
   trashIcon.classList.add("item-trash-icon");
