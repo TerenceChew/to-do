@@ -10,7 +10,7 @@ import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 
 const projectFactory = (title) => {
   const id = utilityFunctions.generateRandomID(title);
-  const todosArr = [];
+  let todosArr = [];
 
   // Getting
   const getTitle = () => title;

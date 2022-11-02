@@ -27,7 +27,10 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
     if (type === "todo") {
       app.removeFromTodosArr(obj.getId());
       console.log(app.getTodosArr());
-      // Also remove from project object's todosArr
+
+      app.getProjectsArr().forEach(project => {
+        project.removeFromTodosArr(obj.getId());
+      });
     } else if (type === "project") {
       app.removeFromProjectsArr(obj.getId());
       console.log(app.getProjectsArr());
