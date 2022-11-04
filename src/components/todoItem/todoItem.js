@@ -38,6 +38,7 @@ const todoItemFactory = (checked, title, notes, dueDate, priority) => {
     priority = newPriority;
   };
 
+
   return {
     id,
     getChecked,
@@ -54,7 +55,7 @@ const todoItemFactory = (checked, title, notes, dueDate, priority) => {
   };
 };
 
-const createTodoItemUI = (todoItem, app) => {
+const createTodoItemUI = (todoItem, app, projectId) => {
   const container = document.createElement("div");
   const leftContainer = document.createElement("div");
   const rightContainer = document.createElement("div");
@@ -70,9 +71,11 @@ const createTodoItemUI = (todoItem, app) => {
 
   container.classList.add("item-container", "flex");
   container.dataset.id = todoItem.getId();
+  container.dataset.projectId = projectId;
   container.style.borderLeft = `4px solid var(--${todoItem.getPriority()}-prio)`;
   container.addEventListener("pointerup", (e) => {
     e.stopPropagation();
+    
     domController.appendToRoot(createTodoDetailsUI(todoItem));
     domController.getAppContainer().classList.add("disabled");
   });
@@ -105,8 +108,9 @@ const createTodoItemUI = (todoItem, app) => {
     e.stopPropagation();
     
     const navbarMode = document.querySelector(`.navbar-container[data-mode]`).dataset.mode;
+    const projectId = container.dataset.projectId === "null" ? null : container.dataset.projectId;
 
-    domController.appendToRoot(createFormUI(app, navbarMode, "edit-todo", todoItem, null));
+    domController.appendToRoot(createFormUI(app, navbarMode, "edit-todo", todoItem, null, projectId));
     domController.getAppContainer().classList.add("disabled");
   })
 

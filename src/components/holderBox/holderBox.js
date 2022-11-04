@@ -6,7 +6,7 @@ import * as domController from "../../domController/domController";
 import compareAsc from "date-fns/compareAsc";
 import isThisWeek from "date-fns/isThisWeek";
 
-const createHolderBoxUI = (app, type, arr) => {
+const createHolderBoxUI = (app, type, arr, projectId) => {
   const container = document.createElement("div");
 
   container.classList.add("holder-box-container", "flex-column");
@@ -28,18 +28,18 @@ const createHolderBoxUI = (app, type, arr) => {
   if (type === "todos") {
     const sortedArr = sortObjsByDateAsc(arr);
 
-    container.append(...sortedArr.map(e => createTodoItemUI(e, app)));
+    container.append(...sortedArr.map(e => createTodoItemUI(e, app, projectId)));
   } else if (type === "projects") {
     container.append(...arr.map(e => createProjectUI(e, app)));
   } else if (type === "day") {
     const filteredArr = getObjsDueToday(arr);
 
-    container.append(...filteredArr.map(e => createTodoItemUI(e, app)));
+    container.append(...filteredArr.map(e => createTodoItemUI(e, app, projectId)));
   } else if (type === "week") {
     const filteredArr = getObjsDueThisWeek(arr);
     const sortedArr = sortObjsByDateAsc(filteredArr);
 
-    container.append(...sortedArr.map(e => createTodoItemUI(e, app)));
+    container.append(...sortedArr.map(e => createTodoItemUI(e, app, projectId)));
   }
 
   return container;

@@ -21,10 +21,9 @@ const createNavbarUI = (app) => {
     handleBtnUI(e);
     updateNavbarMode("todos");
 
-
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
-    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr));
+    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr, null));
   });
 
   projectsBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-projects-btn", "flex");
@@ -46,7 +45,7 @@ const createNavbarUI = (app) => {
 
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
-    domController.getContentBox().append(createHolderBoxUI(app, "day", todosArr));
+    domController.getContentBox().append(createHolderBoxUI(app, navbarMode, todosArr, null));
   });
 
   weekBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-week-btn", "flex");
@@ -56,14 +55,14 @@ const createNavbarUI = (app) => {
 
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
-    domController.getContentBox().append(createHolderBoxUI(app, navbarMode, todosArr));
+    domController.getContentBox().append(createHolderBoxUI(app, navbarMode, todosArr, null));
   });
 
   plusBtn.classList.add("navbar-btn", "navbar-btn-grp-2", "navbar-plus-btn", "flex");
   plusBtn.title = "Add New";
   plusBtn.innerText = "+";
   plusBtn.addEventListener("pointerup", () => {
-    domController.appendToRoot(createFormUI(app, navbarMode, "add", null, null));
+    domController.appendToRoot(createFormUI(app, navbarMode, "add", null, null, null));
     domController.getAppContainer().classList.add("disabled");
   })
 
@@ -92,7 +91,7 @@ const createNavbarUI = (app) => {
       dayBtn.innerText = "Day";
       weekBtn.innerText = "Week";
     }
-    console.log(window.innerWidth);
+    // console.log(window.innerWidth);
   }
 
   updateBtnsText();

@@ -30,8 +30,6 @@ const projectFactory = (title) => {
     todosArr = todosArr.filter(e => e.id !== id);
   }
 
-
-
   return {
     id,
     getTitle,
@@ -56,8 +54,11 @@ const createProjectUI = (project, app) => {
     e.stopPropagation();
 
     const todosArr = project.getTodosArr();
+    const projectId = container.dataset.id;
+
     console.log("todosArr:", todosArr);
-    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr));
+
+    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr, projectId));
   })
 
   title.classList.add("project-title");
@@ -67,8 +68,6 @@ const createProjectUI = (project, app) => {
   addIcon.src = plusIcon;
   addIcon.addEventListener("pointerup", (e) => {
     e.stopPropagation();
-
-    const navbarMode = document.querySelector(`.navbar-container[data-mode]`).dataset.mode;
 
     domController.appendToRoot(createFormUI(app, null, "add-to-project", null, project));
     domController.getAppContainer().classList.add("disabled");

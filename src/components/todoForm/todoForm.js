@@ -7,7 +7,7 @@ import { createHolderBoxUI } from "../holderBox/holderBox";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 import isThisWeek from "date-fns/isThisWeek";
 
-const createFormUI = (app, navbarMode, mode, todoItem, project) => {
+const createFormUI = (app, navbarMode, mode, todoItem, project, projectId) => {
   const box = document.createElement("div");
   const container = document.createElement("div");
   const topContainer = document.createElement("div");
@@ -30,7 +30,8 @@ const createFormUI = (app, navbarMode, mode, todoItem, project) => {
     todoBtn.classList.add("border-btm-w", "no-pointer-events");
 
     topContainer.append(todoBtn);
-    container.append(topContainer, createTodoFieldsUI(app, navbarMode, mode, box, todoItem));
+
+    container.append(topContainer, createTodoFieldsUI(app, navbarMode, mode, box, todoItem, null, projectId));
     box.append(container);
   } else if (mode === "edit-project") {
     projectBtn.classList.add("border-btm-w", "no-pointer-events");
@@ -42,13 +43,13 @@ const createFormUI = (app, navbarMode, mode, todoItem, project) => {
     todoBtn.classList.add("border-btm-w", "no-pointer-events");
 
     topContainer.append(todoBtn);
-    container.append(topContainer, createTodoFieldsUI(app, navbarMode, mode, box, null, project));
+    container.append(topContainer, createTodoFieldsUI(app, navbarMode, mode, box, null, project, null));
     box.append(container);
   } else {
     todoBtn.classList.add("border-btm-b");
 
     topContainer.append(todoBtn, projectBtn);
-    container.append(topContainer, createTodoFieldsUI(app, navbarMode, mode, box, null));
+    container.append(topContainer, createTodoFieldsUI(app, navbarMode, mode, box, null, null, null));
     box.append(container);
 
     todoBtn.addEventListener("pointerup", () => {
@@ -56,7 +57,7 @@ const createFormUI = (app, navbarMode, mode, todoItem, project) => {
       projectBtn.classList.remove("border-btm-b");
 
       container.lastElementChild.remove();
-      container.append(createTodoFieldsUI(app, navbarMode, mode, box, null));
+      container.append(createTodoFieldsUI(app, navbarMode, mode, box, null, null, null));
       box.append(container);
     })
 
@@ -73,7 +74,7 @@ const createFormUI = (app, navbarMode, mode, todoItem, project) => {
   return box;
 }
 
-const createTodoFieldsUI = (app, navbarMode, mode, box, todoItem, project = null) => {
+const createTodoFieldsUI = (app, navbarMode, mode, box, todoItem, project, projectId) => {
   const fieldsContainer = document.createElement("div");
   const middleContainer = document.createElement("form");
   const titleInput = document.createElement("textarea");
@@ -102,7 +103,7 @@ const createTodoFieldsUI = (app, navbarMode, mode, box, todoItem, project = null
     if (mode === "add") {
       addTodo(app, navbarMode);
     } else if (mode === "edit-todo") {
-      editTodo(app, navbarMode, todoItem);
+      editTodo(app, navbarMode, todoItem, projectId);
     } else if (mode === "add-to-project") {
       addToProject(app, project);
     }
@@ -254,15 +255,6 @@ const getInputValues = () => {
   const dueDateInput = document.querySelector(".form-due-date-input");
   const priorityInput = document.querySelector("input[name='priority']:checked");
 
-
-  // console.log({
-  //   titleVal: titleInput.value,
-  //   notesVal: notesInput ? notesInput.value : null,
-  //   dueDateVal: dueDateInput ? dueDateInput.value : null,
-  //   priorityVal: priorityInput ? priorityInput.value : null
-  // })
-  
-
   return {
     titleVal: titleInput.value,
     notesVal: notesInput ? notesInput.value : null,
@@ -280,10 +272,10 @@ const addTodo = (app, navbarMode) => {
 
   const todosArr = app.getTodosArr();
 
-  renderTodos(app, navbarMode, todosArr, isDueToday, isDueThisWeek);
+  renderTodos(app, navbarMode, todosArr, isDueToday, isDueThisWeek, null);
 }
 
-const editTodo = (app, navbarMode, todoItem) => {
+const editTodo = (app, navbarMode, todoItem, projectId) => {
   const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
 
   todoItem.editTitle(titleVal);
@@ -295,10 +287,16 @@ const editTodo = (app, navbarMode, todoItem) => {
 
   const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
 
-  // Get latest todosArr & rerender todos
-  const todosArr = app.getTodosArr();
-  
-  renderTodos(app, navbarMode, todosArr, isDueToday, isDueThisWeek);
+  if (projectId) {
+    const project = app.getProjectsArr().filter(project => project.getId() === projectId)[0];
+    const todosArr = project.getTodosArr();
+
+    renderTodos(app, navbarMode, todosArr, null, null, projectId);
+  } else {
+    const todosArr = app.getTodosArr();
+
+    renderTodos(app, navbarMode, todosArr, isDueToday, isDueThisWeek, null);
+  }  
 }
 
 const addProject = (app, navbarMode) => {
@@ -338,19 +336,21 @@ const checkDueDate = (todoItem) => {
   };
 }
 
-const renderTodos = (app, navbarMode, todosArr, isDueToday, isDueThisWeek) => {
+const renderTodos = (app, navbarMode, todosArr, isDueToday, isDueThisWeek, projectId) => {
   if (navbarMode === "todos") {
-    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr));
+    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr, projectId));
   } else if (navbarMode === "day" && isDueToday) {
-    domController.getContentBox().append(createHolderBoxUI(app, "day", todosArr));
+    domController.getContentBox().append(createHolderBoxUI(app, "day", todosArr, projectId));
   } else if (navbarMode === "week" && isDueThisWeek) {
-    domController.getContentBox().append(createHolderBoxUI(app, "week", todosArr));
-  } 
+    domController.getContentBox().append(createHolderBoxUI(app, "week", todosArr, projectId));
+  } else if (navbarMode === "projects") {
+    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr, projectId));
+  }
 }
 
 const renderProjects = (app, navbarMode, projectsArr) => {
   if (navbarMode === "projects") {
-    domController.getContentBox().append(createHolderBoxUI(app, navbarMode, projectsArr));
+    domController.getContentBox().append(createHolderBoxUI(app, "projects", projectsArr));
   }
 }
 
@@ -363,11 +363,6 @@ const addToProject = (app, project) => {
   // Update app obj
   app.pushToTodosArr(todoItem);
   app.updateProjectsArr(project);
-
-  // console.log("addToProject");
-  // console.log(project.getTodosArr());
-  // console.log(app.getTodosArr());
-  // console.log(app.getProjectsArr());
 }
 
 const createTodoItem = () => {
