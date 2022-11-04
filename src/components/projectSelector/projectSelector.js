@@ -29,8 +29,14 @@ const createProjectSelectorUI = (app, todoItem) => {
   okBtn.innerText = "OK";
   okBtn.addEventListener("pointerup", () => {
     const selectedProjects = Array.from(document.querySelectorAll(".project-option.selected"));
-    const selectedProjectsId = selectedProjects.map(project => project.dataset.id);
 
+    if (!selectedProjects.length) {
+      domController.getAppContainer().classList.remove("disabled");
+      container.remove();
+      return;
+    }
+
+    const selectedProjectsId = selectedProjects.map(project => project.dataset.id);
     console.log("ids:", selectedProjectsId);
 
     selectedProjectsId.forEach(id => {
@@ -51,7 +57,12 @@ const createProjectSelectorUI = (app, todoItem) => {
 
   const projectOptionUIs = filteredProjects.map(project => createProjectOptionUI(project));
 
-  projectsBox.append(...projectOptionUIs);
+  if (!projectOptionUIs.length) {
+    projectsBox.append("No Projects");
+  } else {
+    projectsBox.append(...projectOptionUIs);
+  }
+
   btnsContainer.append(cancelBtn, okBtn);
   container.append(title, projectsBox, btnsContainer);
 
