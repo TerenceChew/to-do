@@ -69,17 +69,17 @@ const createAppUI = () => {
   container.classList.add("app-container", "flex-column", "center")
 
   // Logger btn
-  const logBtn = document.createElement("button");
-  logBtn.innerText = "LOG INFO";
-  logBtn.addEventListener("pointerup", () => {
-    console.log({
-      todosArrOri: app.getTodosArr(),
-      projectsArrOri: app.getProjectsArr()
-    })
-  })
+  // const logBtn = document.createElement("button");
+  // logBtn.innerText = "LOG INFO";
+  // logBtn.addEventListener("pointerup", () => {
+  //   console.log({
+  //     todosArrOri: app.getTodosArr(),
+  //     projectsArrOri: app.getProjectsArr()
+  //   })
+  // })
   // Logger btn
   
-  container.append(createContentBoxUI(app), logBtn);
+  container.append(createContentBoxUI(app));
 
   return container;
 }
