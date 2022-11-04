@@ -8,9 +8,9 @@ import { createHolderBoxUI } from "../holderBox/holderBox";
 import * as domController from "../../domController/domController";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 
-const projectFactory = (title) => {
-  const id = utilityFunctions.generateRandomID(title);
-  let todosArr = [];
+const projectFactory = (title, idFromData, todosArrFromData) => {
+  const id = idFromData ? idFromData : utilityFunctions.generateRandomID(title);
+  let todosArr = todosArrFromData ? todosArrFromData : [];
 
   // Getting
   const getTitle = () => title;
@@ -29,6 +29,15 @@ const projectFactory = (title) => {
   const removeFromTodosArr = (id) => {
     todosArr = todosArr.filter(e => e.id !== id);
   }
+
+  // Updating
+  // const pushToTodosData = (todoData) => {
+  //   todosData.push(todoData);
+  // }
+
+  // const removeFromTodosData = (id) => {
+  //   todosData = todosData.filter(e => e.id !== id);
+  // }
 
   return {
     id,

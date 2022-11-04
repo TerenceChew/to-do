@@ -35,6 +35,7 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
       app.removeFromProjectsArr(obj.getId());
       console.log(app.getProjectsArr());
     }
+    utilityFunctions.updateLocalStorage(app);
     objUI.remove();
     removeContainer();
   })

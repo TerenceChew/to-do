@@ -255,6 +255,13 @@ const getInputValues = () => {
   const dueDateInput = document.querySelector(".form-due-date-input");
   const priorityInput = document.querySelector("input[name='priority']:checked");
 
+  console.log({
+    titleVal: titleInput.value,
+    notesVal: notesInput ? notesInput.value : null,
+    dueDateVal: dueDateInput ? dueDateInput.value : null,
+    priorityVal: priorityInput ? priorityInput.value : null
+  })
+
   return {
     titleVal: titleInput.value,
     notesVal: notesInput ? notesInput.value : null,
@@ -269,6 +276,7 @@ const addTodo = (app, navbarMode) => {
   const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
 
   app.pushToTodosArr(todoItem);
+  utilityFunctions.updateLocalStorage(app);
 
   const todosArr = app.getTodosArr();
 
@@ -284,6 +292,7 @@ const editTodo = (app, navbarMode, todoItem, projectId) => {
   todoItem.editPriority(priorityVal);
 
   app.updateTodosArr(todoItem);
+  utilityFunctions.updateLocalStorage(app);
 
   const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
 
@@ -301,9 +310,10 @@ const editTodo = (app, navbarMode, todoItem, projectId) => {
 
 const addProject = (app, navbarMode) => {
   const { titleVal } = getInputValues();
-  const project = projectFactory(titleVal, []);
+  const project = projectFactory(titleVal, null, null);
 
   app.pushToProjectsArr(project);
+  utilityFunctions.updateLocalStorage(app);
 
   const projectsArr = app.getProjectsArr();
 
@@ -317,6 +327,7 @@ const editProject = (app, navbarMode, project) => {
 
   // Update project in app arr
   app.updateProjectsArr(project);
+  utilityFunctions.updateLocalStorage(app);
 
   // Get latest projectsArr & rerender projects
   const projectsArr = app.getProjectsArr();
@@ -363,11 +374,12 @@ const addToProject = (app, project) => {
   // Update app obj
   app.pushToTodosArr(todoItem);
   app.updateProjectsArr(project);
+  utilityFunctions.updateLocalStorage(app);
 }
 
 const createTodoItem = () => {
   const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
-  return todoItemFactory(false, titleVal, notesVal, dueDateVal, priorityVal);
+  return todoItemFactory(false, titleVal, notesVal, dueDateVal, priorityVal, null);
 }
 
 export { createFormUI };

@@ -87,10 +87,4 @@ const createProjectOptionUI = (project) => {
   return container;
 }
 
-
-// app.getProjectsArr
-// map, createProjectOptionUI
-// append to projectsBox
-// 
-
 export { createProjectSelectorUI };

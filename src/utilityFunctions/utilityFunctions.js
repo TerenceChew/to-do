@@ -30,4 +30,32 @@ const getTodayInYYYYMMDD = () => {
   return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 }
 
-export { setAttributes, getRandomNumInclusive, generateRandomID, addEventListenerToElems, getTodayInYYYYMMDD };
+const transformToTodosData = (todosArr) => {
+  let todosData = todosArr.map(todo => ({
+    id: todo.getId(),
+    checked: todo.getChecked(),
+    title: todo.getTitle(),
+    notes: todo.getNotes(),
+    dueDate: todo.getDueDate(),
+    priority: todo.getPriority()
+  }));
+
+  return todosData;
+}
+
+const transformToProjectsData = (projectsArr) => {
+  let projectsData = projectsArr.map(project => ({
+    id: project.getId(),
+    todosData: transformToTodosData(project.getTodosArr()),
+    title: project.getTitle()
+  }));
+
+  return projectsData;
+}
+
+const updateLocalStorage = (app) => {
+  localStorage.todosData = JSON.stringify(transformToTodosData(app.getTodosArr()));
+  localStorage.projectsData = JSON.stringify(transformToProjectsData(app.getProjectsArr()));
+}
+
+export { setAttributes, getRandomNumInclusive, generateRandomID, addEventListenerToElems, getTodayInYYYYMMDD, updateLocalStorage };

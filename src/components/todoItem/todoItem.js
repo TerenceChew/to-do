@@ -10,8 +10,8 @@ import * as domController from "../../domController/domController";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 import format from "date-fns/format";
 
-const todoItemFactory = (checked, title, notes, dueDate, priority) => {
-  const id = utilityFunctions.generateRandomID(title);
+const todoItemFactory = (checked, title, notes, dueDate, priority, idFromData) => {
+  const id = idFromData ? idFromData : utilityFunctions.generateRandomID(title);
 
   // Getting
   const getChecked = () => checked;
@@ -38,6 +38,15 @@ const todoItemFactory = (checked, title, notes, dueDate, priority) => {
     priority = newPriority;
   };
 
+  // Generating data
+  // const generateTodoData = () => ({
+  //   id,
+  //   checked,
+  //   title,
+  //   notes,
+  //   dueDate,
+  //   priority
+  // });
 
   return {
     id,
