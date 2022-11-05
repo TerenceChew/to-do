@@ -10,7 +10,7 @@
 
 .project-container:hover {
   box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
-  transform: translateX(2px);
+  transform: translateY(-1px);
 }
 
 .project-container:last-child {
