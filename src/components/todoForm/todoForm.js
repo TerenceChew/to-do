@@ -294,7 +294,7 @@ const editTodo = (app, navbarMode, todoItem, projectId) => {
   todoItem.editDueDate(dueDateVal);
   todoItem.editPriority(priorityVal);
 
-  app.updateTodosArr(todoItem);
+  app.updateTodosArr(todoItem); // Refactor
   utilityFunctions.updateLocalStorage(app);
 
   const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);

@@ -81,7 +81,7 @@ const createTodoItemUI = (todoItem, app, projectId) => {
   container.classList.add("item-container", "flex");
   container.dataset.id = todoItem.getId();
   container.dataset.projectId = projectId;
-  container.style.borderLeft = `4px solid var(--${todoItem.getPriority()}-prio)`;
+  container.style.borderLeft = `5px solid var(--${todoItem.getPriority()}-prio)`;
   container.addEventListener("pointerup", (e) => {
     e.stopPropagation();
     
@@ -96,10 +96,11 @@ const createTodoItemUI = (todoItem, app, projectId) => {
   checkbox.classList.add("item-checkbox", "flex", "center");
   checkbox.addEventListener("pointerup", (e) => {
     e.stopPropagation();
+
     checkbox.classList.toggle("checked");
     container.classList.toggle("no-pointer-events");
+    
     todoItem.editChecked();
-    checkbox.innerText = todoItem.getChecked() ? "✓" : "";
   });
 
   title.classList.add("item-title");
