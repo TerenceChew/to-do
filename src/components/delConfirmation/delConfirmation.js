@@ -1,5 +1,6 @@
 import "./delConfirmation.css";
 import * as domController from "../../domController/domController";
+import { updateLocalStorage } from "../../utilityFunctions/utilityFunctions";
 
 const createDelConfirmationUI = (app, type, obj, objUI) => {
   const container = document.createElement("div");
@@ -35,7 +36,7 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
       app.removeFromProjectsArr(obj.getId());
       console.log(app.getProjectsArr());
     }
-    utilityFunctions.updateLocalStorage(app);
+    updateLocalStorage(app);
     objUI.remove();
     removeContainer();
   })
