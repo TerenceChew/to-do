@@ -10,7 +10,7 @@
 
 .form-container {
   width: 325px;
-  height: min(570px, 85%);
+  height: min(585px, 85%);
   display: grid;
   grid-template-rows: 65px 1fr;
   gap: 5px;
@@ -82,8 +82,8 @@
 }
 
 .form-due-date-container {
-  gap: 12px;
-  margin-top: 22px;
+  gap: 13px;
+  margin-top: 24px;
 }
 
 .form-due-date-label {
@@ -91,16 +91,17 @@
 }
 
 .form-due-date-input {
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, .4);
+  border-radius: 5px;
+  border: 2px solid rgba(26, 167, 125, 0.5);
   outline: none;
-  padding: 4px 8px;
+  padding: 5px 10px;
   cursor: pointer;
+  color: black;
 }
 
 .form-priority-container {
-  gap: 12px;
-  margin-top: 22px;
+  gap: 13px;
+  margin-top: 24px;
 }
 
 .form-priority-title {
@@ -108,36 +109,52 @@
 }
 
 .form-priority-options-container {
-  gap: 5px;
+  gap: 4px;
 }
 
 .form-priority-label {
-  border-radius: 3px;
-  padding: 1px 5px 2px 5px;
+  border-radius: 4px;
+  padding: 1px 7px 3px 7px;
   text-align: center;
   transition: .25s;
-  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.15);
   cursor: pointer;
+  font-weight: bold;
 }
 
 .l-prio-label {
   border: 1px solid var(--low-prio);
-  background-color: var(--low-prio);
+  color: var(--low-prio);
 }
 
 .m-prio-label {
   border: 1px solid var(--medium-prio);
-  background-color: var(--medium-prio);
+  color: var(--medium-prio);
 }
 
 .h-prio-label {
   border: 1px solid var(--high-prio);
-  background-color: var(--high-prio);
+  color: var(--high-prio);
   margin-right: 18px;
 }
 
+.form-priority-radio:checked + .l-prio-label {
+  border: 1px solid var(--low-prio);
+  background-color: var(--low-prio);
+}
+
+.form-priority-radio:checked + .m-prio-label {
+  border: 1px solid var(--medium-prio);
+  background-color: var(--medium-prio);
+}
+
+.form-priority-radio:checked + .h-prio-label {
+  border: 1px solid var(--high-prio);
+  background-color: var(--high-prio);
+}
+
 .form-priority-radio:checked + .form-priority-label {
-  transform: scale(1.3);
+  transform: scale(1.1);
+  color: white;
 }
 
 .form-bottom-container {

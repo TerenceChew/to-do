@@ -3,7 +3,7 @@
   height: 100vh;
   min-height: 435px;
   display: grid;
-  grid-template: 70px 1fr 65px / 1fr;
+  grid-template: 65px 1fr 65px / 1fr;
   background-color: white;
 }
 
@@ -13,7 +13,7 @@
   'wght' 400,
   'GRAD' 200,
   'opsz' 48;
-  font-size: 1.65rem;
+  font-size: 1.85rem;
 }
 
 .content-box-title {
@@ -23,7 +23,7 @@
   grid-area: 1 / 1 / 2 / -1;
   color: white;
   background-color: var(--accent-3);
-  font-size: 1.95rem;
+  font-size: 2rem;
   font-family: 'PT Mono', monospace;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
 }
@@ -32,7 +32,7 @@
   .content-box-container {
     max-width: 950px;
     height: min(550px, 85%);
-    grid-template: 70px 1fr / 165px 1fr;
+    grid-template: 65px 1fr / 165px 1fr;
     box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.25);
   }
 
@@ -44,7 +44,15 @@
 
 @media (min-width: 850px) {
   .content-box-container {
-    grid-template: 70px 1fr / 185px 1fr;
+    grid-template: 65px 1fr / 185px 1fr;
+  }
+
+  .material-symbols-outlined {
+    font-size: 2.1rem;
+  }
+
+  .content-box-title {
+    font-size: 2.15rem;
   }
 }
 
@@ -52,6 +60,6 @@
   .content-box-container {
     max-width: 1050px;
     height: min(570px, 85%);
-    grid-template: 70px 1fr / 200px 1fr;
+    grid-template: 65px 1fr / 200px 1fr;
   }
 }

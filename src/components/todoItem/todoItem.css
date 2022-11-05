@@ -5,7 +5,7 @@
   gap: 15px;
   background-color: var(--accent-2);
   padding: 14px 10px;
-  margin-bottom: 7px;
+  margin-bottom: 8px;
   transition: .25s;
   font-family: 'Lato', sans-serif;
   position: relative;
@@ -31,7 +31,7 @@
 }
 
 .item-left-container {
-  gap: 8px;
+  gap: 12px;
 }
 
 .item-right-container {
@@ -39,8 +39,8 @@
 }
 
 .item-checkbox {
-  width: 18px;
-  height: 18px;
+  width: 19px;
+  height: 19px;
   position:relative;
   border: 2px solid var(--accent-1);
   border-radius: 5px;
@@ -100,7 +100,7 @@
 .item-edit-icon:hover,
 .item-move-icon:hover,
 .item-trash-icon:hover {
-  transform: translateY(-3px);
+  transform: scale(1.1);
 }
 
 .item-container,
@@ -111,15 +111,37 @@
   cursor: pointer;
 }
 
+@media (min-width: 380px) {
+  .item-title {
+    width: 125px;
+  }
+}
+
 @media (min-width: 400px) {
   .item-title {
-    width: 150px;
+    width: 145px;
+  }
+}
+
+@media (min-width: 450px) {
+  .item-title {
+    width: 185px;
   }
 }
 
 @media (min-width: 500px) {
   .item-title {
-    width: 230px;
+    width: 240px;
+  }
+}
+
+@media (min-width: 650px) {
+  .item-title {
+    width: 200px;
+  }
+  
+  .item-right-container {
+    gap: 18px;
   }
 }
 

@@ -3,13 +3,14 @@
 :root {
   --accent-1: rgb(26, 167, 125);
   --accent-2: rgb(240, 240, 240);
-  --accent-3: rgb(255, 62, 101);
+  /* --accent-3: rgb(255, 62, 101); */
+  --accent-3: #cc7e97;
   --accent-4: rgb(45, 45, 45);
   --accent-5: rgba(220, 220, 220, 0.5);
   --accent-6: rgba(205, 205, 205, 0.65);
-  --low-prio: rgb(0, 211, 0);
-  --medium-prio: rgb(240, 240, 9);
-  --high-prio: rgb(255, 0, 0);
+  --low-prio: rgb(40, 207, 40);
+  --medium-prio: rgb(255, 187, 60);
+  --high-prio: rgb(255, 70, 70);
   --icon-width-1: 20px;
   --icon-height-1: 20px;
 }
@@ -21,4 +22,3 @@
   background-repeat: no-repeat;
   background-position: center;
 }
-

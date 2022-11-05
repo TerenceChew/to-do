@@ -1,6 +1,6 @@
 .project-container {
   width: 100%;
-  gap: 13px;
+  gap: 18px;
   background-color: var(--accent-2);
   padding: 12px 10px;
   margin-bottom: 7px;
@@ -18,7 +18,7 @@
 }
 
 .project-title {
-  width: 175px;
+  width: 185px;
   margin-right: auto;
   font-size: 1rem;
   overflow-wrap: anywhere;
@@ -38,7 +38,7 @@
 .project-add-icon:hover,
 .project-edit-icon:hover,
 .project-trash-icon:hover {
-  transform: translateY(-3px);
+  transform: scale(1.1);
 }
 
 .project-container,
@@ -48,15 +48,21 @@
   cursor: pointer;
 }
 
-@media (min-width: 400px) {
+@media (min-width: 380px) {
   .project-title {
     width: 215px;
   }
 }
 
+@media (min-width: 450px) {
+  .project-title {
+    width: 250px;
+  }
+}
+
 @media (min-width: 500px) {
   .project-title {
-    width: 265px;
+    width: 285px;
   }
 }
 

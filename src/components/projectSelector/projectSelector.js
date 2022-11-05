@@ -72,6 +72,7 @@ const createProjectSelectorUI = (app, todoItem) => {
 const createProjectOptionUI = (project) => {
   const container = document.createElement("div");
   const title = document.createElement("p");
+  const checkbox = document.createElement("div");
 
   container.classList.add("project-option", "flex", "center");
   container.dataset.id = project.getId();
@@ -82,7 +83,9 @@ const createProjectOptionUI = (project) => {
   title.classList.add("project-option-title");
   title.innerText = project.getTitle();
 
-  container.append(title);
+  checkbox.classList.add("project-option-checkbox");
+
+  container.append(title, checkbox);
 
   return container;
 }
