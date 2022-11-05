@@ -34,6 +34,7 @@ const createFormUI = (app, navbarMode, mode, todoItem, project, projectId) => {
     container.append(topContainer, createTodoFieldsUI(app, navbarMode, mode, box, todoItem, null, projectId));
     box.append(container);
   } else if (mode === "edit-project") {
+    container.classList.add("project-fields-height");
     projectBtn.classList.add("border-btm-w", "no-pointer-events");
 
     topContainer.append(projectBtn);
@@ -53,6 +54,7 @@ const createFormUI = (app, navbarMode, mode, todoItem, project, projectId) => {
     box.append(container);
 
     todoBtn.addEventListener("pointerup", () => {
+      container.classList.remove("project-fields-height");
       todoBtn.classList.add("border-btm-b");
       projectBtn.classList.remove("border-btm-b");
 
@@ -62,6 +64,7 @@ const createFormUI = (app, navbarMode, mode, todoItem, project, projectId) => {
     })
 
     projectBtn.addEventListener("pointerup", () => {
+      container.classList.add("project-fields-height");
       todoBtn.classList.remove("border-btm-b");
       projectBtn.classList.add("border-btm-b");
 
