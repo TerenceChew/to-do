@@ -30,10 +30,10 @@ const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) =>
   dueDate.classList.add("details-due-date", "flex", "center");
   dueDate.innerText = `Due: ${getDueDate()}`;
 
-  title.classList.add("details-title", "flex", 'center');
+  title.classList.add("details-title", "flex");
   title.innerText = getTitle();
 
-  notes.classList.add("details-notes");
+  notes.classList.add("details-notes", "flex");
   notes.innerText = getNotes() || "No Notes";
 
   closeBtn.classList.add("details-close-btn");

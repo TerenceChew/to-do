@@ -1,6 +1,6 @@
 .details-container {
   width: 315px;
-  height: 495px;
+  height: 500px;
   display: grid;
   grid-template-rows: 40px 1fr;
   gap: 20px;
@@ -23,10 +23,10 @@
 .details-bottom-container {
   display: grid;
   gap: 15px;
-  grid-template-rows: 90px 225px 75px;
+  grid-template-rows: 90px 230px 75px;
   justify-items: center;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 10px;
 }
 
 .details-priority {
@@ -55,6 +55,7 @@
 .details-notes {
   width: 100%;
   height: 100%;
+  justify-content: center;
   overflow-wrap: anywhere;
   overflow: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
