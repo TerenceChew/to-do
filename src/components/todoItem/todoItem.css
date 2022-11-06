@@ -21,11 +21,12 @@
 }
 
 .item-container:has(.item-checkbox.checked)::before {
-  width: calc(100% - 34px);
+  width: calc(100% - 34px - 34px);
   height: 100%;
   content: "";
   position: absolute;
   left: 34px;
+  right: 34px;
   background-color: rgba(240, 240, 240, 0.8);
   filter: blur(1px);
 }
@@ -70,7 +71,8 @@
   cursor: auto;
 }
 
-.item-container.no-pointer-events .item-checkbox {
+.item-container.no-pointer-events .item-checkbox,
+.item-container.no-pointer-events .item-trash-icon {
   pointer-events: all;
   cursor: pointer;
 }

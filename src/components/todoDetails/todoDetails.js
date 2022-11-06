@@ -18,12 +18,19 @@ const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) =>
   bottomContainer.classList.add("details-bottom-container");
 
   priority.classList.add("details-priority", "flex", "center");
+  if (getPriority() === "low") {
+    priority.classList.add("details-priority-l");
+  } else if (getPriority() === "medium") {
+    priority.classList.add("details-priority-m");
+  } else {
+    priority.classList.add("details-priority-h");
+  }
   priority.innerText = getPriority()[0].toUpperCase() + getPriority().slice(1);
 
   dueDate.classList.add("details-due-date", "flex", "center");
   dueDate.innerText = `Due: ${getDueDate()}`;
 
-  title.classList.add("details-title");
+  title.classList.add("details-title", "flex", 'center');
   title.innerText = getTitle();
 
   notes.classList.add("details-notes");
