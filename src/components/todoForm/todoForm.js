@@ -117,13 +117,13 @@ const createTodoFieldsUI = (app, navbarMode, mode, box, todoItem, project, proje
 
   titleInput.classList.add("form-title-input");
   titleInput.placeholder = "Enter Title";
-  titleInput.innerText = todoItem ? todoItem.getTitle() : "";
+  titleInput.value = todoItem ? todoItem.getTitle() : "";
   titleInput.setAttribute("maxlength", "50");
   titleInput.required = true;
 
   notesInput.classList.add("form-notes-input");
   notesInput.placeholder = "Enter Notes";
-  notesInput.innerText = todoItem ? todoItem.getNotes() : "";
+  notesInput.value = todoItem ? todoItem.getNotes() : "";
   notesInput.setAttribute("maxlength", "300");
 
   dueDateContainer.classList.add("form-due-date-container", "flex-column", "center");
