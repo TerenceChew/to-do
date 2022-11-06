@@ -86,7 +86,7 @@ const createAppUI = () => {
 
 const transformToTodosArr = (todosData) => {
   const todosArr = todosData.map(data => {
-    const { checked, title, notes, dueDate, priority, id} = data;
+    const { checked, title, notes, dueDate, priority, id } = data;
 
     return todoItemFactory(checked, title, notes, dueDate, priority, id);
   })

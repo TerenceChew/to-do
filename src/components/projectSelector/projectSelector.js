@@ -1,5 +1,6 @@
 import "./projectSelector.css";
 import * as domController from "../../domController/domController";
+import { updateLocalStorage } from "../../utilityFunctions/utilityFunctions";
 
 const createProjectSelectorUI = (app, todoItem) => {
   const container = document.createElement("div");
@@ -47,6 +48,7 @@ const createProjectSelectorUI = (app, todoItem) => {
       })
     });
 
+    updateLocalStorage(app);
     domController.getAppContainer().classList.remove("disabled");
     container.remove();
   })

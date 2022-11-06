@@ -94,6 +94,10 @@ const createTodoItemUI = (todoItem, app, projectId) => {
   rightContainer.classList.add("item-right-container", "flex", "center");
 
   checkbox.classList.add("item-checkbox", "flex", "center");
+  if (todoItem.getChecked()) {
+    checkbox.classList.add("checked");
+    container.classList.add("no-pointer-events");
+  }
   checkbox.addEventListener("pointerup", (e) => {
     e.stopPropagation();
 
@@ -101,6 +105,7 @@ const createTodoItemUI = (todoItem, app, projectId) => {
     container.classList.toggle("no-pointer-events");
     
     todoItem.editChecked();
+    utilityFunctions.updateLocalStorage(app);
   });
 
   title.classList.add("item-title");
