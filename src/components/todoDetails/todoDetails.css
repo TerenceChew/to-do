@@ -1,6 +1,6 @@
 .details-container {
   width: 315px;
-  height: 500px;
+  height: min(505px, 95%);
   display: grid;
   grid-template-rows: 40px 1fr;
   gap: 20px;
@@ -13,6 +13,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  overflow: scroll;
+  -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none;  /* Hide scrollbar for Firefox */
+}
+
+.details-container::-webkit-scrollbar {
+  display: none;
 }
 
 .details-top-container {
@@ -22,8 +29,8 @@
 
 .details-bottom-container {
   display: grid;
-  gap: 15px;
-  grid-template-rows: 90px 230px 75px;
+  gap: 20px;
+  grid-template-rows: 90px 230px 60px;
   justify-items: center;
   align-items: center;
   padding: 0 10px;

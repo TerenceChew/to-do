@@ -1,5 +1,5 @@
 .project-selector-container {
-  height: 425px;
+  height: min(425px, 95%);
   width: 335px;
   display: grid;
   grid-template-rows: 65px 1fr 95px;
@@ -11,6 +11,13 @@
   font-family: 'Lato', sans-serif;
   border-radius: 8px;
   box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.25);
+  overflow: scroll;
+  -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none;  /* Hide scrollbar for Firefox */
+}
+
+.project-selector-container::-webkit-scrollbar {
+  display: none;
 }
 
 .project-selector-title {
@@ -139,7 +146,7 @@
 
 @media (min-width: 950px) {
   .project-selector-container {
-    height: 500px;
+    height: min(500px, 95%);
     width: 380px;
   }
 
