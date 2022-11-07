@@ -1,6 +1,7 @@
 import "./navbar.css";
 import { createFormUI } from "../todoForm/todoForm";
 import * as domController from "../../domController/domController";
+import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 import { createHolderBoxUI } from "../holderBox/holderBox";
 
 const createNavbarUI = (app) => {
@@ -16,7 +17,7 @@ const createNavbarUI = (app) => {
   container.dataset.mode = navbarMode;
 
   todosBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-todos-btn", "flex", "navbar-btn-selected");
-
+  todosBtn.dataset.count = app.getTodosArr().length;
   todosBtn.addEventListener("pointerup", (e) => {
     handleBtnUI(e);
     updateNavbarMode("todos");
@@ -27,6 +28,7 @@ const createNavbarUI = (app) => {
   });
 
   projectsBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-projects-btn", "flex");
+  projectsBtn.dataset.count = app.getProjectsArr().length;
   projectsBtn.addEventListener("pointerup", (e) => {
     handleBtnUI(e);
     updateNavbarMode("projects");
@@ -38,6 +40,7 @@ const createNavbarUI = (app) => {
   });
 
   dayBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-day-btn", "flex");
+  dayBtn.dataset.count = utilityFunctions.getObjsDueToday(app.getTodosArr()).length;
   dayBtn.addEventListener("pointerup", (e) => {
     handleBtnUI(e);
     updateNavbarMode("day");
@@ -49,6 +52,7 @@ const createNavbarUI = (app) => {
   });
 
   weekBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-week-btn", "flex");
+  weekBtn.dataset.count = utilityFunctions.getObjsDueThisWeek(app.getTodosArr()).length;
   weekBtn.addEventListener("pointerup", (e) => {
     handleBtnUI(e);
     updateNavbarMode("week");
@@ -103,4 +107,25 @@ const createNavbarUI = (app) => {
   return container;
 }
 
-export { createNavbarUI };
+const updateTodosTotal = (app) => {
+  const todosBtn = document.querySelector(".navbar-todos-btn");
+  todosBtn.dataset.count = app.getTodosArr().length;
+}
+
+const updateProjectsTotal = (app) => {
+  const projectsBtn = document.querySelector(".navbar-projects-btn");
+  projectsBtn.dataset.count = app.getProjectsArr().length;
+}
+
+const updateDayTotal = (app) => {
+  const dayBtn = document.querySelector(".navbar-day-btn");
+  dayBtn.dataset.count = utilityFunctions.getObjsDueToday(app.getTodosArr()).length;
+  
+}
+
+const updateWeekTotal = (app) => {
+  const weekBtn = document.querySelector(".navbar-week-btn");
+  weekBtn.dataset.count = utilityFunctions.getObjsDueThisWeek(app.getTodosArr()).length;
+}
+
+export { createNavbarUI, updateTodosTotal, updateProjectsTotal, updateDayTotal, updateWeekTotal };

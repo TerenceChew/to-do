@@ -1,3 +1,5 @@
+import isThisWeek from "date-fns/isThisWeek";
+
 const setAttributes = (el, attrs) => {
   for (let key in attrs) {
     el[key] = attrs[key];
@@ -58,4 +60,19 @@ const updateLocalStorage = (app) => {
   localStorage.projectsData = JSON.stringify(transformToProjectsData(app.getProjectsArr()));
 }
 
-export { setAttributes, getRandomNumInclusive, generateRandomID, addEventListenerToElems, getTodayInYYYYMMDD, updateLocalStorage };
+// Get objects that are due today
+const getObjsDueToday = (arr) => {
+  const today = getTodayInYYYYMMDD();
+  return arr.filter(e => e.getDueDate() === today);
+}
+
+// Get objects that are due this week (Mon - Sun)
+const getObjsDueThisWeek = (arr) => {
+  return arr.filter(e => {
+    const processedDueDate = `${e.getDueDate()}T00:00:00`;
+
+    return isThisWeek(new Date(processedDueDate), { weekStartsOn: 1 });
+  })
+}
+
+export { setAttributes, getRandomNumInclusive, generateRandomID, addEventListenerToElems, getTodayInYYYYMMDD, updateLocalStorage, getObjsDueToday, getObjsDueThisWeek };

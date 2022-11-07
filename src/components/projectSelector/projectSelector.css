@@ -139,12 +139,12 @@
 
 @media (min-width: 950px) {
   .project-selector-container {
-    height: 475px;
-    width: 400px;
+    height: 500px;
+    width: 380px;
   }
 
   .project-selector-title {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
   }
 
   .project-option-title {

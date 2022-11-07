@@ -6,6 +6,7 @@ import { projectFactory, createProjectUI } from "../project/project";
 import { createHolderBoxUI } from "../holderBox/holderBox";
 import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
 import isThisWeek from "date-fns/isThisWeek";
+import { updateTodosTotal, updateProjectsTotal, updateDayTotal, updateWeekTotal } from "../navbar/navbar";
 
 const createFormUI = (app, navbarMode, mode, todoItem, project, projectId) => {
   const box = document.createElement("div");
@@ -280,6 +281,9 @@ const addTodo = (app, navbarMode) => {
 
   app.pushToTodosArr(todoItem);
   utilityFunctions.updateLocalStorage(app);
+  updateTodosTotal(app);
+  updateDayTotal(app);
+  updateWeekTotal(app);
 
   const todosArr = app.getTodosArr();
 
@@ -296,6 +300,8 @@ const editTodo = (app, navbarMode, todoItem, projectId) => {
 
   app.updateTodosArr(todoItem); // Refactor
   utilityFunctions.updateLocalStorage(app);
+  updateDayTotal(app);
+  updateWeekTotal(app);
 
   const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
 
@@ -317,6 +323,7 @@ const addProject = (app, navbarMode) => {
 
   app.pushToProjectsArr(project);
   utilityFunctions.updateLocalStorage(app);
+  updateProjectsTotal(app);
 
   const projectsArr = app.getProjectsArr();
 
@@ -378,6 +385,9 @@ const addToProject = (app, project) => {
   app.pushToTodosArr(todoItem);
   app.updateProjectsArr(project);
   utilityFunctions.updateLocalStorage(app);
+  updateTodosTotal(app);
+  updateDayTotal(app);
+  updateWeekTotal(app);
 }
 
 const createTodoItem = () => {

@@ -1,6 +1,7 @@
 import "./delConfirmation.css";
 import * as domController from "../../domController/domController";
 import { updateLocalStorage } from "../../utilityFunctions/utilityFunctions";
+import { updateTodosTotal, updateProjectsTotal, updateDayTotal, updateWeekTotal } from "../navbar/navbar";
 
 const createDelConfirmationUI = (app, type, obj, objUI) => {
   const container = document.createElement("div");
@@ -19,7 +20,7 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
   noBtn.classList.add("del-confirmation-no-btn");
   noBtn.innerText = "NO";
   noBtn.addEventListener("pointerup", () => {
-    removeContainer();
+    removeContainer(container);
   })
 
   yesBtn.classList.add("del-confirmation-yes-btn");
@@ -27,29 +28,40 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
   yesBtn.addEventListener("pointerup", () => {
     if (type === "todo") {
       app.removeFromTodosArr(obj.getId());
-      console.log(app.getTodosArr());
 
       app.getProjectsArr().forEach(project => {
         project.removeFromTodosArr(obj.getId());
       });
     } else if (type === "project") {
+      obj.getTodosArr().forEach(todo => {
+        app.removeFromTodosArr(todo.getId());
+      });
+      
       app.removeFromProjectsArr(obj.getId());
-      console.log(app.getProjectsArr());
     }
-    updateLocalStorage(app);
-    objUI.remove();
-    removeContainer();
-  })
 
-  function removeContainer() {
-    container.remove();
-    domController.getAppContainer().classList.remove("disabled");
-  }
+    updateLocalStorage(app);
+    updateNavbarTotals(app);
+    objUI.remove();
+    removeContainer(container);
+  })
 
   btnsContainer.append(noBtn, yesBtn);
   container.append(confirmationMsg, btnsContainer);
 
   return container;
+}
+
+const removeContainer = (container) => {
+  container.remove();
+  domController.getAppContainer().classList.remove("disabled");
+}
+
+const updateNavbarTotals = (app) => {
+  updateTodosTotal(app);
+  updateProjectsTotal(app);
+  updateDayTotal(app);
+  updateWeekTotal(app);
 }
 
 export { createDelConfirmationUI };
