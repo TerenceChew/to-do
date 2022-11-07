@@ -10,7 +10,7 @@
 
 .form-container {
   width: 325px;
-  height: min(585px, 85%);
+  height: min(585px, 95%);
   display: grid;
   grid-template-rows: 65px 1fr;
   gap: 5px;
@@ -29,7 +29,7 @@
 }
 
 .project-fields-height {
-  height: min(245px, 85%);
+  height: min(245px, 95%);
 }
 
 .form-top-container {
