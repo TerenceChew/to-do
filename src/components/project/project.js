@@ -5,8 +5,8 @@ import deleteIcon from "./delete.svg";
 import { createFormUI } from "../todoForm/todoForm";
 import { createDelConfirmationUI } from "../delConfirmation/delConfirmation";
 import { createHolderBoxUI } from "../holderBox/holderBox";
-import * as domController from "../../domController/domController";
-import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
+import * as domController from "../../modules/domController/domController";
+import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
 
 const projectFactory = (title, idFromData, todosArrFromData) => {
   const id = idFromData ? idFromData : utilityFunctions.generateRandomID(title);

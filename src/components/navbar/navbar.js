@@ -1,7 +1,7 @@
 import "./navbar.css";
 import { createFormUI } from "../todoForm/todoForm";
-import * as domController from "../../domController/domController";
-import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
+import * as domController from "../../modules/domController/domController";
+import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
 import { createHolderBoxUI } from "../holderBox/holderBox";
 
 const createNavbarUI = (app) => {

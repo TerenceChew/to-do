@@ -1,10 +1,10 @@
 import "./todoForm.css";
-import { setAttributes } from "../../utilityFunctions/utilityFunctions";
-import * as domController from "../../domController/domController";
+import { setAttributes } from "../../modules/utilityFunctions/utilityFunctions";
+import * as domController from "../../modules/domController/domController";
 import { todoItemFactory, createTodoItemUI } from "../todoItem/todoItem";
 import { projectFactory, createProjectUI } from "../project/project";
 import { createHolderBoxUI } from "../holderBox/holderBox";
-import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
+import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
 import isThisWeek from "date-fns/isThisWeek";
 import { updateTodosTotal, updateProjectsTotal, updateDayTotal, updateWeekTotal } from "../navbar/navbar";
 

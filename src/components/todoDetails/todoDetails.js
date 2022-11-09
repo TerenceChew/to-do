@@ -1,5 +1,5 @@
 import "./todoDetails.css";
-import * as domController from "../../domController/domController";
+import * as domController from "../../modules/domController/domController";
 
 const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) => {
   const container = document.createElement("div");

@@ -1,8 +1,8 @@
 import "./holderBox.css";
 import { createTodoItemUI } from "../todoItem/todoItem";
 import { createProjectUI } from "../project/project";
-import * as utilityFunctions from "../../utilityFunctions/utilityFunctions";
-import * as domController from "../../domController/domController";
+import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
+import * as domController from "../../modules/domController/domController";
 import compareAsc from "date-fns/compareAsc";
 
 const createHolderBoxUI = (app, type, arr, projectId) => {

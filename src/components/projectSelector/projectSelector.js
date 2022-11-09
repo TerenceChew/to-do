@@ -1,6 +1,6 @@
 import "./projectSelector.css";
-import * as domController from "../../domController/domController";
-import { updateLocalStorage } from "../../utilityFunctions/utilityFunctions";
+import * as domController from "../../modules/domController/domController";
+import { updateLocalStorage } from "../../modules/utilityFunctions/utilityFunctions";
 
 const createProjectSelectorUI = (app, todoItem) => {
   const container = document.createElement("div");

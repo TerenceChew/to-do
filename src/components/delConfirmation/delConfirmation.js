@@ -1,6 +1,6 @@
 import "./delConfirmation.css";
-import * as domController from "../../domController/domController";
-import { updateLocalStorage } from "../../utilityFunctions/utilityFunctions";
+import * as domController from "../../modules/domController/domController";
+import { updateLocalStorage } from "../../modules/utilityFunctions/utilityFunctions";
 import { updateTodosTotal, updateProjectsTotal, updateDayTotal, updateWeekTotal } from "../navbar/navbar";
 
 const createDelConfirmationUI = (app, type, obj, objUI) => {

@@ -2,7 +2,7 @@ import './app.css';
 import { createContentBoxUI } from "../components/contentBox/contentBox";
 import { todoItemFactory } from '../components/todoItem/todoItem';
 import { projectFactory } from '../components/project/project';
-import { updateLocalStorage } from "../utilityFunctions/utilityFunctions";
+import { updateLocalStorage } from "../modules/utilityFunctions/utilityFunctions";
 
 const appFactory = () => {
   let todosArr = [];
