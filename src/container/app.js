@@ -106,13 +106,25 @@ const transformToProjectsArr = (projectsData) => {
 }
 
 const initializeApp = (app) => {
+  const [ defaultTodosArr, defaultProjectsArr ] = generateDefaultItems();
+
   localStorage.todosData ?
   app.initializeTodosArr(transformToTodosArr(JSON.parse(localStorage.todosData))) :
-  app.initializeTodosArr([]);
+  app.initializeTodosArr(defaultTodosArr);
 
   localStorage.projectsData ?
   app.initializeProjectsArr(transformToProjectsArr(JSON.parse(localStorage.projectsData))) :
-  app.initializeProjectsArr([]);
+  app.initializeProjectsArr(defaultProjectsArr);
+}
+
+const generateDefaultItems = () => {
+  const sharedTodoItem = todoItemFactory(true, "Leg day", "Squats x 100", "2022-11-25", "low", null);
+
+  const todosArr = [todoItemFactory(false, "CS fundamentals", "Finish lesson 28", "2022-11-28", "high", null), todoItemFactory(false, "Codewars practice", "Complete 10 challenges today", "2022-11-28", "medium", null), todoItemFactory(false, "Project update", "Update sign-in form features", "2022-11-28", "high", null), sharedTodoItem];
+
+  const projectsArr = [projectFactory("Fitness", null, [sharedTodoItem])];
+
+  return [todosArr, projectsArr];
 }
 
 export { createAppUI };
