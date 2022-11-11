@@ -1,9 +1,9 @@
 import "./holderBox.css";
+import compareAsc from "date-fns/compareAsc";
 import { createTodoItemUI } from "../todoItem/todoItem";
 import { createProjectUI } from "../project/project";
 import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
 import * as domController from "../../modules/domController/domController";
-import compareAsc from "date-fns/compareAsc";
 
 const createHolderBoxUI = (app, type, arr, projectId) => {
   const container = document.createElement("div");
@@ -18,7 +18,7 @@ const createHolderBoxUI = (app, type, arr, projectId) => {
     container.append("No Projects");
     return container;
   }
-  
+
   if (!arr.length) {
     container.append("No Todos");
     return container;
@@ -27,27 +27,31 @@ const createHolderBoxUI = (app, type, arr, projectId) => {
   if (type === "todos") {
     const sortedArr = sortObjsByDateAsc(arr);
 
-    container.append(...sortedArr.map(e => createTodoItemUI(e, app, projectId)));
+    container.append(
+      ...sortedArr.map((e) => createTodoItemUI(e, app, projectId))
+    );
   } else if (type === "projects") {
-    container.append(...arr.map(e => createProjectUI(e, app)));
+    container.append(...arr.map((e) => createProjectUI(e, app)));
   } else if (type === "day") {
     const filteredArr = utilityFunctions.getObjsDueToday(arr);
 
-    container.append(...filteredArr.map(e => createTodoItemUI(e, app, projectId)));
+    container.append(
+      ...filteredArr.map((e) => createTodoItemUI(e, app, projectId))
+    );
   } else if (type === "week") {
     const filteredArr = utilityFunctions.getObjsDueThisWeek(arr);
     const sortedArr = sortObjsByDateAsc(filteredArr);
 
-    container.append(...sortedArr.map(e => createTodoItemUI(e, app, projectId)));
+    container.append(
+      ...sortedArr.map((e) => createTodoItemUI(e, app, projectId))
+    );
   }
 
   return container;
-}
+};
 
-const sortObjsByDateAsc = (objsArr) => {
-  return objsArr.sort((a, b) => compareAsc(new Date(a.getDueDate()), new Date(b.getDueDate())));
-}
+const sortObjsByDateAsc = (objsArr) => objsArr.sort((a, b) =>
+    compareAsc(new Date(a.getDueDate()), new Date(b.getDueDate()))
+  );
 
-
-export { createHolderBoxUI };
-
+export default createHolderBoxUI;

@@ -1,7 +1,12 @@
 import "./delConfirmation.css";
 import * as domController from "../../modules/domController/domController";
 import { updateLocalStorage } from "../../modules/utilityFunctions/utilityFunctions";
-import { updateTodosTotal, updateProjectsTotal, updateDayTotal, updateWeekTotal } from "../navbar/navbar";
+import {
+  updateTodosTotal,
+  updateProjectsTotal,
+  updateDayTotal,
+  updateWeekTotal,
+} from "../navbar/navbar";
 
 const createDelConfirmationUI = (app, type, obj, objUI) => {
   const container = document.createElement("div");
@@ -10,18 +15,26 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
   const noBtn = document.createElement("button");
   const yesBtn = document.createElement("button");
 
-  container.classList.add("del-confirmation-container", "flex-column", "center");
+  container.classList.add(
+    "del-confirmation-container",
+    "flex-column",
+    "center"
+  );
 
   confirmationMsg.classList.add("del-confirmation-msg");
   confirmationMsg.innerText = "Confirm Delete?";
 
-  btnsContainer.classList.add("del-confirmation-btns-container", "flex", "center");
+  btnsContainer.classList.add(
+    "del-confirmation-btns-container",
+    "flex",
+    "center"
+  );
 
   noBtn.classList.add("del-confirmation-no-btn");
   noBtn.innerText = "NO";
   noBtn.addEventListener("pointerup", () => {
     removeContainer(container);
-  })
+  });
 
   yesBtn.classList.add("del-confirmation-yes-btn");
   yesBtn.innerText = "YES";
@@ -29,14 +42,14 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
     if (type === "todo") {
       app.removeFromTodosArr(obj.getId());
 
-      app.getProjectsArr().forEach(project => {
+      app.getProjectsArr().forEach((project) => {
         project.removeFromTodosArr(obj.getId());
       });
     } else if (type === "project") {
-      obj.getTodosArr().forEach(todo => {
+      obj.getTodosArr().forEach((todo) => {
         app.removeFromTodosArr(todo.getId());
       });
-      
+
       app.removeFromProjectsArr(obj.getId());
     }
 
@@ -44,24 +57,24 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
     updateNavbarTotals(app);
     objUI.remove();
     removeContainer(container);
-  })
+  });
 
   btnsContainer.append(noBtn, yesBtn);
   container.append(confirmationMsg, btnsContainer);
 
   return container;
-}
+};
 
 const removeContainer = (container) => {
   container.remove();
   domController.getAppContainer().classList.remove("disabled");
-}
+};
 
 const updateNavbarTotals = (app) => {
   updateTodosTotal(app);
   updateProjectsTotal(app);
   updateDayTotal(app);
   updateWeekTotal(app);
-}
+};
 
-export { createDelConfirmationUI };
+export default createDelConfirmationUI;

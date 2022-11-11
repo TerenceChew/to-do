@@ -1,6 +1,6 @@
 import "./contentBox.css";
 import { createNavbarUI } from "../navbar/navbar";
-import { createHolderBoxUI } from "../holderBox/holderBox";
+import createHolderBoxUI from "../holderBox/holderBox";
 
 const createContentBoxUI = (app) => {
   const container = document.createElement("div");
@@ -16,9 +16,13 @@ const createContentBoxUI = (app) => {
 
   title.append(titleIcon, "To-Do");
 
-  container.append(title, createNavbarUI(app), createHolderBoxUI(app, "todos", app.getTodosArr(), null));
+  container.append(
+    title,
+    createNavbarUI(app),
+    createHolderBoxUI(app, "todos", app.getTodosArr(), null)
+  );
 
   return container;
-}
+};
 
-export { createContentBoxUI };
+export default createContentBoxUI;

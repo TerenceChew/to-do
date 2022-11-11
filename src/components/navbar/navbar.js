@@ -2,7 +2,7 @@ import "./navbar.css";
 import { createFormUI } from "../todoForm/todoForm";
 import * as domController from "../../modules/domController/domController";
 import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
-import { createHolderBoxUI } from "../holderBox/holderBox";
+import createHolderBoxUI from "../holderBox/holderBox";
 
 const createNavbarUI = (app) => {
   let navbarMode = "todos";
@@ -16,7 +16,13 @@ const createNavbarUI = (app) => {
   container.classList.add("navbar-container", "flex");
   container.dataset.mode = navbarMode;
 
-  todosBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-todos-btn", "flex", "navbar-btn-selected");
+  todosBtn.classList.add(
+    "navbar-btn",
+    "navbar-btn-grp-1",
+    "navbar-todos-btn",
+    "flex",
+    "navbar-btn-selected"
+  );
   todosBtn.dataset.count = app.getTodosArr().length;
   todosBtn.addEventListener("pointerup", (e) => {
     handleBtnUI(e);
@@ -24,51 +30,83 @@ const createNavbarUI = (app) => {
 
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
-    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr, null));
+    domController
+      .getContentBox()
+      .append(createHolderBoxUI(app, "todos", todosArr, null));
   });
 
-  projectsBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-projects-btn", "flex");
+  projectsBtn.classList.add(
+    "navbar-btn",
+    "navbar-btn-grp-1",
+    "navbar-projects-btn",
+    "flex"
+  );
   projectsBtn.dataset.count = app.getProjectsArr().length;
   projectsBtn.addEventListener("pointerup", (e) => {
     handleBtnUI(e);
     updateNavbarMode("projects");
 
-    
     const projectsArr = app.getProjectsArr();
     console.log("projectsArr:", projectsArr);
-    domController.getContentBox().append(createHolderBoxUI(app, "projects", projectsArr));
+    domController
+      .getContentBox()
+      .append(createHolderBoxUI(app, "projects", projectsArr));
   });
 
-  dayBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-day-btn", "flex");
-  dayBtn.dataset.count = utilityFunctions.getObjsDueToday(app.getTodosArr()).length;
+  dayBtn.classList.add(
+    "navbar-btn",
+    "navbar-btn-grp-1",
+    "navbar-day-btn",
+    "flex"
+  );
+  dayBtn.dataset.count = utilityFunctions.getObjsDueToday(
+    app.getTodosArr()
+  ).length;
   dayBtn.addEventListener("pointerup", (e) => {
     handleBtnUI(e);
     updateNavbarMode("day");
-    
 
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
-    domController.getContentBox().append(createHolderBoxUI(app, navbarMode, todosArr, null));
+    domController
+      .getContentBox()
+      .append(createHolderBoxUI(app, navbarMode, todosArr, null));
   });
 
-  weekBtn.classList.add("navbar-btn", "navbar-btn-grp-1", "navbar-week-btn", "flex");
-  weekBtn.dataset.count = utilityFunctions.getObjsDueThisWeek(app.getTodosArr()).length;
+  weekBtn.classList.add(
+    "navbar-btn",
+    "navbar-btn-grp-1",
+    "navbar-week-btn",
+    "flex"
+  );
+  weekBtn.dataset.count = utilityFunctions.getObjsDueThisWeek(
+    app.getTodosArr()
+  ).length;
   weekBtn.addEventListener("pointerup", (e) => {
     handleBtnUI(e);
     updateNavbarMode("week");
 
     const todosArr = app.getTodosArr();
     console.log("todosArr:", todosArr);
-    domController.getContentBox().append(createHolderBoxUI(app, navbarMode, todosArr, null));
+    domController
+      .getContentBox()
+      .append(createHolderBoxUI(app, navbarMode, todosArr, null));
   });
 
-  plusBtn.classList.add("navbar-btn", "navbar-btn-grp-2", "navbar-plus-btn", "flex");
+  plusBtn.classList.add(
+    "navbar-btn",
+    "navbar-btn-grp-2",
+    "navbar-plus-btn",
+    "flex"
+  );
   plusBtn.title = "Add New";
   plusBtn.innerText = "+";
   plusBtn.addEventListener("pointerup", () => {
-    domController.appendToRoot(createFormUI(app, navbarMode, "add", null, null, null));
+    domController.appendToRoot(
+      createFormUI(app, navbarMode, "add", null, null, null)
+    );
     domController.getAppContainer().classList.add("disabled");
-  })
+  });
 
   function updateNavbarMode(mode) {
     navbarMode = mode;
@@ -76,7 +114,7 @@ const createNavbarUI = (app) => {
   }
 
   function handleBtnUI(e) {
-    document.querySelectorAll(".navbar-btn-grp-1").forEach(btn => {
+    document.querySelectorAll(".navbar-btn-grp-1").forEach((btn) => {
       btn.classList.remove("navbar-btn-selected");
     });
 
@@ -105,27 +143,36 @@ const createNavbarUI = (app) => {
   container.append(todosBtn, projectsBtn, dayBtn, weekBtn, plusBtn);
 
   return container;
-}
+};
 
 const updateTodosTotal = (app) => {
   const todosBtn = document.querySelector(".navbar-todos-btn");
   todosBtn.dataset.count = app.getTodosArr().length;
-}
+};
 
 const updateProjectsTotal = (app) => {
   const projectsBtn = document.querySelector(".navbar-projects-btn");
   projectsBtn.dataset.count = app.getProjectsArr().length;
-}
+};
 
 const updateDayTotal = (app) => {
   const dayBtn = document.querySelector(".navbar-day-btn");
-  dayBtn.dataset.count = utilityFunctions.getObjsDueToday(app.getTodosArr()).length;
-  
-}
+  dayBtn.dataset.count = utilityFunctions.getObjsDueToday(
+    app.getTodosArr()
+  ).length;
+};
 
 const updateWeekTotal = (app) => {
   const weekBtn = document.querySelector(".navbar-week-btn");
-  weekBtn.dataset.count = utilityFunctions.getObjsDueThisWeek(app.getTodosArr()).length;
-}
+  weekBtn.dataset.count = utilityFunctions.getObjsDueThisWeek(
+    app.getTodosArr()
+  ).length;
+};
 
-export { createNavbarUI, updateTodosTotal, updateProjectsTotal, updateDayTotal, updateWeekTotal };
+export {
+  createNavbarUI,
+  updateTodosTotal,
+  updateProjectsTotal,
+  updateDayTotal,
+  updateWeekTotal,
+};

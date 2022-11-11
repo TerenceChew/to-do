@@ -1,6 +1,6 @@
-import { createAppUI } from './container/app';
-import './index.css';
+import createAppUI from "./container/app";
+import "./index.css";
 
-const root = document.querySelector('#root');
+const root = document.querySelector("#root");
 
 root.append(createAppUI());

@@ -1,7 +1,12 @@
 import "./todoDetails.css";
 import * as domController from "../../modules/domController/domController";
 
-const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) => {
+const createTodoDetailsUI = ({
+  getPriority,
+  getDueDate,
+  getTitle,
+  getNotes,
+}) => {
   const container = document.createElement("div");
   const topContainer = document.createElement("div");
   const bottomContainer = document.createElement("div");
@@ -41,13 +46,13 @@ const createTodoDetailsUI = ({ getPriority, getDueDate, getTitle, getNotes }) =>
   closeBtn.addEventListener("pointerup", () => {
     container.remove();
     domController.getAppContainer().classList.remove("disabled");
-  })
+  });
 
   topContainer.append(priority, dueDate);
   bottomContainer.append(title, notes, closeBtn);
   container.append(topContainer, bottomContainer);
 
   return container;
-}
+};
 
-export { createTodoDetailsUI };
+export default createTodoDetailsUI;

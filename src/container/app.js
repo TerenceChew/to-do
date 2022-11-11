@@ -1,7 +1,8 @@
-import './app.css';
-import { createContentBoxUI } from "../components/contentBox/contentBox";
-import { todoItemFactory } from '../components/todoItem/todoItem';
-import { projectFactory } from '../components/project/project';
+/* eslint-disable no-unused-expressions */
+import "./app.css";
+import createContentBoxUI from "../components/contentBox/contentBox";
+import { todoItemFactory } from "../components/todoItem/todoItem";
+import { projectFactory } from "../components/project/project";
 import { updateLocalStorage } from "../modules/utilityFunctions/utilityFunctions";
 
 const appFactory = () => {
@@ -15,34 +16,38 @@ const appFactory = () => {
   // Initializing
   const initializeTodosArr = (arr) => {
     todosArr = arr;
-  }
+  };
   const initializeProjectsArr = (arr) => {
     projectsArr = arr;
-  }
+  };
 
   // Adding
   const pushToTodosArr = (todoItem) => {
     todosArr.push(todoItem);
-  }
+  };
   const pushToProjectsArr = (project) => {
     projectsArr.push(project);
-  }
+  };
 
   // Removing
   const removeFromTodosArr = (id) => {
-    todosArr = todosArr.filter(e => e.id !== id);
-  }
+    todosArr = todosArr.filter((e) => e.id !== id);
+  };
   const removeFromProjectsArr = (id) => {
-    projectsArr = projectsArr.filter(e => e.id !== id);
-  }
+    projectsArr = projectsArr.filter((e) => e.id !== id);
+  };
 
   // Updating
   const updateTodosArr = (todoItem) => {
-    todosArr = todosArr.map(e => e.getId() === todoItem.getId() ? todoItem : e);
-  }
+    todosArr = todosArr.map((e) =>
+      e.getId() === todoItem.getId() ? todoItem : e
+    );
+  };
   const updateProjectsArr = (project) => {
-    projectsArr = projectsArr.map(e => e.getId() === project.getId() ? project : e);
-  }
+    projectsArr = projectsArr.map((e) =>
+      e.getId() === project.getId() ? project : e
+    );
+  };
 
   return {
     getTodosArr,
@@ -54,19 +59,20 @@ const appFactory = () => {
     updateTodosArr,
     pushToProjectsArr,
     removeFromProjectsArr,
-    updateProjectsArr
-  }
-}
+    updateProjectsArr,
+  };
+};
 
 const createAppUI = () => {
-  const container = document.createElement('div');
+  const container = document.createElement("div");
   const app = appFactory();
 
+  // eslint-disable-next-line no-use-before-define
   initializeApp(app);
-  
+
   onbeforeunload = updateLocalStorage(app);
 
-  container.classList.add("app-container", "flex-column", "center")
+  container.classList.add("app-container", "flex-column", "center");
 
   // Logger btn
   // const logBtn = document.createElement("button");
@@ -78,24 +84,24 @@ const createAppUI = () => {
   //   })
   // })
   // Logger btn
-  
+
   container.append(createContentBoxUI(app));
 
   return container;
-}
+};
 
 const transformToTodosArr = (todosData) => {
-  const todosArr = todosData.map(data => {
+  const todosArr = todosData.map((data) => {
     const { checked, title, notes, dueDate, priority, id } = data;
 
     return todoItemFactory(checked, title, notes, dueDate, priority, id);
-  })
+  });
 
   return todosArr;
-}
+};
 
 const transformToProjectsArr = (projectsData) => {
-  const projectsArr = projectsData.map(data => {
+  const projectsArr = projectsData.map((data) => {
     const { title, id, todosData } = data;
     const todosArr = transformToTodosArr(todosData);
 
@@ -103,28 +109,65 @@ const transformToProjectsArr = (projectsData) => {
   });
 
   return projectsArr;
-}
-
-const initializeApp = (app) => {
-  const [ defaultTodosArr, defaultProjectsArr ] = generateDefaultItems();
-
-  localStorage.todosData ?
-  app.initializeTodosArr(transformToTodosArr(JSON.parse(localStorage.todosData))) :
-  app.initializeTodosArr(defaultTodosArr);
-
-  localStorage.projectsData ?
-  app.initializeProjectsArr(transformToProjectsArr(JSON.parse(localStorage.projectsData))) :
-  app.initializeProjectsArr(defaultProjectsArr);
-}
+};
 
 const generateDefaultItems = () => {
-  const sharedTodoItem = todoItemFactory(true, "Leg day", "Squats x 100", "2022-11-25", "low", null);
+  const sharedTodoItem = todoItemFactory(
+    true,
+    "Leg day",
+    "Squats x 100",
+    "2022-11-25",
+    "low",
+    null
+  );
 
-  const todosArr = [todoItemFactory(false, "CS fundamentals", "Finish lesson 28", "2022-11-28", "high", null), todoItemFactory(false, "Codewars practice", "Complete 10 challenges today", "2022-11-28", "medium", null), todoItemFactory(false, "Project update", "Update sign-in form features", "2022-11-28", "high", null), sharedTodoItem];
+  const todosArr = [
+    todoItemFactory(
+      false,
+      "CS fundamentals",
+      "Finish lesson 28",
+      "2022-11-28",
+      "high",
+      null
+    ),
+    todoItemFactory(
+      false,
+      "Codewars practice",
+      "Complete 10 challenges today",
+      "2022-11-28",
+      "medium",
+      null
+    ),
+    todoItemFactory(
+      false,
+      "Project update",
+      "Update sign-in form features",
+      "2022-11-28",
+      "high",
+      null
+    ),
+    sharedTodoItem,
+  ];
 
   const projectsArr = [projectFactory("Fitness", null, [sharedTodoItem])];
 
   return [todosArr, projectsArr];
-}
+};
 
-export { createAppUI };
+const initializeApp = (app) => {
+  const [defaultTodosArr, defaultProjectsArr] = generateDefaultItems();
+
+  localStorage.todosData
+    ? app.initializeTodosArr(
+        transformToTodosArr(JSON.parse(localStorage.todosData))
+      )
+    : app.initializeTodosArr(defaultTodosArr);
+
+  localStorage.projectsData
+    ? app.initializeProjectsArr(
+        transformToProjectsArr(JSON.parse(localStorage.projectsData))
+      )
+    : app.initializeProjectsArr(defaultProjectsArr);
+};
+
+export default createAppUI;

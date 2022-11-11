@@ -17,19 +17,25 @@ const createProjectSelectorUI = (app, todoItem) => {
 
   projectsBox.classList.add("project-selector-projects-box", "flex-column");
 
-  btnsContainer.classList.add("project-selector-btns-container", "flex", "center");
+  btnsContainer.classList.add(
+    "project-selector-btns-container",
+    "flex",
+    "center"
+  );
 
   cancelBtn.classList.add("project-selector-cancel-btn");
   cancelBtn.innerText = "CANCEL";
   cancelBtn.addEventListener("pointerup", () => {
     container.remove();
     domController.getAppContainer().classList.remove("disabled");
-  })
+  });
 
   okBtn.classList.add("project-selector-ok-btn");
   okBtn.innerText = "OK";
   okBtn.addEventListener("pointerup", () => {
-    const selectedProjects = Array.from(document.querySelectorAll(".project-option.selected"));
+    const selectedProjects = Array.from(
+      document.querySelectorAll(".project-option.selected")
+    );
 
     if (!selectedProjects.length) {
       domController.getAppContainer().classList.remove("disabled");
@@ -37,27 +43,33 @@ const createProjectSelectorUI = (app, todoItem) => {
       return;
     }
 
-    const selectedProjectsId = selectedProjects.map(project => project.dataset.id);
+    const selectedProjectsId = selectedProjects.map(
+      (project) => project.dataset.id
+    );
     console.log("ids:", selectedProjectsId);
 
-    selectedProjectsId.forEach(id => {
-      app.getProjectsArr().forEach(project => {
+    selectedProjectsId.forEach((id) => {
+      app.getProjectsArr().forEach((project) => {
         if (id === project.getId()) {
           project.pushToTodosArr(todoItem);
         }
-      })
+      });
     });
 
     updateLocalStorage(app);
     domController.getAppContainer().classList.remove("disabled");
     container.remove();
-  })
-
-  const filteredProjects = app.getProjectsArr().filter(project => {
-    return project.getTodosArr().every(todo => todo.getId() !== todoItem.getId());
   });
 
-  const projectOptionUIs = filteredProjects.map(project => createProjectOptionUI(project));
+  const filteredProjects = app
+    .getProjectsArr()
+    .filter((project) =>
+      project.getTodosArr().every((todo) => todo.getId() !== todoItem.getId())
+    );
+
+  const projectOptionUIs = filteredProjects.map((project) =>
+    createProjectOptionUI(project)
+  );
 
   if (!projectOptionUIs.length) {
     projectsBox.append("No Projects");
@@ -69,7 +81,7 @@ const createProjectSelectorUI = (app, todoItem) => {
   container.append(title, projectsBox, btnsContainer);
 
   return container;
-}
+};
 
 const createProjectOptionUI = (project) => {
   const container = document.createElement("div");
@@ -80,7 +92,7 @@ const createProjectOptionUI = (project) => {
   container.dataset.id = project.getId();
   container.addEventListener("pointerup", () => {
     container.classList.toggle("selected");
-  })
+  });
 
   title.classList.add("project-option-title");
   title.innerText = project.getTitle();
@@ -90,6 +102,6 @@ const createProjectOptionUI = (project) => {
   container.append(title, checkbox);
 
   return container;
-}
+};
 
-export { createProjectSelectorUI };
+export default createProjectSelectorUI;

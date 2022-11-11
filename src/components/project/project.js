@@ -3,14 +3,14 @@ import plusIcon from "./plus.svg";
 import penIcon from "./pencil-outline.svg";
 import deleteIcon from "./delete.svg";
 import { createFormUI } from "../todoForm/todoForm";
-import { createDelConfirmationUI } from "../delConfirmation/delConfirmation";
-import { createHolderBoxUI } from "../holderBox/holderBox";
+import createDelConfirmationUI from "../delConfirmation/delConfirmation";
+import createHolderBoxUI from "../holderBox/holderBox";
 import * as domController from "../../modules/domController/domController";
 import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
 
 const projectFactory = (title, idFromData, todosArrFromData) => {
-  const id = idFromData ? idFromData : utilityFunctions.generateRandomID(title);
-  let todosArr = todosArrFromData ? todosArrFromData : [];
+  const id = idFromData || utilityFunctions.generateRandomID(title);
+  let todosArr = todosArrFromData || [];
 
   // Getting
   const getTitle = () => title;
@@ -19,16 +19,18 @@ const projectFactory = (title, idFromData, todosArrFromData) => {
 
   // Editing
   const editTitle = (newTitle) => {
+    // eslint-disable-next-line no-param-reassign
     title = newTitle;
-  }
+  };
 
   const pushToTodosArr = (todoItem) => {
     todosArr.push(todoItem);
-  }
+  };
 
+  // eslint-disable-next-line no-shadow
   const removeFromTodosArr = (id) => {
-    todosArr = todosArr.filter(e => e.id !== id);
-  }
+    todosArr = todosArr.filter((e) => e.id !== id);
+  };
 
   // Updating
   // const pushToTodosData = (todoData) => {
@@ -46,9 +48,9 @@ const projectFactory = (title, idFromData, todosArrFromData) => {
     getId,
     editTitle,
     pushToTodosArr,
-    removeFromTodosArr
+    removeFromTodosArr,
   };
-}
+};
 
 const createProjectUI = (project, app) => {
   const container = document.createElement("div");
@@ -65,10 +67,12 @@ const createProjectUI = (project, app) => {
     const todosArr = project.getTodosArr();
     const projectId = container.dataset.id;
 
-    console.log("todosArr:", todosArr);
+    // console.log("todosArr:", todosArr);
 
-    domController.getContentBox().append(createHolderBoxUI(app, "todos", todosArr, projectId));
-  })
+    domController
+      .getContentBox()
+      .append(createHolderBoxUI(app, "todos", todosArr, projectId));
+  });
 
   title.classList.add("project-title");
   title.innerText = project.getTitle();
@@ -78,33 +82,40 @@ const createProjectUI = (project, app) => {
   addIcon.addEventListener("pointerup", (e) => {
     e.stopPropagation();
 
-    domController.appendToRoot(createFormUI(app, null, "add-to-project", null, project));
+    domController.appendToRoot(
+      createFormUI(app, null, "add-to-project", null, project)
+    );
     domController.getAppContainer().classList.add("disabled");
-  })
+  });
 
   editIcon.classList.add("project-edit-icon");
   editIcon.src = penIcon;
   editIcon.addEventListener("pointerup", (e) => {
     e.stopPropagation();
 
-    const navbarMode = document.querySelector(`.navbar-container[data-mode]`).dataset.mode;
+    const navbarMode = document.querySelector(".navbar-container[data-mode]")
+      .dataset.mode;
 
-    domController.appendToRoot(createFormUI(app, navbarMode, "edit-project", null, project));
+    domController.appendToRoot(
+      createFormUI(app, navbarMode, "edit-project", null, project)
+    );
     domController.getAppContainer().classList.add("disabled");
-  })
+  });
 
   trashIcon.classList.add("project-trash-icon");
   trashIcon.src = deleteIcon;
   trashIcon.addEventListener("pointerup", (e) => {
     e.stopPropagation();
 
-    domController.appendToRoot(createDelConfirmationUI(app, "project", project, container));
+    domController.appendToRoot(
+      createDelConfirmationUI(app, "project", project, container)
+    );
     domController.getAppContainer().classList.add("disabled");
-  })
+  });
 
   container.append(title, addIcon, editIcon, trashIcon);
 
   return container;
-}
+};
 
 export { projectFactory, createProjectUI };
