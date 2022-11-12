@@ -1,64 +1,56 @@
 .navbar-container {
-  width: 100%;
-  height: 65px;
+  width: min(430px, 90%);
+  height: 70px;
+  place-self: center;
   grid-area: 3 / 1 / -1 / -1;
   justify-content: space-between;
   align-items: center;
   padding: 0 15px;
   background-color: var(--accent-4);
-  font-family: 'Press Start 2P', cursive;
+  border-radius: 14px;
 }
 
 .navbar-btn {
-  height: 40px;
-  width: 40px;
+  height: 47px;
+  width: 47px;
   justify-content: center;
   align-items: center;
   font-size: 1.3rem;
-  color: white;
+  border-radius: 15px;
   transition: .4s;
   cursor: pointer;
-  position: relative;
 }
 
-.navbar-btn:hover,
+.navbar-btn:hover {
+  transform: translateY(-4px);
+}
+
+.navbar-btn-icon {
+  width: 27px;
+  height: 27px;
+}
+
 .navbar-btn-selected {
-  transform: scale(1.2);
-  color: var(--accent-3);
+  pointer-events: none;
+  background-color: var(--accent-1);
 }
 
 .navbar-plus-btn {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2.55rem;
   margin-bottom: 4px;
-  color: var(--accent-1)
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.8rem;
+  color: var(--accent-1);
 }
 
 .navbar-plus-btn:hover {
   color: var(--accent-1);
 }
 
-@media (min-width: 400px) {
-  .navbar-container {
-    padding: 0 30px;
-  }
-}
-
-@media (min-width: 500px) {
-  .navbar-container {
-    padding: 0 60px;
-  }
-}
-
-@media (min-width: 600px) {
-  .navbar-container {
-    padding: 0 80px;
-  }
-}
-
 @media (min-width: 650px) {
   .navbar-container {
+    width: 100%;
     height: 100%;
+    place-self: auto;
     grid-area: 2 / 1 / 3 / 2;
     flex-direction: column;
     justify-content: center;
@@ -66,6 +58,7 @@
     padding: 0 0 20px 0;
     background-color: var(--accent-5);
     box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 0;
   }
 
   .navbar-btn {
@@ -77,8 +70,10 @@
     font-size: 1.1rem;
     color: var(--accent-4);
     font-family: 'Montserrat', sans-serif;
+    border-radius: 0;
     border-right: 6px solid transparent;
     transition: .65s;
+    position: relative;
   }
 
   .navbar-btn-grp-1::before {

@@ -1,8 +1,13 @@
+/* eslint-disable no-param-reassign */
 import "./navbar.css";
 import { createFormUI } from "../todoForm/todoForm";
 import * as domController from "../../modules/domController/domController";
 import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
 import createHolderBoxUI from "../holderBox/holderBox";
+import todosIcon from "./check-list.png";
+import projectsIcon from "./folder.png";
+import dayIcon from "./daily-calendar.png";
+import weekIcon from "./weekly-calendar.png";
 
 const createNavbarUI = (app) => {
   let navbarMode = "todos";
@@ -108,37 +113,13 @@ const createNavbarUI = (app) => {
     domController.getAppContainer().classList.add("disabled");
   });
 
-  function updateNavbarMode(mode) {
-    navbarMode = mode;
+  function updateNavbarMode(newMode) {
+    navbarMode = newMode;
     container.dataset.mode = navbarMode;
   }
 
-  function handleBtnUI(e) {
-    document.querySelectorAll(".navbar-btn-grp-1").forEach((btn) => {
-      btn.classList.remove("navbar-btn-selected");
-    });
-
-    e.target.classList.add("navbar-btn-selected");
-  }
-
-  function updateBtnsText() {
-    if (window.innerWidth < 650) {
-      todosBtn.innerText = "T";
-      projectsBtn.innerText = "P";
-      dayBtn.innerText = "D";
-      weekBtn.innerText = "W";
-    } else {
-      todosBtn.innerText = "Todos";
-      projectsBtn.innerText = "Projects";
-      dayBtn.innerText = "Day";
-      weekBtn.innerText = "Week";
-    }
-    // console.log(window.innerWidth);
-  }
-
-  updateBtnsText();
-
-  window.onresize = updateBtnsText;
+  updateBtns(todosBtn, projectsBtn, dayBtn, weekBtn);
+  window.onresize = updateBtns(todosBtn, projectsBtn, dayBtn, weekBtn);
 
   container.append(todosBtn, projectsBtn, dayBtn, weekBtn, plusBtn);
 
@@ -167,6 +148,56 @@ const updateWeekTotal = (app) => {
   weekBtn.dataset.count = utilityFunctions.getObjsDueThisWeek(
     app.getTodosArr()
   ).length;
+};
+
+const changeBtnsToIcons = (todosBtn, projectsBtn, dayBtn, weekBtn) => {
+  todosBtn.innerText = "";
+  projectsBtn.innerText = "";
+  dayBtn.innerText = "";
+  weekBtn.innerText = "";
+
+  const iconsArr = [todosIcon, projectsIcon, dayIcon, weekIcon];
+  const btnsArr = [todosBtn, projectsBtn, dayBtn, weekBtn];
+
+  btnsArr.forEach((btn, i) => {
+    const icon = document.createElement("img");
+
+    icon.classList.add("navbar-btn-icon");
+    icon.src = iconsArr[i];
+
+    btn.append(icon);
+  });
+};
+
+const changeBtnsToTexts = (todosBtn, projectsBtn, dayBtn, weekBtn) => {
+  todosBtn.innerText = "Todos";
+  projectsBtn.innerText = "Projects";
+  dayBtn.innerText = "Day";
+  weekBtn.innerText = "Week";
+};
+
+const updateBtns = (todosBtn, projectsBtn, dayBtn, weekBtn) => {
+  if (window.innerWidth < 650) {
+    changeBtnsToIcons(todosBtn, projectsBtn, dayBtn, weekBtn);
+  } else {
+    changeBtnsToTexts(todosBtn, projectsBtn, dayBtn, weekBtn);
+  }
+};
+
+const handleBtnUI = (e) => {
+  document.querySelectorAll(".navbar-btn-grp-1").forEach((e) => {
+    e.classList.remove("navbar-btn-selected");
+  });
+
+  document.querySelectorAll(".navbar-btn-icon").forEach((e) => {
+    e.classList.remove("navbar-btn-selected");
+  });
+
+  if (e.target.classList.contains("navbar-btn-icon")) {
+    e.target.parentElement.classList.add("navbar-btn-selected");
+  }
+
+  e.target.classList.add("navbar-btn-selected");
 };
 
 export {
