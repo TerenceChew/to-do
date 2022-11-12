@@ -118,8 +118,10 @@ const createNavbarUI = (app) => {
     container.dataset.mode = navbarMode;
   }
 
-  updateBtns(todosBtn, projectsBtn, dayBtn, weekBtn);
-  window.onresize = updateBtns(todosBtn, projectsBtn, dayBtn, weekBtn);
+  const btnsArr = [todosBtn, projectsBtn, dayBtn, weekBtn];
+
+  updateBtns(btnsArr, container);
+  window.onresize = () => updateBtns(btnsArr, container);
 
   container.append(todosBtn, projectsBtn, dayBtn, weekBtn, plusBtn);
 
@@ -176,11 +178,19 @@ const changeBtnsToTexts = (todosBtn, projectsBtn, dayBtn, weekBtn) => {
   weekBtn.innerText = "Week";
 };
 
-const updateBtns = (todosBtn, projectsBtn, dayBtn, weekBtn) => {
+const updateBtns = (btnsArr, container) => {
   if (window.innerWidth < 650) {
-    changeBtnsToIcons(todosBtn, projectsBtn, dayBtn, weekBtn);
+    changeBtnsToIcons(...btnsArr);
+
+    btnsArr.forEach((btn) => btn.classList.add("animate-appear"));
+
+    container.classList.add("animate-move-in");
   } else {
-    changeBtnsToTexts(todosBtn, projectsBtn, dayBtn, weekBtn);
+    changeBtnsToTexts(...btnsArr);
+
+    btnsArr.forEach((btn) => btn.classList.remove("animate-appear"));
+
+    container.classList.remove("animate-move-in");
   }
 };
 

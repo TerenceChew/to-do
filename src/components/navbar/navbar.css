@@ -16,13 +16,23 @@
   justify-content: center;
   align-items: center;
   font-size: 1.3rem;
+  color: var(--accent-4);
   border-radius: 15px;
-  transition: .4s;
+  transition: background-color .3s, transform .4s;
   cursor: pointer;
+  opacity: 0;
 }
 
 .navbar-btn:hover {
   transform: translateY(-4px);
+}
+
+.navbar-btn-selected {
+  background-color: var(--accent-1);
+}
+
+.navbar-btn-selected.navbar-btn:hover {
+  transform: none;
 }
 
 .navbar-btn-icon {
@@ -30,16 +40,12 @@
   height: 27px;
 }
 
-.navbar-btn-selected {
-  pointer-events: none;
-  background-color: var(--accent-1);
-}
-
 .navbar-plus-btn {
   margin-bottom: 4px;
   font-family: 'Montserrat', sans-serif;
   font-size: 2.8rem;
   color: var(--accent-1);
+  opacity: 1;
 }
 
 .navbar-plus-btn:hover {
@@ -67,13 +73,23 @@
     justify-content: start;
     align-items: center;
     padding-left: 15px;
+    position: relative;
     font-size: 1.1rem;
-    color: var(--accent-4);
     font-family: 'Montserrat', sans-serif;
     border-radius: 0;
     border-right: 6px solid transparent;
-    transition: .65s;
-    position: relative;
+    transition: .55s;
+    opacity: 1;
+  }
+
+  .navbar-btn:hover,
+  .navbar-btn-selected  {
+    transform: none;
+    background-color: var(--accent-6);
+  }
+
+  .navbar-btn-selected {
+    border-right: 6px solid var(--accent-1);
   }
 
   .navbar-btn-grp-1::before {
@@ -93,17 +109,6 @@
     font-weight: bold;
     color: var(--accent-3);
     background-color: white;
-  }
-
-  .navbar-btn:hover,
-  .navbar-btn-selected  {
-    transform: none;
-    color: var(--accent-4);
-    background-color: var(--accent-6);
-  }
-
-  .navbar-btn-selected {
-    border-right: 6px solid var(--accent-1);
   }
 
   .navbar-plus-btn {
@@ -138,4 +143,27 @@
   }
 }
 
+/* Animations */
+.animate-move-in {
+  animation: move-in 1s normal 0s 1 forwards;
+}
 
+@keyframes move-in {
+  from {
+    transform: translateY(150%);
+  }
+  
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-appear {
+  animation: appear 1s normal .5s 1 forwards;
+}
+
+@keyframes appear {
+  to {
+    opacity: 1;
+  }
+}
