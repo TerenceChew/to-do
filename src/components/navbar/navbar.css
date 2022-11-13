@@ -15,10 +15,10 @@
   width: 47px;
   justify-content: center;
   align-items: center;
+  border-radius: 15px;
   font-size: 1.3rem;
   color: var(--accent-4);
-  border-radius: 15px;
-  transition: background-color .3s, transform .4s;
+  transition: background-color .2s, transform .4s;
   cursor: pointer;
   opacity: 0;
 }
