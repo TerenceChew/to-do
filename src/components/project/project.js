@@ -59,7 +59,12 @@ const createProjectUI = (project, app) => {
   const editIcon = document.createElement("img");
   const trashIcon = document.createElement("img");
 
-  container.classList.add("project-container", "flex", "center");
+  container.classList.add(
+    "project-container",
+    "flex",
+    "center",
+    "animate-box-appear"
+  );
   container.dataset.id = project.getId();
   container.addEventListener("pointerup", (e) => {
     e.stopPropagation();

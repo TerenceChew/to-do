@@ -10,7 +10,7 @@ const createProjectSelectorUI = (app, todoItem) => {
   const cancelBtn = document.createElement("button");
   const okBtn = document.createElement("button");
 
-  container.classList.add("project-selector-container");
+  container.classList.add("project-selector-container", "animate-box-appear");
 
   title.classList.add("project-selector-title", "flex", "center");
   title.innerText = "Add To Project";

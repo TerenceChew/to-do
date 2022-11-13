@@ -18,7 +18,8 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
   container.classList.add(
     "del-confirmation-container",
     "flex-column",
-    "center"
+    "center",
+    "animate-box-appear"
   );
 
   confirmationMsg.classList.add("del-confirmation-msg");
@@ -55,7 +56,10 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
 
     updateLocalStorage(app);
     updateNavbarTotals(app);
-    objUI.remove();
+    objUI.classList.add("animate-delete");
+    setTimeout(() => {
+      objUI.remove();
+    }, 1250);
     removeContainer(container);
   });
 

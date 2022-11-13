@@ -144,11 +144,11 @@
 }
 
 /* Animations */
-.animate-move-in {
-  animation: move-in 1s normal 0s 1 forwards;
+.animate-navbar-move-in {
+  animation: navbar-move-in 1s normal 0s 1 forwards;
 }
 
-@keyframes move-in {
+@keyframes navbar-move-in {
   from {
     transform: translateY(150%);
   }
@@ -158,11 +158,11 @@
   }
 }
 
-.animate-appear {
-  animation: appear 1s normal .5s 1 forwards;
+.animate-btn-appear {
+  animation: btn-appear 1s normal .5s 1 forwards;
 }
 
-@keyframes appear {
+@keyframes btn-appear {
   to {
     opacity: 1;
   }

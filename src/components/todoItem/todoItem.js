@@ -77,7 +77,7 @@ const createTodoItemUI = (todoItem, app, projectId) => {
   // eslint-disable-next-line no-use-before-define
   const processedDueDate = formatDueDate(todoItem.getDueDate());
 
-  container.classList.add("item-container", "flex");
+  container.classList.add("item-container", "flex", "animate-box-appear");
   container.dataset.id = todoItem.getId();
   container.dataset.projectId = projectId;
   container.style.borderLeft = `5px solid var(--${todoItem.getPriority()}-prio)`;

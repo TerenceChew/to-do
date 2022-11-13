@@ -182,15 +182,15 @@ const updateBtns = (btnsArr, container) => {
   if (window.innerWidth < 650) {
     changeBtnsToIcons(...btnsArr);
 
-    btnsArr.forEach((btn) => btn.classList.add("animate-appear"));
+    btnsArr.forEach((btn) => btn.classList.add("animate-btn-appear"));
 
-    container.classList.add("animate-move-in");
+    container.classList.add("animate-navbar-move-in");
   } else {
     changeBtnsToTexts(...btnsArr);
 
-    btnsArr.forEach((btn) => btn.classList.remove("animate-appear"));
+    btnsArr.forEach((btn) => btn.classList.remove("animate-btn-appear"));
 
-    container.classList.remove("animate-move-in");
+    container.classList.remove("animate-navbar-move-in");
   }
 };
 

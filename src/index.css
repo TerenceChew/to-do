@@ -29,3 +29,27 @@
   filter: blur(1px) grayscale(50%) brightness(50%);
   pointer-events: none;
 }
+
+.animate-box-appear {
+  animation: box-appear .7s 0s 1 forwards;
+}
+
+@keyframes box-appear {
+  0% {
+    opacity: 0;
+  }
+  
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-delete {
+  animation: delete 1.2s 0s 1 forwards;
+}
+
+@keyframes delete {
+  to {
+    transform: translateX(150%);
+  }
+}

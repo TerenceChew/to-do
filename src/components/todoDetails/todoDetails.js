@@ -16,7 +16,7 @@ const createTodoDetailsUI = ({
   const notes = document.createElement("p");
   const closeBtn = document.createElement("button");
 
-  container.classList.add("details-container");
+  container.classList.add("details-container", "animate-box-appear");
 
   topContainer.classList.add("details-top-container", "flex");
 

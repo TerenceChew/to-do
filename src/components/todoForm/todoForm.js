@@ -20,7 +20,7 @@ const createFormUI = (app, navbarMode, mode, todoItem, project, projectId) => {
   const todoBtn = document.createElement("button");
   const projectBtn = document.createElement("button");
 
-  box.classList.add("box", "flex", "center");
+  box.classList.add("box", "flex", "center", "animate-box-appear");
 
   container.classList.add("form-container");
 
@@ -189,7 +189,7 @@ const createTodoFieldsUI = (
     value: "low",
     name: "priority",
     required: true,
-    checked: !!(todoItem && todoItem.getPriority() === "low")
+    checked: !!(todoItem && todoItem.getPriority() === "low"),
   });
   lowPriorityInput.classList.add("form-priority-radio", "hidden");
 
@@ -203,7 +203,7 @@ const createTodoFieldsUI = (
     value: "medium",
     name: "priority",
     required: true,
-    checked: !!(todoItem && todoItem.getPriority() === "medium")
+    checked: !!(todoItem && todoItem.getPriority() === "medium"),
   });
   midPriorityInput.classList.add("form-priority-radio", "hidden");
 
@@ -217,7 +217,7 @@ const createTodoFieldsUI = (
     value: "high",
     name: "priority",
     required: true,
-    checked: !!(todoItem && todoItem.getPriority() === "high")
+    checked: !!(todoItem && todoItem.getPriority() === "high"),
   });
   highPriorityInput.classList.add("form-priority-radio", "hidden");
 
