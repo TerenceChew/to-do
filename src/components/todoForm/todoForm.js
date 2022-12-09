@@ -435,10 +435,6 @@ const renderTodos = (
     domController
       .getContentBox()
       .append(createHolderBoxUI(app, "week", todosArr, projectId));
-  } else if (navbarMode === "projects") {
-    domController
-      .getContentBox()
-      .append(createHolderBoxUI(app, "todos", todosArr, projectId));
   }
 };
 
