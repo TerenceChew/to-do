@@ -43,11 +43,12 @@ const createProjectSelectorUI = (app, todoItem) => {
       return;
     }
 
+    // Get ids of selected projects
     const selectedProjectsId = selectedProjects.map(
       (project) => project.dataset.id
     );
-    console.log("ids:", selectedProjectsId);
 
+    // Push todoItem into selected projects
     selectedProjectsId.forEach((id) => {
       app.getProjectsArr().forEach((project) => {
         if (id === project.getId()) {
@@ -61,6 +62,7 @@ const createProjectSelectorUI = (app, todoItem) => {
     container.remove();
   });
 
+  // Do not show projects that already contain the todoItem
   const filteredProjects = app
     .getProjectsArr()
     .filter((project) =>

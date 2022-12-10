@@ -5,3 +5,5 @@ const addFilterToElem = (elem, value) => {
 
 // eslint-disable-next-line import/prefer-default-export
 export { addFilterToElem };
+
+// This module is currently unused

@@ -31,10 +31,10 @@ const appFactory = () => {
 
   // Removing
   const removeFromTodosArr = (id) => {
-    todosArr = todosArr.filter((e) => e.id !== id);
+    todosArr = todosArr.filter((e) => e.getId() !== id);
   };
   const removeFromProjectsArr = (id) => {
-    projectsArr = projectsArr.filter((e) => e.id !== id);
+    projectsArr = projectsArr.filter((e) => e.getId() !== id);
   };
 
   // Updating
@@ -63,33 +63,38 @@ const appFactory = () => {
   };
 };
 
+const initializeApp = (app) => {
+  const [defaultTodosArr, defaultProjectsArr] = generateDefaultItems();
+
+  localStorage.todosData
+    ? app.initializeTodosArr(
+        transformToTodosArr(JSON.parse(localStorage.todosData))
+      )
+    : app.initializeTodosArr(defaultTodosArr);
+
+  localStorage.projectsData
+    ? app.initializeProjectsArr(
+        transformToProjectsArr(JSON.parse(localStorage.projectsData))
+      )
+    : app.initializeProjectsArr(defaultProjectsArr);
+};
+
 const createAppUI = () => {
   const container = document.createElement("div");
   const app = appFactory();
 
-  // eslint-disable-next-line no-use-before-define
   initializeApp(app);
 
   onbeforeunload = updateLocalStorage(app);
 
   container.classList.add("app-container", "flex-column", "center");
 
-  // Logger btn
-  // const logBtn = document.createElement("button");
-  // logBtn.innerText = "LOG INFO";
-  // logBtn.addEventListener("pointerup", () => {
-  //   console.log({
-  //     todosArrOri: app.getTodosArr(),
-  //     projectsArrOri: app.getProjectsArr()
-  //   })
-  // })
-  // Logger btn
-
   container.append(createContentBoxUI(app));
 
   return container;
 };
 
+// Transform data to an array of TODO objects
 const transformToTodosArr = (todosData) => {
   const todosArr = todosData.map((data) => {
     const { checked, title, notes, dueDate, priority, id } = data;
@@ -100,6 +105,7 @@ const transformToTodosArr = (todosData) => {
   return todosArr;
 };
 
+// Transform data to an array of PROJECT objects
 const transformToProjectsArr = (projectsData) => {
   const projectsArr = projectsData.map((data) => {
     const { title, id, todosData } = data;
@@ -111,6 +117,7 @@ const transformToProjectsArr = (projectsData) => {
   return projectsArr;
 };
 
+// For first-time users
 const generateDefaultItems = () => {
   const sharedTodoItem = todoItemFactory(
     true,
@@ -152,22 +159,6 @@ const generateDefaultItems = () => {
   const projectsArr = [projectFactory("Fitness", null, [sharedTodoItem])];
 
   return [todosArr, projectsArr];
-};
-
-const initializeApp = (app) => {
-  const [defaultTodosArr, defaultProjectsArr] = generateDefaultItems();
-
-  localStorage.todosData
-    ? app.initializeTodosArr(
-        transformToTodosArr(JSON.parse(localStorage.todosData))
-      )
-    : app.initializeTodosArr(defaultTodosArr);
-
-  localStorage.projectsData
-    ? app.initializeProjectsArr(
-        transformToProjectsArr(JSON.parse(localStorage.projectsData))
-      )
-    : app.initializeProjectsArr(defaultProjectsArr);
 };
 
 export default createAppUI;

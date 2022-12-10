@@ -2,7 +2,7 @@ import "./project.css";
 import plusIcon from "./plus.svg";
 import penIcon from "./pencil-outline.svg";
 import deleteIcon from "./delete.svg";
-import { createFormUI } from "../todoForm/todoForm";
+import createFormUI from "../todoForm/todoForm";
 import createDelConfirmationUI from "../delConfirmation/delConfirmation";
 import createHolderBoxUI from "../holderBox/holderBox";
 import * as domController from "../../modules/domController/domController";
@@ -29,20 +29,10 @@ const projectFactory = (title, idFromData, todosArrFromData) => {
 
   // eslint-disable-next-line no-shadow
   const removeFromTodosArr = (id) => {
-    todosArr = todosArr.filter((e) => e.id !== id);
+    todosArr = todosArr.filter((e) => e.getId() !== id);
   };
 
-  // Updating
-  // const pushToTodosData = (todoData) => {
-  //   todosData.push(todoData);
-  // }
-
-  // const removeFromTodosData = (id) => {
-  //   todosData = todosData.filter(e => e.id !== id);
-  // }
-
   return {
-    id,
     getTitle,
     getTodosArr,
     getId,
@@ -71,8 +61,6 @@ const createProjectUI = (project, app) => {
 
     const todosArr = project.getTodosArr();
     const projectId = container.dataset.id;
-
-    // console.log("todosArr:", todosArr);
 
     domController
       .getContentBox()

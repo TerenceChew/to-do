@@ -34,7 +34,7 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
   noBtn.classList.add("del-confirmation-no-btn");
   noBtn.innerText = "NO";
   noBtn.addEventListener("pointerup", () => {
-    removeContainer(container);
+    removeDelConfirmationUI(container);
   });
 
   yesBtn.classList.add("del-confirmation-yes-btn");
@@ -43,24 +43,29 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
     if (type === "todo") {
       app.removeFromTodosArr(obj.getId());
 
+      // Remove todoItem from every project that contains it
       app.getProjectsArr().forEach((project) => {
         project.removeFromTodosArr(obj.getId());
       });
     } else if (type === "project") {
+      app.removeFromProjectsArr(obj.getId());
+
+      // Remove any todoItem that the project contains
       obj.getTodosArr().forEach((todo) => {
         app.removeFromTodosArr(todo.getId());
       });
-
-      app.removeFromProjectsArr(obj.getId());
     }
 
     updateLocalStorage(app);
     updateNavbarTotals(app);
+
     objUI.classList.add("animate-delete");
+
     setTimeout(() => {
       objUI.remove();
     }, 1250);
-    removeContainer(container);
+
+    removeDelConfirmationUI(container);
   });
 
   btnsContainer.append(noBtn, yesBtn);
@@ -69,7 +74,7 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
   return container;
 };
 
-const removeContainer = (container) => {
+const removeDelConfirmationUI = (container) => {
   container.remove();
   domController.getAppContainer().classList.remove("disabled");
 };

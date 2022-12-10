@@ -13,18 +13,18 @@ import {
   updateWeekTotal,
 } from "../navbar/navbar";
 
+// Form consists of 3 parts (Top, Middle, Bottom)
+// Middle part can either be todoFields or projectFields
 const createFormUI = (app, navbarMode, mode, todoItem, project, projectId) => {
   const box = document.createElement("div");
   const container = document.createElement("div");
-  const topContainer = document.createElement("div");
+  const topContainer = createTopContainerUI();
   const todoBtn = document.createElement("button");
   const projectBtn = document.createElement("button");
 
   box.classList.add("box", "flex", "center", "animate-box-appear");
 
   container.classList.add("form-container");
-
-  topContainer.classList.add("form-top-container", "flex", "center");
 
   todoBtn.classList.add("form-todo-btn");
   todoBtn.innerText = mode === "edit-todo" ? "Edit Todo" : "New Todo";
@@ -98,6 +98,16 @@ const createFormUI = (app, navbarMode, mode, todoItem, project, projectId) => {
   return box;
 };
 
+// Top part of form
+const createTopContainerUI = () => {
+  const container = document.createElement("div");
+
+  container.classList.add("form-top-container", "flex", "center");
+
+  return container;
+};
+
+// Middle part of form
 const createTodoFieldsUI = (
   app,
   navbarMode,
@@ -126,7 +136,6 @@ const createTodoFieldsUI = (
 
   fieldsContainer.classList.add("form-fields-container", "flex-column");
 
-  // Middle
   middleContainer.classList.add("form-middle-container", "flex-column");
   middleContainer.id = "form";
   middleContainer.addEventListener("submit", (e) => {
@@ -246,6 +255,7 @@ const createTodoFieldsUI = (
   return fieldsContainer;
 };
 
+// Middle part of form
 const createProjectFieldsUI = (app, navbarMode, mode, box, project) => {
   const fieldsContainer = document.createElement("div");
   const middleContainer = document.createElement("form");
@@ -253,7 +263,6 @@ const createProjectFieldsUI = (app, navbarMode, mode, box, project) => {
 
   fieldsContainer.classList.add("form-fields-container", "flex-column");
 
-  // Middle
   middleContainer.classList.add("form-middle-container", "flex-column");
   middleContainer.id = "form";
   middleContainer.addEventListener("submit", (e) => {
@@ -281,6 +290,7 @@ const createProjectFieldsUI = (app, navbarMode, mode, box, project) => {
   return fieldsContainer;
 };
 
+// Bottom part of form
 const createBottomContainerUI = (box) => {
   const bottomContainer = document.createElement("div");
   const cancelBtn = document.createElement("button");
@@ -312,13 +322,6 @@ const getInputValues = () => {
     "input[name='priority']:checked"
   );
 
-  console.log({
-    titleVal: titleInput.value,
-    notesVal: notesInput ? notesInput.value : null,
-    dueDateVal: dueDateInput ? dueDateInput.value : null,
-    priorityVal: priorityInput ? priorityInput.value : null,
-  });
-
   return {
     titleVal: titleInput.value,
     notesVal: notesInput ? notesInput.value : null,
@@ -327,81 +330,20 @@ const getInputValues = () => {
   };
 };
 
-const addTodo = (app, navbarMode) => {
-  const todoItem = createTodoItem();
-
-  const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
-
-  app.pushToTodosArr(todoItem);
-  utilityFunctions.updateLocalStorage(app);
-  updateTodosTotal(app);
-  updateDayTotal(app);
-  updateWeekTotal(app);
-
-  const todosArr = app.getTodosArr();
-
-  renderTodos(app, navbarMode, todosArr, isDueToday, isDueThisWeek, null);
-};
-
-const editTodo = (app, navbarMode, todoItem, projectId) => {
+const createTodoItem = () => {
   const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
 
-  todoItem.editTitle(titleVal);
-  todoItem.editNotes(notesVal);
-  todoItem.editDueDate(dueDateVal);
-  todoItem.editPriority(priorityVal);
-
-  app.updateTodosArr(todoItem); // Refactor
-  utilityFunctions.updateLocalStorage(app);
-  updateDayTotal(app);
-  updateWeekTotal(app);
-
-  const { isDueToday, isDueThisWeek } = checkDueDate(todoItem);
-
-  if (projectId) {
-    const project = app
-      .getProjectsArr()
-      // eslint-disable-next-line no-shadow
-      .filter((project) => project.getId() === projectId)[0];
-    const todosArr = project.getTodosArr();
-
-    renderTodos(app, navbarMode, todosArr, null, null, projectId);
-  } else {
-    const todosArr = app.getTodosArr();
-
-    renderTodos(app, navbarMode, todosArr, isDueToday, isDueThisWeek, null);
-  }
+  return todoItemFactory(
+    false,
+    titleVal,
+    notesVal,
+    dueDateVal,
+    priorityVal,
+    null
+  );
 };
 
-const addProject = (app, navbarMode) => {
-  const { titleVal } = getInputValues();
-  const project = projectFactory(titleVal, null, null);
-
-  app.pushToProjectsArr(project);
-  utilityFunctions.updateLocalStorage(app);
-  updateProjectsTotal(app);
-
-  const projectsArr = app.getProjectsArr();
-
-  renderProjects(app, navbarMode, projectsArr);
-};
-
-const editProject = (app, navbarMode, project) => {
-  const { titleVal } = getInputValues();
-
-  project.editTitle(titleVal);
-
-  // Update project in app arr
-  app.updateProjectsArr(project);
-  utilityFunctions.updateLocalStorage(app);
-
-  // Get latest projectsArr & rerender projects
-  const projectsArr = app.getProjectsArr();
-
-  renderProjects(app, navbarMode, projectsArr);
-};
-
-const checkDueDate = (todoItem) => {
+const checkTodoItemDueDate = (todoItem) => {
   const today = utilityFunctions.getTodayInYYYYMMDD();
   const processedDueDate = `${todoItem.getDueDate()}T00:00:00`;
   const isDueToday = todoItem.getDueDate() === today;
@@ -415,7 +357,109 @@ const checkDueDate = (todoItem) => {
   };
 };
 
-const renderTodos = (
+const addTodo = (app, navbarMode) => {
+  const todoItem = createTodoItem();
+
+  const { isDueToday, isDueThisWeek } = checkTodoItemDueDate(todoItem);
+
+  app.pushToTodosArr(todoItem);
+
+  utilityFunctions.updateLocalStorage(app);
+
+  updateTodosTotal(app);
+  updateDayTotal(app);
+  updateWeekTotal(app);
+
+  // Get latest
+  const todosArr = app.getTodosArr();
+
+  renderTodosUI(app, navbarMode, todosArr, isDueToday, isDueThisWeek, null);
+};
+
+const editTodo = (app, navbarMode, todoItem, projectId) => {
+  const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
+
+  todoItem.editTitle(titleVal);
+  todoItem.editNotes(notesVal);
+  todoItem.editDueDate(dueDateVal);
+  todoItem.editPriority(priorityVal);
+
+  app.updateTodosArr(todoItem);
+
+  utilityFunctions.updateLocalStorage(app);
+
+  updateDayTotal(app);
+  updateWeekTotal(app);
+
+  const { isDueToday, isDueThisWeek } = checkTodoItemDueDate(todoItem);
+
+  if (projectId) {
+    const project = app
+      .getProjectsArr()
+      // eslint-disable-next-line no-shadow
+      .filter((project) => project.getId() === projectId)[0];
+    const todosArr = project.getTodosArr(); // Get latest
+
+    renderTodosUI(app, navbarMode, todosArr, null, null, projectId);
+  } else {
+    const todosArr = app.getTodosArr(); // Get latest
+
+    renderTodosUI(app, navbarMode, todosArr, isDueToday, isDueThisWeek, null);
+  }
+};
+
+const createProject = () => {
+  const { titleVal } = getInputValues();
+
+  return projectFactory(titleVal, null, null);
+};
+
+const addProject = (app, navbarMode) => {
+  const project = createProject();
+
+  app.pushToProjectsArr(project);
+
+  utilityFunctions.updateLocalStorage(app);
+
+  updateProjectsTotal(app);
+
+  // Get latest
+  const projectsArr = app.getProjectsArr();
+
+  renderProjectsUI(app, navbarMode, projectsArr);
+};
+
+const editProject = (app, navbarMode, project) => {
+  const { titleVal } = getInputValues();
+
+  project.editTitle(titleVal);
+
+  app.updateProjectsArr(project);
+
+  utilityFunctions.updateLocalStorage(app);
+
+  // Get latest
+  const projectsArr = app.getProjectsArr();
+
+  renderProjectsUI(app, navbarMode, projectsArr);
+};
+
+const addToProject = (app, project) => {
+  const todoItem = createTodoItem();
+
+  project.pushToTodosArr(todoItem);
+
+  app.pushToTodosArr(todoItem);
+  app.updateProjectsArr(project);
+
+  utilityFunctions.updateLocalStorage(app);
+
+  updateTodosTotal(app);
+  updateDayTotal(app);
+  updateWeekTotal(app);
+};
+
+const renderTodosUI = (
   app,
   navbarMode,
   todosArr,
@@ -438,7 +482,7 @@ const renderTodos = (
   }
 };
 
-const renderProjects = (app, navbarMode, projectsArr) => {
+const renderProjectsUI = (app, navbarMode, projectsArr) => {
   if (navbarMode === "projects") {
     domController
       .getContentBox()
@@ -446,32 +490,4 @@ const renderProjects = (app, navbarMode, projectsArr) => {
   }
 };
 
-const addToProject = (app, project) => {
-  const todoItem = createTodoItem();
-
-  // Update project obj
-  project.pushToTodosArr(todoItem);
-
-  // Update app obj
-  app.pushToTodosArr(todoItem);
-  app.updateProjectsArr(project);
-  utilityFunctions.updateLocalStorage(app);
-  updateTodosTotal(app);
-  updateDayTotal(app);
-  updateWeekTotal(app);
-};
-
-const createTodoItem = () => {
-  const { titleVal, notesVal, dueDateVal, priorityVal } = getInputValues();
-  return todoItemFactory(
-    false,
-    titleVal,
-    notesVal,
-    dueDateVal,
-    priorityVal,
-    null
-  );
-};
-
-// eslint-disable-next-line import/prefer-default-export
-export { createFormUI };
+export default createFormUI;

@@ -16,11 +16,13 @@ const createHolderBoxUI = (app, type, arr, projectId) => {
 
   if (!arr.length && type === "projects") {
     container.append("No Projects");
+
     return container;
   }
 
   if (!arr.length) {
     container.append("No Todos");
+
     return container;
   }
 
@@ -30,27 +32,42 @@ const createHolderBoxUI = (app, type, arr, projectId) => {
     container.append(
       ...sortedArr.map((e) => createTodoItemUI(e, app, projectId))
     );
-  } else if (type === "projects") {
+
+    return container;
+  }
+
+  if (type === "projects") {
     container.append(...arr.map((e) => createProjectUI(e, app)));
-  } else if (type === "day") {
+
+    return container;
+  }
+
+  if (type === "day") {
     const filteredArr = utilityFunctions.getObjsDueToday(arr);
 
     container.append(
       ...filteredArr.map((e) => createTodoItemUI(e, app, projectId))
     );
-  } else if (type === "week") {
+
+    return container;
+  }
+
+  if (type === "week") {
     const filteredArr = utilityFunctions.getObjsDueThisWeek(arr);
     const sortedArr = sortObjsByDateAsc(filteredArr);
 
     container.append(
       ...sortedArr.map((e) => createTodoItemUI(e, app, projectId))
     );
+
+    return container;
   }
 
   return container;
 };
 
-const sortObjsByDateAsc = (objsArr) => objsArr.sort((a, b) =>
+const sortObjsByDateAsc = (objsArr) =>
+  objsArr.sort((a, b) =>
     compareAsc(new Date(a.getDueDate()), new Date(b.getDueDate()))
   );
 

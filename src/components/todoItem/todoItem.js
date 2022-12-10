@@ -2,7 +2,7 @@
 import "./todoItem.css";
 import format from "date-fns/format";
 import createTodoDetailsUI from "../todoDetails/todoDetails";
-import { createFormUI } from "../todoForm/todoForm";
+import createFormUI from "../todoForm/todoForm";
 import createDelConfirmationUI from "../delConfirmation/delConfirmation";
 import createProjectSelectorUI from "../projectSelector/projectSelector";
 import * as domController from "../../modules/domController/domController";
@@ -47,7 +47,6 @@ const todoItemFactory = (
   };
 
   return {
-    id,
     getChecked,
     getTitle,
     getNotes,

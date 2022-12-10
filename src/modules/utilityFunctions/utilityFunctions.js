@@ -1,6 +1,21 @@
 /* eslint-disable no-param-reassign */
 import isThisWeek from "date-fns/isThisWeek";
 
+// OBJECTS
+const getObjsDueToday = (arr) => {
+  const today = getTodayInYYYYMMDD();
+  return arr.filter((e) => e.getDueDate() === today);
+};
+
+// Mon - Sun
+const getObjsDueThisWeek = (arr) =>
+  arr.filter((e) => {
+    const processedDueDate = `${e.getDueDate()}T00:00:00`;
+
+    return isThisWeek(new Date(processedDueDate), { weekStartsOn: 1 });
+  });
+
+// ELEMENTS
 const setAttributes = (el, attrs) => {
   // eslint-disable-next-line no-restricted-syntax, guard-for-in
   for (const key in attrs) {
@@ -8,6 +23,13 @@ const setAttributes = (el, attrs) => {
   }
 };
 
+const addEventListenerToElems = (elemsArr, event, fn) => {
+  elemsArr.forEach((e) => {
+    e.addEventListener(event, fn);
+  });
+};
+
+// NUMBERS
 const getRandomNumInclusive = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -18,12 +40,7 @@ const getRandomNumInclusive = (min, max) => {
 const generateRandomID = (title) =>
   `${title}-${getRandomNumInclusive(1, 1000000)}`;
 
-const addEventListenerToElems = (elemsArr, event, fn) => {
-  elemsArr.forEach((e) => {
-    e.addEventListener(event, fn);
-  });
-};
-
+// DATES
 const getTodayInYYYYMMDD = () => {
   const date = new Date();
   const year = String(date.getFullYear());
@@ -33,6 +50,7 @@ const getTodayInYYYYMMDD = () => {
   return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 };
 
+// DATA
 const transformToTodosData = (todosArr) => {
   const todosData = todosArr.map((todo) => ({
     id: todo.getId(),
@@ -64,20 +82,6 @@ const updateLocalStorage = (app) => {
     transformToProjectsData(app.getProjectsArr())
   );
 };
-
-// Get objects that are due today
-const getObjsDueToday = (arr) => {
-  const today = getTodayInYYYYMMDD();
-  return arr.filter((e) => e.getDueDate() === today);
-};
-
-// Get objects that are due this week (Mon - Sun)
-const getObjsDueThisWeek = (arr) =>
-  arr.filter((e) => {
-    const processedDueDate = `${e.getDueDate()}T00:00:00`;
-
-    return isThisWeek(new Date(processedDueDate), { weekStartsOn: 1 });
-  });
 
 export {
   setAttributes,
