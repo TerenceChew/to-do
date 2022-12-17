@@ -208,11 +208,11 @@
 }
 
 .border-btm-b {
-  border-bottom: 4px solid rgba(0, 0, 0, 0.75);
+  border-bottom: 5px solid var(--accent-1);
 }
 
 .border-btm-w {
-  border-bottom: 4px solid white;
+  border-bottom: 5px solid white;
 }
 
 .no-pointer-events {
