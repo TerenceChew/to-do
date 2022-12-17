@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-expressions */
-import "./app.css";
-import createContentBoxUI from "../components/contentBox/contentBox";
-import { todoItemFactory } from "../components/todoItem/todoItem";
-import { projectFactory } from "../components/project/project";
+import { todoFactory } from "../components/todo/todoLogic";
+import projectFactory from "../components/project/projectLogic";
 import { updateLocalStorage } from "../modules/utilityFunctions/utilityFunctions";
 
 const appFactory = () => {
@@ -63,43 +60,20 @@ const appFactory = () => {
   };
 };
 
-const initializeApp = (app) => {
-  const [defaultTodosArr, defaultProjectsArr] = generateDefaultItems();
+const isTodosDataAvailable = () => !!localStorage.todosData;
 
-  localStorage.todosData
-    ? app.initializeTodosArr(
-        transformToTodosArr(JSON.parse(localStorage.todosData))
-      )
-    : app.initializeTodosArr(defaultTodosArr);
+const isProjectsDataAvailable = () => !!localStorage.projectsData;
 
-  localStorage.projectsData
-    ? app.initializeProjectsArr(
-        transformToProjectsArr(JSON.parse(localStorage.projectsData))
-      )
-    : app.initializeProjectsArr(defaultProjectsArr);
-};
+const getTodosData = () => JSON.parse(localStorage.todosData);
 
-const createAppUI = () => {
-  const container = document.createElement("div");
-  const app = appFactory();
-
-  initializeApp(app);
-
-  onbeforeunload = updateLocalStorage(app);
-
-  container.classList.add("app-container", "flex-column", "center");
-
-  container.append(createContentBoxUI(app));
-
-  return container;
-};
+const getProjectsData = () => JSON.parse(localStorage.projectsData);
 
 // Transform data to an array of TODO objects
 const transformToTodosArr = (todosData) => {
   const todosArr = todosData.map((data) => {
     const { checked, title, notes, dueDate, priority, id } = data;
 
-    return todoItemFactory(checked, title, notes, dueDate, priority, id);
+    return todoFactory(checked, title, notes, dueDate, priority, id);
   });
 
   return todosArr;
@@ -119,7 +93,7 @@ const transformToProjectsArr = (projectsData) => {
 
 // For first-time users
 const generateDefaultItems = () => {
-  const sharedTodoItem = todoItemFactory(
+  const sharedTodo = todoFactory(
     true,
     "Leg day",
     "Squats x 100",
@@ -129,7 +103,7 @@ const generateDefaultItems = () => {
   );
 
   const todosArr = [
-    todoItemFactory(
+    todoFactory(
       false,
       "CS fundamentals",
       "Finish lesson 28",
@@ -137,7 +111,7 @@ const generateDefaultItems = () => {
       "high",
       null
     ),
-    todoItemFactory(
+    todoFactory(
       false,
       "Codewars practice",
       "Complete 10 challenges today",
@@ -145,7 +119,7 @@ const generateDefaultItems = () => {
       "medium",
       null
     ),
-    todoItemFactory(
+    todoFactory(
       false,
       "Project update",
       "Update sign-in form features",
@@ -153,12 +127,34 @@ const generateDefaultItems = () => {
       "high",
       null
     ),
-    sharedTodoItem,
+    sharedTodo,
   ];
 
-  const projectsArr = [projectFactory("Fitness", null, [sharedTodoItem])];
+  const projectsArr = [projectFactory("Fitness", null, [sharedTodo])];
 
   return [todosArr, projectsArr];
 };
 
-export default createAppUI;
+const initializeApp = (app) => {
+  const [defaultTodosArr, defaultProjectsArr] = generateDefaultItems();
+
+  app.initializeTodosArr(
+    isTodosDataAvailable()
+      ? transformToTodosArr(getTodosData())
+      : defaultTodosArr
+  );
+
+  app.initializeProjectsArr(
+    isProjectsDataAvailable()
+      ? transformToProjectsArr(getProjectsData())
+      : defaultProjectsArr
+  );
+};
+
+const setUpApp = (app) => {
+  initializeApp(app);
+
+  onbeforeunload = updateLocalStorage(app);
+};
+
+export { appFactory, setUpApp };

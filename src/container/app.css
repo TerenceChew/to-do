@@ -17,7 +17,7 @@
 
 .app-container {
   height: 100vh;
-  background-image: url("./bg-wallpaper.jpg");
+  background-image: url("./assets/bg-wallpaper.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

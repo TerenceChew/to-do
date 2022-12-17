@@ -2,7 +2,7 @@ import "./projectSelector.css";
 import * as domController from "../../modules/domController/domController";
 import { updateLocalStorage } from "../../modules/utilityFunctions/utilityFunctions";
 
-const createProjectSelectorUI = (app, todoItem) => {
+const createProjectSelectorUI = (app, todo) => {
   const container = document.createElement("div");
   const title = document.createElement("p");
   const projectsBox = document.createElement("div");
@@ -10,7 +10,7 @@ const createProjectSelectorUI = (app, todoItem) => {
   const cancelBtn = document.createElement("button");
   const okBtn = document.createElement("button");
 
-  container.classList.add("project-selector-container", "animate-box-appear");
+  container.classList.add("project-selector-container", "animate-appear");
 
   title.classList.add("project-selector-title", "flex", "center");
   title.innerText = "Add To Project";
@@ -33,40 +33,14 @@ const createProjectSelectorUI = (app, todoItem) => {
   okBtn.classList.add("project-selector-ok-btn");
   okBtn.innerText = "OK";
   okBtn.addEventListener("pointerup", () => {
-    const selectedProjects = Array.from(
-      document.querySelectorAll(".project-option.selected")
-    );
-
-    if (!selectedProjects.length) {
-      domController.getAppContainer().classList.remove("disabled");
-      container.remove();
-      return;
-    }
-
-    // Get ids of selected projects
-    const selectedProjectsId = selectedProjects.map(
-      (project) => project.dataset.id
-    );
-
-    // Push todoItem into selected projects
-    selectedProjectsId.forEach((id) => {
-      app.getProjectsArr().forEach((project) => {
-        if (id === project.getId()) {
-          project.pushToTodosArr(todoItem);
-        }
-      });
-    });
-
-    updateLocalStorage(app);
-    domController.getAppContainer().classList.remove("disabled");
-    container.remove();
+    handleOkBtnClick(app, container, todo);
   });
 
-  // Do not show projects that already contain the todoItem
+  // Do not show projects that already contain the todo
   const filteredProjects = app
     .getProjectsArr()
     .filter((project) =>
-      project.getTodosArr().every((todo) => todo.getId() !== todoItem.getId())
+      project.getTodosArr().every((td) => td.getId() !== todo.getId())
     );
 
   const projectOptionUIs = filteredProjects.map((project) =>
@@ -83,6 +57,36 @@ const createProjectSelectorUI = (app, todoItem) => {
   container.append(title, projectsBox, btnsContainer);
 
   return container;
+};
+
+const handleOkBtnClick = (app, container, todo) => {
+  const selectedProjects = Array.from(
+    document.querySelectorAll(".project-option.selected")
+  );
+
+  if (!selectedProjects.length) {
+    domController.getAppContainer().classList.remove("disabled");
+    container.remove();
+    return;
+  }
+
+  // Get ids of selected projects
+  const selectedProjectsId = selectedProjects.map(
+    (project) => project.dataset.id
+  );
+
+  // Push todo into selected projects
+  selectedProjectsId.forEach((id) => {
+    app.getProjectsArr().forEach((project) => {
+      if (id === project.getId()) {
+        project.pushToTodosArr(todo);
+      }
+    });
+  });
+
+  updateLocalStorage(app);
+  domController.getAppContainer().classList.remove("disabled");
+  container.remove();
 };
 
 const createProjectOptionUI = (project) => {

@@ -6,7 +6,7 @@ import {
   updateProjectsTotal,
   updateDayTotal,
   updateWeekTotal,
-} from "../navbar/navbar";
+} from "../navbar/navbarDOM";
 
 const createDelConfirmationUI = (app, type, obj, objUI) => {
   const container = document.createElement("div");
@@ -19,7 +19,7 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
     "del-confirmation-container",
     "flex-column",
     "center",
-    "animate-box-appear"
+    "animate-appear"
   );
 
   confirmationMsg.classList.add("del-confirmation-msg");
@@ -40,38 +40,44 @@ const createDelConfirmationUI = (app, type, obj, objUI) => {
   yesBtn.classList.add("del-confirmation-yes-btn");
   yesBtn.innerText = "YES";
   yesBtn.addEventListener("pointerup", () => {
-    if (type === "todo") {
-      app.removeFromTodosArr(obj.getId());
-
-      // Remove todoItem from every project that contains it
-      app.getProjectsArr().forEach((project) => {
-        project.removeFromTodosArr(obj.getId());
-      });
-    } else if (type === "project") {
-      app.removeFromProjectsArr(obj.getId());
-
-      // Remove any todoItem that the project contains
-      obj.getTodosArr().forEach((todo) => {
-        app.removeFromTodosArr(todo.getId());
-      });
-    }
-
-    updateLocalStorage(app);
-    updateNavbarTotals(app);
-
-    objUI.classList.add("animate-delete");
-
-    setTimeout(() => {
-      objUI.remove();
-    }, 1250);
-
-    removeDelConfirmationUI(container);
+    handleYesBtnClick({ app, container, objUI, obj, type });
   });
 
   btnsContainer.append(noBtn, yesBtn);
   container.append(confirmationMsg, btnsContainer);
 
   return container;
+};
+
+const handleYesBtnClick = ({ app, container, objUI, obj, type }) => {
+  if (type === "todo") {
+    app.removeFromTodosArr(obj.getId());
+
+    // Remove todoItem from every project that contains it
+    app.getProjectsArr().forEach((project) => {
+      project.removeFromTodosArr(obj.getId());
+    });
+  } else if (type === "project") {
+    app.removeFromProjectsArr(obj.getId());
+
+    // Remove any todoItem that the project contains
+    obj.getTodosArr().forEach((todo) => {
+      app.removeFromTodosArr(todo.getId());
+    });
+  }
+
+  updateLocalStorage(app);
+  updateNavbarTotals(app);
+  deleteObjUI(objUI);
+  removeDelConfirmationUI(container);
+};
+
+const deleteObjUI = (objUI) => {
+  objUI.classList.add("animate-delete");
+
+  setTimeout(() => {
+    objUI.remove();
+  }, 1000);
 };
 
 const removeDelConfirmationUI = (container) => {

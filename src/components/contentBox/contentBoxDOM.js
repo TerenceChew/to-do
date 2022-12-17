@@ -1,6 +1,6 @@
 import "./contentBox.css";
-import { createNavbarUI } from "../navbar/navbar";
-import createHolderBoxUI from "../holderBox/holderBox";
+import { createNavbarUI } from "../navbar/navbarDOM";
+import createHolderBoxUI from "../holderBox/holderBoxDOM";
 
 const createContentBoxUI = (app) => {
   const container = document.createElement("div");
@@ -19,7 +19,12 @@ const createContentBoxUI = (app) => {
   container.append(
     title,
     createNavbarUI(app),
-    createHolderBoxUI(app, "todos", app.getTodosArr(), null)
+    createHolderBoxUI({
+      app,
+      mode: "todos",
+      arr: app.getTodosArr(),
+      projectId: null,
+    })
   );
 
   return container;

@@ -1,4 +1,4 @@
-import createAppUI from "./container/app";
+import createAppUI from "./container/appDOM";
 import "./index.css";
 
 const root = document.querySelector("#root");
