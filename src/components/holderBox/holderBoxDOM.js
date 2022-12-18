@@ -6,7 +6,6 @@ import {
 } from "./holderBoxLogic";
 import createTodoUI from "../todo/todoDOM";
 import createProjectUI from "../project/projectDOM";
-import * as utilityFunctions from "../../modules/utilityFunctions/utilityFunctions";
 import * as domController from "../../modules/domController/domController";
 
 const createHolderBoxUI = ({ app, mode, arr, projectId }) => {
@@ -66,15 +65,11 @@ const createTodosUI = ({ app, arr, projectId }) => {
 const createProjectsUI = ({ app, arr }) =>
   arr.map((elem) => createProjectUI(elem, app));
 
-const createTodosUIDueToday = ({ app, arr, projectId }) => {
-  const filteredArr = utilityFunctions.getObjsDueToday(arr);
-
-  return filteredArr.map((e) => createTodoUI(e, app, projectId));
-};
+const createTodosUIDueToday = ({ app, arr, projectId }) =>
+  arr.map((e) => createTodoUI(e, app, projectId));
 
 const createTodosUIDueThisWeek = ({ app, arr, projectId }) => {
-  const filteredArr = utilityFunctions.getObjsDueThisWeek(arr);
-  const sortedArr = sortObjsByDateAsc(filteredArr);
+  const sortedArr = sortObjsByDateAsc(arr);
 
   return sortedArr.map((e) => createTodoUI(e, app, projectId));
 };

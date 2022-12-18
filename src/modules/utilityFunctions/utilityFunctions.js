@@ -83,6 +83,9 @@ const updateLocalStorage = (app) => {
   );
 };
 
+const getProjectWithMatchingId = (app, id) =>
+  app.getProjectsArr().filter((project) => project.getId() === id)[0];
+
 export {
   setAttributes,
   getRandomNumInclusive,
@@ -92,4 +95,5 @@ export {
   updateLocalStorage,
   getObjsDueToday,
   getObjsDueThisWeek,
+  getProjectWithMatchingId,
 };

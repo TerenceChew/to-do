@@ -125,12 +125,13 @@ const handleDayBtnClick = ({ e, app, container }) => {
   container.dataset.mode = "day";
 
   const todosArr = app.getTodosArr();
+  const todosDueToday = utilityFunctions.getObjsDueToday(todosArr);
 
   domController.getContentBox().append(
     createHolderBoxUI({
       app,
       mode: "day",
-      arr: todosArr,
+      arr: todosDueToday,
       projectId: null,
     })
   );
@@ -141,12 +142,13 @@ const handleWeekBtnClick = ({ e, app, container }) => {
   container.dataset.mode = "week";
 
   const todosArr = app.getTodosArr();
+  const todosDueThisWeek = utilityFunctions.getObjsDueThisWeek(todosArr);
 
   domController.getContentBox().append(
     createHolderBoxUI({
       app,
       mode: "week",
-      arr: todosArr,
+      arr: todosDueThisWeek,
       projectId: null,
     })
   );

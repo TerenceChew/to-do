@@ -460,7 +460,7 @@ const editTodo = (app, navbarMode, todo, projectId) => {
   const todoEditedWithinProject = !!projectId;
 
   if (todoEditedWithinProject) {
-    const project = formLogic.getProjectWithMatchingId(app, projectId);
+    const project = utilityFunctions.getProjectWithMatchingId(app, projectId);
 
     renderProjectLatestTodos({ app, project });
   } else {

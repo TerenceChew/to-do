@@ -2,6 +2,8 @@ const getAppContainer = () => document.querySelector(".app-container");
 
 const getContentBox = () => document.querySelector(".content-box-container");
 
+const getNavbar = () => document.querySelector(".navbar-container");
+
 const appendToRoot = (elem) => {
   const root = document.querySelector("#root");
 
@@ -14,4 +16,10 @@ const appendToHolderBox = (elem) => {
   holderBox.append(elem);
 };
 
-export { getAppContainer, appendToRoot, appendToHolderBox, getContentBox };
+export {
+  getAppContainer,
+  appendToRoot,
+  appendToHolderBox,
+  getContentBox,
+  getNavbar,
+};
