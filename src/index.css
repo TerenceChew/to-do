@@ -30,6 +30,10 @@
   pointer-events: none;
 }
 
+.unclickable {
+  pointer-events: none;
+}
+
 .animate-appear {
   animation: appear .7s 0s 1 forwards;
 }

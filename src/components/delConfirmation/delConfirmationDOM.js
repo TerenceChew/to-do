@@ -159,11 +159,15 @@ const displayNoProjects = (app) => {
 };
 
 const deleteObjUI = (objUI) => {
+  const appContainer = domController.getAppContainer();
+
+  appContainer.classList.add("unclickable");
   objUI.classList.add("animate-delete");
 
   return new Promise((resolve) => {
     setTimeout(() => {
       objUI.remove();
+      appContainer.classList.remove("unclickable");
 
       resolve();
     }, 1000);
