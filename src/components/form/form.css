@@ -101,12 +101,18 @@
 }
 
 .form-due-date-input {
+  width: 134px;
   border-radius: 5px;
   border: 2px solid rgba(26, 167, 125, 0.5);
   outline: none;
   padding: 5px 10px;
-  cursor: pointer;
   color: black;
+}
+
+.form-due-date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  padding: 5px 0 5px 98px;
+  cursor: pointer;
 }
 
 .form-priority-title {
