@@ -180,6 +180,7 @@ const handleBtnClickUI = (e) => {
 
 const changeBtnsToIcons = (btnsArr) => {
   const iconsArr = [todosIcon, projectsIcon, dayIcon, weekIcon];
+  const iconsNameArr = ["Todos Icon", "Projects Icon", "Day Icon", "Week Icon"];
 
   btnsArr.forEach((btn, i) => {
     btn.innerText = "";
@@ -187,6 +188,7 @@ const changeBtnsToIcons = (btnsArr) => {
 
     icon.classList.add("navbar-btn-icon");
     icon.src = iconsArr[i];
+    icon.alt = iconsNameArr[i];
 
     btn.append(icon);
   });
