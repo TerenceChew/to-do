@@ -78,17 +78,18 @@
     font-family: 'Montserrat', sans-serif;
     border-radius: 0;
     border-right: 6px solid transparent;
-    transition: .55s;
     opacity: 1;
+    transition: none;
   }
 
-  .navbar-btn:hover,
-  .navbar-btn-selected  {
+  .navbar-btn:hover {
     transform: none;
     background-color: var(--accent-6);
+    transition: background-color .5s;
   }
 
   .navbar-btn-selected {
+    background-color: var(--accent-6);
     border-right: 6px solid var(--accent-1);
   }
 
@@ -152,7 +153,6 @@
   from {
     transform: translateY(150%);
   }
-  
   to {
     transform: translateY(0);
   }
